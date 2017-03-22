@@ -5,12 +5,17 @@ using UnityEngine.AI;
 
 public class EntryPoint : MonoBehaviour
 {
+    private GameObject mainCamera;
+    public Transform cameraTarget;
     public EntryPoint OtherSidePoint;
     private GameObject player;
     private bool locked = false;
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectWithTag("Player");
+	    cameraTarget = transform.FindChild("CameraTarget");
+	    mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+
 	}
 	
 	// Update is called once per frame
@@ -25,6 +30,7 @@ public class EntryPoint : MonoBehaviour
             Debug.Log("Teleported to " + transform.parent.parent.name);
             player.GetComponent<NavMeshAgent>().Warp(OtherSidePoint.transform.position);
             OtherSidePoint.locked = true;
+            mainCamera.GetComponent<CameraMovement>().ToEntryPoint(cameraTarget, OtherSidePoint);
         }
     }
 

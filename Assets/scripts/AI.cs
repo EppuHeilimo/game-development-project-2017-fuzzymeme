@@ -65,7 +65,7 @@ public class AI : MonoBehaviour
             reactionTimer = 0;
             RaycastHit hit;
             playerDirection = (player.position - transform.position ) / playerDistance;
-            Debug.DrawRay(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), playerDirection, Color.blue, 5f);
+            //Debug.DrawRay(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), playerDirection, Color.blue, 5f);
             if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), playerDirection, out hit, sightDistance))
             {
                 if (hit.transform.CompareTag("Player"))

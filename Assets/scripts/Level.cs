@@ -58,9 +58,10 @@ public class Level : MonoBehaviour
         
         roomCount--;
 
+#if UNITY_EDITOR
         if(prevArea != null)
-            Debug.DrawLine(entry.transform.position, prevArea.transform.position, Color.blue, 100f);
-
+            Debug.DrawLine(entry.transform.position, prevArea.transform.position, Color.blue, float.PositiveInfinity);
+#endif
         //check if there's enough rooms to continue recursive initiation
         bool last = availableAreas.Count <= roomCount;
         if (!deadend)

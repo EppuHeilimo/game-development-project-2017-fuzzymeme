@@ -60,14 +60,6 @@ public class EntryPoint : MonoBehaviour
     }
 
 
-    void OnDrawGizmosSelected()
-    {
-        if (otherSidePoint.transform != null)
-        {
-            Debug.DrawLine(transform.position, otherSidePoint.transform.position, Color.blue, 100f);
-        }
-    }
-
 
     void OnTriggerEnter(Collider other)
     {

@@ -29,23 +29,38 @@ public class Level : MonoBehaviour
 		
 	}
 
+
+
     //inits the room and returns the entrypoint used to enter the room (RECURSIVE)
     public EntryPoint init(List<GameObject> availableAreas, EntryPoint prevArea, bool deadend)
     {
         //select rnd assigned entrypoint
         int rnd = Random.Range(0, entrypoints.Count);
         EntryPoint entry = entrypoints[rnd].GetComponent<EntryPoint>();
+
+        //ensure that the next area entrance isn't in the same direction as the one you just left
+        if (prevArea != null && entry.compassDirection == prevArea.compassDirection)
+        {
+            entrypoints.RemoveAt(rnd);
+            rnd = Random.Range(0, entrypoints.Count);
+            EntryPoint temp = entry;
+            entry = entrypoints[rnd].GetComponent<EntryPoint>();
+            entrypoints.Add(temp.transform);
+        }
         //set tree inactive to make a way for walking
         entrypoints[rnd].GetChild(0).gameObject.SetActive(false);
         //set previous area for the entrance
-        entrypoints[rnd].GetComponent<EntryPoint>().OtherSidePoint = prevArea;
+        entrypoints[rnd].GetComponent<EntryPoint>().otherSidePoint = prevArea;
         //set player location to start
         if (prevArea == null)
             GameObject.FindGameObjectWithTag("Player").GetComponent<NavMeshAgent>().Warp(entrypoints[rnd].transform.position);
         //remove used entrypoint
-        entrypoints.RemoveAt(rnd);
+        
         roomCount--;
-    
+
+        if(prevArea != null)
+            Debug.DrawLine(entry.transform.position, prevArea.transform.position, Color.blue, 100f);
+
         //check if there's enough rooms to continue recursive initiation
         bool last = availableAreas.Count <= roomCount;
         if (!deadend)
@@ -56,7 +71,7 @@ public class Level : MonoBehaviour
                 Level area = GameObject.FindGameObjectWithTag("BossArea").GetComponent<Level>();
                 rnd = Random.Range(0, entrypoints.Count);
                 entrypoints[rnd].GetChild(0).gameObject.SetActive(false);
-                entrypoints[rnd].GetComponent<EntryPoint>().OtherSidePoint = area.init(availableAreas, entrypoints[rnd].GetComponent<EntryPoint>(), true);
+                entrypoints[rnd].GetComponent<EntryPoint>().otherSidePoint = area.init(availableAreas, entrypoints[rnd].GetComponent<EntryPoint>(), true);
                 entrypoints.RemoveAt(rnd); 
                 Dictionary<EntryPoint, Level> usedareas = new Dictionary<EntryPoint, Level>();
                 //use the rest of the available rooms if there's any
@@ -74,7 +89,7 @@ public class Level : MonoBehaviour
                 foreach (KeyValuePair<EntryPoint, Level> pair in usedareas)
                 {
                     // make last rooms deadends
-                    pair.Key.OtherSidePoint = pair.Value.init(availableAreas, pair.Key, true);
+                    pair.Key.otherSidePoint = pair.Value.init(availableAreas, pair.Key, true);
                     count++;
                 }
             }
@@ -101,9 +116,9 @@ public class Level : MonoBehaviour
                 {
                     //make the first one always the "right way", others should be deadends
                     if (count == 0)
-                        pair.Key.OtherSidePoint = pair.Value.init(availableAreas, pair.Key, false);
+                        pair.Key.otherSidePoint = pair.Value.init(availableAreas, pair.Key, false);
                     else
-                        pair.Key.OtherSidePoint = pair.Value.init(availableAreas, pair.Key, true);
+                        pair.Key.otherSidePoint = pair.Value.init(availableAreas, pair.Key, true);
                     count++;
                 }
             }

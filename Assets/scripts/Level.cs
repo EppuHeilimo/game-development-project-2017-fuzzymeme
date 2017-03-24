@@ -48,14 +48,14 @@ public class Level : MonoBehaviour
             entrypoints.Add(temp.transform);
         }
         //set tree inactive to make a way for walking
-        entrypoints[rnd].GetChild(0).gameObject.SetActive(false);
+        entrypoints[rnd].GetComponent<EntryPoint>().init(true);
         //set previous area for the entrance
         entrypoints[rnd].GetComponent<EntryPoint>().otherSidePoint = prevArea;
         //set player location to start
         if (prevArea == null)
             GameObject.FindGameObjectWithTag("Player").GetComponent<NavMeshAgent>().Warp(entrypoints[rnd].transform.position);
         //remove used entrypoint
-        
+        entrypoints.RemoveAt(rnd);
         roomCount--;
 
 #if UNITY_EDITOR
@@ -71,7 +71,7 @@ public class Level : MonoBehaviour
                 //find bossarea and assign random entrypoint for bossroom
                 Level area = GameObject.FindGameObjectWithTag("BossArea").GetComponent<Level>();
                 rnd = Random.Range(0, entrypoints.Count);
-                entrypoints[rnd].GetChild(0).gameObject.SetActive(false);
+                entrypoints[rnd].GetComponent<EntryPoint>().init(true);
                 entrypoints[rnd].GetComponent<EntryPoint>().otherSidePoint = area.init(availableAreas, entrypoints[rnd].GetComponent<EntryPoint>(), true);
                 entrypoints.RemoveAt(rnd); 
                 Dictionary<EntryPoint, Level> usedareas = new Dictionary<EntryPoint, Level>();
@@ -80,7 +80,7 @@ public class Level : MonoBehaviour
                 {
                     Level area2 = availableAreas[Random.Range(0, availableAreas.Count)].GetComponent<Level>();
                     rnd = Random.Range(0, entrypoints.Count);
-                    entrypoints[rnd].GetChild(0).gameObject.SetActive(false);
+                    entrypoints[rnd].GetComponent<EntryPoint>().init(true);
                     usedareas.Add(entrypoints[rnd].GetComponent<EntryPoint>(), area2);
                     availableAreas.Remove(area2.gameObject);
                     entrypoints.RemoveAt(rnd);
@@ -105,7 +105,7 @@ public class Level : MonoBehaviour
                     //take random entrypoint
                     rnd = Random.Range(0, entrypoints.Count);
                     //set blocking tree mesh inactive
-                    entrypoints[rnd].GetChild(0).gameObject.SetActive(false);
+                    entrypoints[rnd].GetComponent<EntryPoint>().init(true);
                     //pair the entrypoints to levels
                     usedareas.Add(entrypoints[rnd].GetComponent<EntryPoint>(), area);
                     availableAreas.Remove(area.gameObject);
@@ -123,6 +123,10 @@ public class Level : MonoBehaviour
                     count++;
                 }
             }
+        }
+        foreach (Transform e in entrypoints)
+        {
+            e.GetComponent<EntryPoint>().init(false);
         }
         return entry;
     }

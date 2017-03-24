@@ -18,20 +18,27 @@ public class EntryPoint : MonoBehaviour
     public EntryPoint otherSidePoint;
     private GameObject player;
     private bool locked = false;
+    private GameObject blockingÓbject;
 
-
+    private VinesAnimation vineAnim;
+    private GameObject vine;
+    
     //ignore up axis, y = z
     private Vector2 center;
     public Compass compassDirection;
     private Terrain parentTerrain;
     // Use this for initialization
-    void Start () {
-
+    void Start ()
+    {
+        
         FindParentTerrain();
 		player = GameObject.FindGameObjectWithTag("Player");
 	    cameraTarget = transform.FindChild("CameraTarget");
 	    mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-
+        blockingÓbject = transform.FindChild("Tree").gameObject;
+        vine = transform.FindChild("Vines").gameObject;
+        vineAnim = vine.GetComponent<VinesAnimation>();
+        
         Vector2 localCenter = new Vector2(parentTerrain.terrainData.size.x / 2, parentTerrain.terrainData.size.z / 2);
         center = new Vector2(parentTerrain.terrainData.size.x / 2 + parentTerrain.transform.position.x, parentTerrain.terrainData.size.z / 2 + parentTerrain.transform.position.z);
         Vector2 entrypointcoords = new Vector2(transform.position.x, transform.position.z);
@@ -59,7 +66,32 @@ public class EntryPoint : MonoBehaviour
         parentTerrain = parent.GetComponent<Terrain>();
     }
 
+    void OnDrawGizmosSelected()
+    {
 
+    }
+
+    public void OpenPath()
+    {
+        if (vine.activeSelf)
+        {
+            vineAnim.Open();
+        }
+    }
+
+    public void ClosePath()
+    {
+        if (vine.activeSelf)
+        {
+            vineAnim.Close();
+        }
+    }
+
+    public void init(bool isEntry)
+    {
+        blockingÓbject.SetActive(!isEntry);
+        vine.SetActive(isEntry);
+    }
 
     void OnTriggerEnter(Collider other)
     {

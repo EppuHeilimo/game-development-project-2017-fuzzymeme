@@ -19,6 +19,7 @@ public class EntryPoint : MonoBehaviour
     private GameObject player;
     private bool locked = false;
     private GameObject blockingÓbject;
+    private NavMeshObstacle obstacle;
 
     private VinesAnimation vineAnim;
     private GameObject vine;
@@ -27,10 +28,11 @@ public class EntryPoint : MonoBehaviour
     private Vector2 center;
     public Compass compassDirection;
     private Terrain parentTerrain;
+    public Transform playerTeleportPoint;
     // Use this for initialization
     void Start ()
     {
-        
+        obstacle = GetComponent<NavMeshObstacle>();
         FindParentTerrain();
 		player = GameObject.FindGameObjectWithTag("Player");
 	    cameraTarget = transform.FindChild("CameraTarget");
@@ -38,6 +40,7 @@ public class EntryPoint : MonoBehaviour
         blockingÓbject = transform.FindChild("Tree").gameObject;
         vine = transform.FindChild("Vines").gameObject;
         vineAnim = vine.GetComponent<VinesAnimation>();
+        playerTeleportPoint = transform.FindChild("PlayerTeleportPoint");
         
         Vector2 localCenter = new Vector2(parentTerrain.terrainData.size.x / 2, parentTerrain.terrainData.size.z / 2);
         center = new Vector2(parentTerrain.terrainData.size.x / 2 + parentTerrain.transform.position.x, parentTerrain.terrainData.size.z / 2 + parentTerrain.transform.position.z);
@@ -76,6 +79,7 @@ public class EntryPoint : MonoBehaviour
         if (vine.activeSelf)
         {
             vineAnim.Open();
+            obstacle.enabled = false;
         }
     }
 
@@ -84,6 +88,7 @@ public class EntryPoint : MonoBehaviour
         if (vine.activeSelf)
         {
             vineAnim.Close();
+            obstacle.enabled = true;
         }
     }
 
@@ -98,18 +103,14 @@ public class EntryPoint : MonoBehaviour
         if (other.CompareTag("Player") && otherSidePoint != null && !locked)
         {
             Debug.Log("Teleported to " + transform.parent.parent.name);
-            player.GetComponent<NavMeshAgent>().Warp(otherSidePoint.transform.position);
-            otherSidePoint.locked = true;
+            player.GetComponent<NavMeshAgent>().Warp(otherSidePoint.playerTeleportPoint.position);
             mainCamera.GetComponent<CameraMovement>().ToEntryPoint(cameraTarget, otherSidePoint);
+            GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().SetCurrentArea(otherSidePoint.parentTerrain.GetComponent<Level>());
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            locked = false;
-        }
             
     }
 }

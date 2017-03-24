@@ -53,7 +53,11 @@ public class Level : MonoBehaviour
         entrypoints[rnd].GetComponent<EntryPoint>().otherSidePoint = prevArea;
         //set player location to start
         if (prevArea == null)
-            GameObject.FindGameObjectWithTag("Player").GetComponent<NavMeshAgent>().Warp(entrypoints[rnd].transform.position);
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<NavMeshAgent>().Warp(entrypoints[rnd].GetComponent<EntryPoint>().playerTeleportPoint.position);
+            GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().SetCurrentArea(this);
+        }
+            
         //remove used entrypoint
         entrypoints.RemoveAt(rnd);
         roomCount--;
@@ -69,11 +73,18 @@ public class Level : MonoBehaviour
             if (last)
             {
                 //find bossarea and assign random entrypoint for bossroom
-                Level area = GameObject.FindGameObjectWithTag("BossArea").GetComponent<Level>();
-                rnd = Random.Range(0, entrypoints.Count);
-                entrypoints[rnd].GetComponent<EntryPoint>().init(true);
-                entrypoints[rnd].GetComponent<EntryPoint>().otherSidePoint = area.init(availableAreas, entrypoints[rnd].GetComponent<EntryPoint>(), true);
-                entrypoints.RemoveAt(rnd); 
+                try
+                {
+                    Level area = GameObject.FindGameObjectWithTag("BossArea").GetComponent<Level>();
+                    rnd = Random.Range(0, entrypoints.Count);
+                    entrypoints[rnd].GetComponent<EntryPoint>().init(true);
+                    entrypoints[rnd].GetComponent<EntryPoint>().otherSidePoint = area.init(availableAreas, entrypoints[rnd].GetComponent<EntryPoint>(), true);
+                    entrypoints.RemoveAt(rnd);
+                }
+                catch (Exception)
+                {
+                    Debug.Log("No area with 'BossArea' tag found!");
+                }
                 Dictionary<EntryPoint, Level> usedareas = new Dictionary<EntryPoint, Level>();
                 //use the rest of the available rooms if there's any
                 for (int i = 0; i < availableAreas.Count; i++)

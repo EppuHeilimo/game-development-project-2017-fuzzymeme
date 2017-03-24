@@ -100,7 +100,7 @@ public class AI : MonoBehaviour
         if (idleTimer > idleTime)
         {
             idleTimer = 0;
-            agent.SetDestination(RndPointInArea(5f, NavMesh.GetAreaFromName("EnemyIdleArea")));
+            agent.SetDestination(RndPointInArea(5f, NavMesh.AllAreas));
         }
 
     }

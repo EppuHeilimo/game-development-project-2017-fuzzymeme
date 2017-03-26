@@ -54,6 +54,22 @@ public class EntryPoint : MonoBehaviour
 
         compassDirection = (Compass)quadrant;
 
+        switch (compassDirection)
+        {
+                case Compass.EAST:
+                cameraTarget.position = new Vector3(transform.position.x + 40f, transform.position.y, transform.position.z);
+                break;
+                case Compass.NORTH:
+                cameraTarget.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 40f);
+                break;
+                case Compass.SOUTH:
+                cameraTarget.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 40f);
+                break;
+                case Compass.WEST:
+                cameraTarget.position = new Vector3(transform.position.x - 40f, transform.position.y, transform.position.z);
+                break;
+        }
+
         /*
         Vector2 north = new Vector2(center.x, center.y + localCenter.y);
         Vector2 east = new Vector2(center.x + localCenter.y, center.y);

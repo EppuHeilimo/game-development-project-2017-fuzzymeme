@@ -54,8 +54,8 @@ public class Level : MonoBehaviour
         //set player location to start
         if (prevArea == null)
         {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<NavMeshAgent>().Warp(entrypoints[rnd].GetComponent<EntryPoint>().playerTeleportPoint.position);
-            GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().SetCurrentArea(this);
+            
+            
         }
             
         //remove used entrypoint

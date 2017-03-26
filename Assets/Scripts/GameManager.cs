@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     private GameObject player;
     private Level currentArea;
+    private EnemySpawner areasSpawner;
 
 	// Use this for initialization
 	void Start () {
@@ -20,6 +21,8 @@ public class GameManager : MonoBehaviour
     public void SetCurrentArea(Level currentArea)
     {
         this.currentArea = currentArea;
+        areasSpawner = currentArea.transform.FindChild("EnemySpawnPoints").GetComponent<EnemySpawner>();
+        areasSpawner.SpawnAll();
     }
 
     public Level GetCurrentArea()

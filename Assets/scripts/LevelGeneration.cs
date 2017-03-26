@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class LevelGeneration : MonoBehaviour
 {
@@ -25,6 +26,10 @@ public class LevelGeneration : MonoBehaviour
     {
         startingArea = areas[Random.Range(0, areas.Count)];
         areas.Remove(startingArea);
-        startingArea.GetComponent<Level>().init(areas, null, false);
+        EntryPoint startingEntryPoint = startingArea.GetComponent<Level>().init(areas, null, false);
+
+        //set player location to start
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().SetCurrentArea(startingArea.GetComponent<Level>());
+        GameObject.FindGameObjectWithTag("Player").GetComponent<NavMeshAgent>().Warp(startingEntryPoint.playerTeleportPoint.position);
     }
 }

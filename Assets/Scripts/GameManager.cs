@@ -7,10 +7,14 @@ public class GameManager : MonoBehaviour
     private GameObject player;
     private Level currentArea;
     private EnemySpawner areasSpawner;
-
+    private List<GameObject> weapons;
 	// Use this for initialization
 	void Start () {
-		
+        Object[] loadedweapons = Resources.LoadAll("/Assets/Weapons");
+        foreach(Object weapon in loadedweapons)
+        {
+            weapons.Add((GameObject)weapon);
+        }
 	}
 	
 	// Update is called once per frame

@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     private GameObject player;
     private Level currentArea;
     private EnemySpawner areasSpawner;
-    private List<GameObject> weapons;
+    public List<GameObject> weapons;
 	// Use this for initialization
 	void Start () {
         Object[] loadedweapons = Resources.LoadAll("/Assets/Weapons");

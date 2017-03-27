@@ -51,6 +51,6 @@ public class CombineMeshes : MonoBehaviour
         gameObject.transform.rotation = rotation;
 
         //Add collider to mesh
-        gameObject.AddComponent<BoxCollider>();
+        //gameObject.AddComponent<BoxCollider>();
     }
 }

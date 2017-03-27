@@ -12,6 +12,10 @@ namespace Assets.Scripts
 
         public Stats Stats;
 
+        void Start()
+        {
+            Stats = GetComponent<Stats>();
+        }
 
         void Update()
         {

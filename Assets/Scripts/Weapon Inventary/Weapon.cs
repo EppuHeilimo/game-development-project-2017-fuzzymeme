@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Weapon_Inventary
 {
-    public class Weapon : InventaryItem, IWeapon
+    public class Weapon : InventoryItem, IWeapon
     {
 
         public int Ammunition;
@@ -13,6 +13,14 @@ namespace Assets.Scripts.Weapon_Inventary
 
 
         private float _lastShootTime;
+
+        void Start()
+        {
+            if(BulletSpawnPosition == null)
+            {
+                BulletSpawnPosition = transform.FindChild("BulletSpawnPoint");
+            }
+        }
 
         public void SetBulletSpawnPosition(Transform transform)
         {
@@ -53,6 +61,7 @@ namespace Assets.Scripts.Weapon_Inventary
             Bullet component = bullet.GetComponent<Bullet>();
             Ammunition--;
             _lastShootTime = Time.time;
+            component.shooter = gameObject;
 
         }
 
@@ -63,7 +72,7 @@ namespace Assets.Scripts.Weapon_Inventary
         }
 
 
-        protected override void OnCreateCopy(InventaryItem addComponent)
+        protected override void OnCreateCopy(InventoryItem addComponent)
         {
             Weapon weapon = addComponent as Weapon;
             weapon.Ammunition = Ammunition;

@@ -2,7 +2,7 @@
 {
     public static class Constants
     {
-        public static string InventarItem = "InventarItem";
+        public static string InventoryItem = "InventoryItem";
 
     }
 }

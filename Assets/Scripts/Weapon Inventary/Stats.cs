@@ -30,9 +30,5 @@ namespace Assets.Scripts.Weapon_Inventary
                 Text.text = CreatureName + ":  " + CurrentLifeEnergy + " / " + LifeEnergy;
 
         }
-
-
-
-
     }
 }

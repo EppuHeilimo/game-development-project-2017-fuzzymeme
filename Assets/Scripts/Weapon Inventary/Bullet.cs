@@ -9,40 +9,64 @@ namespace Assets.Scripts.Weapon_Inventary
         public float Speed;
         public float Distance;
         public Vector3 StartPosition;
+        private float InitTime = 0.3f;
+        private float InitTimer = 0f;
+        private bool init = false;
 
         void Start()
         {
-
+            InitTimer = Time.time;
             float time = Distance / Speed;
             Destroy(gameObject, time);
         }
 
         void Update()
         {
-        
+            InitTimer += Time.deltaTime;
+            if(InitTimer > InitTime)
+            {
+
+            }
             Vector3 movement = Time.deltaTime * Speed * transform.forward;
-            transform.position = transform.position - movement;
+            transform.position = transform.position + movement;
 
         }
 
-        void OnCollisionEnter(Collision collision)
+        void OnTriggerEnter(Collider collision)
         {
-            GameObject gameobj1 = collision.gameObject;
-
-            if (shooter == gameobj1)
+            
+            if (collision.CompareTag("Player") && shooter.CompareTag("Player"))
             {
-                return;
+                if (Time.time - InitTimer > InitTime)
+                {
+                    Debug.Log(collision.gameObject.name);
+                    Collision(collision);
+                }
             }
-
-            Stats component = gameobj1.GetComponent<Stats>();
-            if (component != null)
+            else if(collision.CompareTag("Bullet"))
             {
+                
+            }
+            else
+            {
+                Collision(collision);
+            }
+            
 
+        }
+
+        void Collision(Collider collision)
+        {
+             
+            GameObject gameobj1 = collision.gameObject;
+            Stats component = gameobj1.GetComponent<Stats>();
+            
+            if (component != null)
+            { 
                 component.Damage(Damage);
 
             }
             Destroy(gameObject);
-
         }
     }
 }

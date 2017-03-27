@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
+using Assets.Scripts.Weapon_Inventary;
 
 public class AI : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class AI : MonoBehaviour
     private float reactionTimer = 0f;
     private float obstructionTimer = 0f;
     private float idleTimer = 0f;
-
+    private Weapon weapon;
     enum AIState
     {
         Idle,
@@ -39,6 +40,7 @@ public class AI : MonoBehaviour
         state = AIState.Idle;
         playerDistance = Vector3.Distance(transform.position, player.position);
         playerDirection = (transform.position - player.position) / playerDistance;
+        weapon = GetComponent<Weapon>();
     }
 	
 	// Update is called once per frame
@@ -124,6 +126,7 @@ public class AI : MonoBehaviour
 
     void Attack()
     {
+        
         transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
         if (obstructed)
         {
@@ -140,18 +143,15 @@ public class AI : MonoBehaviour
         }
         else if (playerDistance > shootdistance)
         {
+            
             float step = speed * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, player.position, step);
         }
-        else if (playerDistance > giveupdistance)
+        if(shootdistance < playerDistance)
         {
-            state = AIState.Idle;
+            weapon.Use();
         }
-        else if(shootdistance < playerDistance)
-        {
-            
-        }
-
+ 
     }
 
     void OnCollisionEnter(Collision collision)

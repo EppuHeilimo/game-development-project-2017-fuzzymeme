@@ -13,10 +13,14 @@ public class PlayerMovement : MonoBehaviour {
     Vector3 previous;
     float playerVelocity;
 
+    private Inventory inventory;
+
     // Use this for initialization
     void Start () {
         main_camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        
+        inventory = GetComponent<Inventory>();
+
+
     }
 	
 	// Update is called once per frame
@@ -24,10 +28,26 @@ public class PlayerMovement : MonoBehaviour {
     {
         SpeedLimit();  
         Aiming();//AIMING
-	    
+
+        if(Input.GetKeyDown(KeyCode.F))
+        {
+            inventory.TakeUp();
+        }
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            inventory.Previous();
+        }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            inventory.Next();
+        }
+
+
         CharacterMovement();
 
     }
+    
+    
 
 
     void Aiming()

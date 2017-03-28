@@ -42,7 +42,7 @@ namespace Assets.Scripts.Weapon_Inventary
                     Collision(collision);
                 }
             }
-            else if(collision.CompareTag("Bullet"))
+            else if(collision.CompareTag("Bullet") || (collision.CompareTag("Enemy") && shooter.CompareTag("Enemy")))
             {
                 
             }

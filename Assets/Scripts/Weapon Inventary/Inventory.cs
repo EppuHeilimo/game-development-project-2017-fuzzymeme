@@ -46,21 +46,21 @@ public class Inventory : MonoBehaviour
             return;
         }
         _lastIndexChangeTime = time;
-
+        int nextIndex = Index;
         do
         {
-            if (Index == 0)
+            if (nextIndex == 0)
             {
-
-                ChangeIndex(Items.Count - 1);
+                nextIndex = Items.Count - 1;
 
             }
             else
             {
-                ChangeIndex(Index-1);
+                nextIndex = nextIndex - 1;
             }
-        } while (Items[Index] == null);
+        } while (Items[nextIndex] == null);
 
+        ChangeIndex(nextIndex);
 
 
     }
@@ -74,21 +74,22 @@ public class Inventory : MonoBehaviour
             return;
         }
         _lastIndexChangeTime = time;
-
+        int newIndex = Index;
         do
         {
-            if (Index == Items.Count - 1)
+            if (newIndex == Items.Count - 1)
             {
-                ChangeIndex(0);
 
+                newIndex = 0;
             }
             else
             {
-                
-                ChangeIndex(Index + 1);
+
+                newIndex= newIndex + 1;
             }
 
-        } while (Items[Index] == null);
+        } while (Items[newIndex] == null);
+        ChangeIndex(newIndex);
     }
 
     private void ChangeIndex(int newIndex)

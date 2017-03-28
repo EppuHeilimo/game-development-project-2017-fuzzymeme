@@ -12,30 +12,29 @@ using UnityEngine.UI;
 public class Inventory : MonoBehaviour
 {
     public List<InventoryItem> Items;
-    public Transform AttackSpawnPosition;
-    public int index = 0;
+    public int Index { get; set; } 
     private int InventarySize = 4;
-    private List<GameObject> takeableItemsAround = new List<GameObject>();
+    private List<GameObject> pickUpsAround = new List<GameObject>();
+    public InventoryItem SelectedPickUpAround { get; set; }
+    public List<GameObject> PickUpsAround { get { return pickUpsAround; } }
 
-    public InventoryItem SelectedTakeableItemsAround;
 
-
-    private int _selectedTakeableItemsAroundIndex = -1;
+    private int _selectedPickUpArroundIndex = -1;
     private int _defaultWeaponAmount = 1;
     private float _lastIndexChangeTime = 0;
     private float _lastTakeUpTime = 0;
 
     private float changeTimeThreshold = 0.2f;
-    public List<GameObject> TakeableItemsAround { get { return takeableItemsAround; } }
 
 
     public void Start()
     {
+        Index = 0;
         InventarySize = Items.Count;
     }
-    public int SelectedTakeableItemsAroundIndex
+    public int SelectedPickUpArroundIndex
     {
-        get { return _selectedTakeableItemsAroundIndex; }
+        get { return _selectedPickUpArroundIndex; }
     }
 
     public void Previous()
@@ -50,15 +49,17 @@ public class Inventory : MonoBehaviour
 
         do
         {
-            if (index == 0)
+            if (Index == 0)
             {
-                index = Items.Count - 1;
+
+                ChangeIndex(Items.Count - 1);
+
             }
             else
             {
-                index--;
+                ChangeIndex(Index-1);
             }
-        } while (Items[index] == null);
+        } while (Items[Index] == null);
 
 
 
@@ -76,58 +77,66 @@ public class Inventory : MonoBehaviour
 
         do
         {
-            if (index == Items.Count - 1)
+            if (Index == Items.Count - 1)
             {
-                index = 0;
+                ChangeIndex(0);
+
             }
             else
             {
-                index++;
+                
+                ChangeIndex(Index + 1);
             }
 
-        } while (Items[index] == null);
+        } while (Items[Index] == null);
+    }
+
+    private void ChangeIndex(int newIndex)
+    {
+        Index = newIndex;
+        Items[Index].OnBeingSelected();
     }
 
     public void SelectNextTakeableItem()
     {
-        if (_selectedTakeableItemsAroundIndex == -1)
+        if (_selectedPickUpArroundIndex == -1)
         {
             return;
         }
-        _selectedTakeableItemsAroundIndex++;
-        if (TakeableItemsAround.Count >= _selectedTakeableItemsAroundIndex)
+        _selectedPickUpArroundIndex++;
+        if (PickUpsAround.Count >= _selectedPickUpArroundIndex)
         {
-            _selectedTakeableItemsAroundIndex = 0;
+            _selectedPickUpArroundIndex = 0;
         }
-        SelectedTakeableItemsAround = TakeableItemsAround[_selectedTakeableItemsAroundIndex].GetComponent<InventoryItem>();
+        SelectedPickUpAround = PickUpsAround[_selectedPickUpArroundIndex].GetComponent<InventoryItem>();
     }
 
     public void SelectPreviousTakeableItem()
     {
 
-        if (_selectedTakeableItemsAroundIndex == -1)
+        if (_selectedPickUpArroundIndex == -1)
         {
             return;
         }
-        _selectedTakeableItemsAroundIndex--;
-        if (0 > _selectedTakeableItemsAroundIndex)
+        _selectedPickUpArroundIndex--;
+        if (0 > _selectedPickUpArroundIndex)
         {
-            _selectedTakeableItemsAroundIndex = TakeableItemsAround.Count - 1;
+            _selectedPickUpArroundIndex = PickUpsAround.Count - 1;
         }
-        SelectedTakeableItemsAround = TakeableItemsAround[_selectedTakeableItemsAroundIndex].GetComponent<InventoryItem>(); ;
+        SelectedPickUpAround = PickUpsAround[_selectedPickUpArroundIndex].GetComponent<InventoryItem>(); ;
 
     }
 
     public void Use()
     {
-        InventoryItem inventaryItem = Items[index];
+        InventoryItem inventaryItem = Items[Index];
         if (inventaryItem != null)
         {
 
             inventaryItem.Use();
             if (inventaryItem.UseAbleAmount == 0)
             {
-                Items[index] = null;
+                Items[Index] = null;
                 Destroy(inventaryItem);
                 Previous();
             }
@@ -144,46 +153,46 @@ public class Inventory : MonoBehaviour
         }
         _lastTakeUpTime = time;
 
-        if (SelectedTakeableItemsAround != null)
+        if (SelectedPickUpAround != null)
         {
             int itemCount = CountItems();
             if (InventarySize <= itemCount)
             {
 
-                if (index < _defaultWeaponAmount)
+                if (Index < _defaultWeaponAmount)
                 {
                     return;
                 }
-                InventoryItem inventaryItem = SelectedTakeableItemsAround.CreateCopy(gameObject);
+                InventoryItem inventaryItem = SelectedPickUpAround.CreateCopy(gameObject);
 
-                InventoryItem itemToDrop = Items[index];
+                InventoryItem itemToDrop = Items[Index];
                 Items.Remove(itemToDrop);
                 OnItemAdded(inventaryItem);
-                Items.Insert(index, inventaryItem);
-                itemToDrop.Drop(transform);
+                Items.Insert(Index, inventaryItem);
+                itemToDrop.Drop();
                 Destroy(itemToDrop);
 
             }
             else
             {
 
-                InventoryItem inventaryItem = SelectedTakeableItemsAround.CreateCopy(gameObject);
+                InventoryItem inventaryItem = SelectedPickUpAround.CreateCopy(gameObject);
                 OnItemAdded(inventaryItem);
 
                 AddItem(inventaryItem);
 
             }
-            takeableItemsAround.Remove(takeableItemsAround[SelectedTakeableItemsAroundIndex]);
-            SelectedTakeableItemsAround.OnBeeinTakenUp();
-            if (takeableItemsAround.Count == 0)
+            pickUpsAround.Remove(pickUpsAround[SelectedPickUpArroundIndex]);
+            SelectedPickUpAround.OnBeeinTakenUp();
+            if (pickUpsAround.Count == 0)
             {
-                _selectedTakeableItemsAroundIndex = -1;
-                SelectedTakeableItemsAround = null;
+                _selectedPickUpArroundIndex = -1;
+                SelectedPickUpAround = null;
             }
             else
             {
-                _selectedTakeableItemsAroundIndex = 0;
-                SelectedTakeableItemsAround = takeableItemsAround[_selectedTakeableItemsAroundIndex].GetComponent<InventoryItemHolder>().InventaryItem;
+                _selectedPickUpArroundIndex = 0;
+                SelectedPickUpAround = pickUpsAround[_selectedPickUpArroundIndex].GetComponent<InventoryItemHolder>().InventoryItem;
             }
         }
     }
@@ -193,7 +202,6 @@ public class Inventory : MonoBehaviour
         if (inventaryItem is IWeapon)
         {
             IWeapon weapon = inventaryItem as IWeapon;
-            weapon.SetBulletSpawnPosition(AttackSpawnPosition);
         }
     }
 
@@ -230,15 +238,15 @@ public class Inventory : MonoBehaviour
         Boolean contains = gameObject.CompareTag(Constants.InventoryItem);
         if (contains)
         {
-            InventoryItem inventaryItem = other.GetComponent<InventoryItemHolder>().InventaryItem;
-            if (!TakeableItemsAround.Contains(gameObject))
+            InventoryItem inventaryItem = other.GetComponent<InventoryItemHolder>().InventoryItem;
+            if (!PickUpsAround.Contains(gameObject))
             {
 
-                TakeableItemsAround.Add(gameObject);
-                if (_selectedTakeableItemsAroundIndex == -1)
+                PickUpsAround.Add(gameObject);
+                if (_selectedPickUpArroundIndex == -1)
                 {
-                    _selectedTakeableItemsAroundIndex = 0;
-                    SelectedTakeableItemsAround = inventaryItem;
+                    _selectedPickUpArroundIndex = 0;
+                    SelectedPickUpAround = inventaryItem;
                 }
             }
         }
@@ -252,35 +260,35 @@ public class Inventory : MonoBehaviour
         {
             var gameObject = other.gameObject;
             InventoryItem inventaryItem = other.gameObject.GetComponent<InventoryItem>();
-            bool contains = TakeableItemsAround.Contains(gameObject);
+            bool contains = PickUpsAround.Contains(gameObject);
             if (contains)
             {
-                int indexOfNotAnymoreAvailable = TakeableItemsAround.IndexOf(gameObject);
-                TakeableItemsAround.Remove(gameObject);
+                int indexOfNotAnymoreAvailable = PickUpsAround.IndexOf(gameObject);
+                PickUpsAround.Remove(gameObject);
 
-                if (SelectedTakeableItemsAround == inventaryItem)
+                if (SelectedPickUpAround == inventaryItem)
                 {
-                    if (TakeableItemsAround.Count == 0)
+                    if (PickUpsAround.Count == 0)
                     {
-                        SelectedTakeableItemsAround = null;
-                        _selectedTakeableItemsAroundIndex = -1;
+                        SelectedPickUpAround = null;
+                        _selectedPickUpArroundIndex = -1;
                     }
-                    else if (_selectedTakeableItemsAroundIndex == 0)
+                    else if (_selectedPickUpArroundIndex == 0)
                     {
-                        SelectedTakeableItemsAround = TakeableItemsAround[0].GetComponent<InventoryItem>();
+                        SelectedPickUpAround = PickUpsAround[0].GetComponent<InventoryItem>();
                     }
                     else
                     {
-                        _selectedTakeableItemsAroundIndex--;
-                        SelectedTakeableItemsAround = TakeableItemsAround[_selectedTakeableItemsAroundIndex].GetComponent<InventoryItem>();
+                        _selectedPickUpArroundIndex--;
+                        SelectedPickUpAround = PickUpsAround[_selectedPickUpArroundIndex].GetComponent<InventoryItem>();
                     }
 
                 }
                 else
                 {
-                    if (indexOfNotAnymoreAvailable < _selectedTakeableItemsAroundIndex)
+                    if (indexOfNotAnymoreAvailable < _selectedPickUpArroundIndex)
                     {
-                        _selectedTakeableItemsAroundIndex--;
+                        _selectedPickUpArroundIndex--;
                     }
 
                 }

@@ -8,7 +8,6 @@ namespace Assets.Scripts.Weapon_Inventary
         public float Damage;
         public float Speed;
         public float Distance;
-        public Vector3 StartPosition;
         private float InitTime = 0.3f;
         private float InitTimer = 0f;
         private bool init = false;

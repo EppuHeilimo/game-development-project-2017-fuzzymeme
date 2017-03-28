@@ -9,6 +9,7 @@ namespace Assets.Scripts.Weapon_Inventary
         public int Ammunition;
         public float ReloadTime = 0.5f;
         public GameObject BulletPrefab;
+        private float _lastShootTime;
 
         private Transform _bulletSpawnPosition;
         public Transform BulletSpawnPosition
@@ -29,7 +30,6 @@ namespace Assets.Scripts.Weapon_Inventary
         }
 
 
-        private float _lastShootTime;
 
         void Start()
         {
@@ -49,6 +49,32 @@ namespace Assets.Scripts.Weapon_Inventary
         {
 
 
+        }
+
+        public override double ReloadPercentage
+        {
+            get
+            {
+                float passedTime = Time.time- _lastShootTime;
+                if (passedTime > ReloadTime)
+                {
+                    return 1;
+                }
+                else
+                {
+                    float percentage = passedTime / ReloadTime;
+                    Debug.Log(percentage);
+                    return percentage;
+                }
+            }
+        }
+
+        public override string ItemDescription
+        {
+            get
+            {
+                return base.InventaryItemName+" | A: "+" | D:";
+            }
         }
 
         public void Attack()

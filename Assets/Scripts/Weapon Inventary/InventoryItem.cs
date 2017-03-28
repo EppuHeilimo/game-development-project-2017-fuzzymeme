@@ -24,6 +24,20 @@ namespace Assets.Scripts.Interface
         }
 
 
+        public virtual double ReloadPercentage
+        {
+            get { return 1; }
+        }
+
+        public virtual String ItemDescription
+        {
+            get
+            {
+                return InventaryItemName;
+                
+            }
+        }
+
         public virtual int UseAbleAmount
         {
             get { return -1; }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Assets.Scripts.Weapon_Inventary;
 using UnityEngine;
 
 namespace Assets.Scripts.Interface
@@ -10,10 +11,17 @@ namespace Assets.Scripts.Interface
     {
 
 
-        public GameObject takeablePrefab;
+        public GameObject PickUpPrefab;
         public String InventaryItemName;
 
 
+        public void Start()
+        {
+
+            gameObject.GetComponent<MeshFilter>().sharedMesh = PickUpPrefab.GetComponent<MeshFilter>().sharedMesh;
+            gameObject.GetComponent<MeshRenderer>().sharedMaterial = PickUpPrefab.GetComponent<MeshRenderer>().sharedMaterial;
+
+        }
 
 
         public virtual int UseAbleAmount
@@ -24,14 +32,18 @@ namespace Assets.Scripts.Interface
         public abstract void Use();
 
 
-        public virtual void Drop(Transform transform)
+        public virtual void Drop()
         {
-            var takeableItem = (GameObject)Instantiate(
-            takeablePrefab,
-            transform.position,
-            transform.rotation);
-            InventoryItemHolder inventaryItemHolder = takeableItem.GetComponent<InventoryItemHolder>();
-            inventaryItemHolder.InventaryItem = CreateCopy(takeableItem);
+
+            GameObject pickupItemObject = new GameObject();
+            pickupItemObject.transform.position = new Vector3(transform.position.x,0.5f,transform.position.z);
+            pickupItemObject.transform.rotation = transform.rotation;
+            //pickupItemObject.transform.localScale=new Vector3(0.5f,0.5f,0.5f);
+
+            InventoryItemHolder itemHolder = pickupItemObject.AddComponent<InventoryItemHolder>();
+            InventoryItem inventoryItem = CreateCopy(pickupItemObject);
+            itemHolder.SetInventoryItem(inventoryItem);
+           
         }
 
 
@@ -40,13 +52,18 @@ namespace Assets.Scripts.Interface
             Destroy(gameObject, 0);
         }
 
+        public virtual void OnBeingSelected()
+        {
+            
+        }
 
         public InventoryItem CreateCopy(GameObject newGameObject)
         {
             Type type = this.GetType();
             Component addComponent = newGameObject.AddComponent(type);
             InventoryItem inventaryItem = addComponent as InventoryItem;
-            inventaryItem.takeablePrefab = takeablePrefab;
+            inventaryItem.PickUpPrefab = PickUpPrefab;
+            inventaryItem.InventaryItemName = InventaryItemName;
             OnCreateCopy(inventaryItem);
             return inventaryItem;
 

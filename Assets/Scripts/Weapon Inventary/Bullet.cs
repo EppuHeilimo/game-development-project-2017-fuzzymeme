@@ -8,7 +8,6 @@ namespace Assets.Scripts.Weapon_Inventary
         public float Damage;
         public float Speed;
         public float Distance;
-        public Vector3 StartPosition;
         private float InitTime = 0.3f;
         private float InitTimer = 0f;
         private bool init = false;
@@ -34,36 +33,35 @@ namespace Assets.Scripts.Weapon_Inventary
 
         void OnTriggerEnter(Collider collision)
         {
+            GameObject target = collision.gameObject;
             
-            if (collision.CompareTag("Player") && shooter.CompareTag("Player"))
+            if (shooter.CompareTag("Player") && target == shooter)
             {
                 if (Time.time - InitTimer > InitTime)
                 {
-                    Debug.Log(collision.gameObject.name);
+                    Debug.Log(target.name);
                     Collision(collision);
                 }
             }
             else if(collision.CompareTag("Bullet") || (collision.CompareTag("Enemy") && shooter.CompareTag("Enemy")))
             {
-                
+                // do nothing
             }
             else
             {
                 Collision(collision);
             }
-            
-
         }
 
         void Collision(Collider collision)
         {
              
             GameObject gameobj1 = collision.gameObject;
-            Stats component = gameobj1.GetComponent<Stats>();
+            Stats stats = gameobj1.GetComponent<Stats>();
             
-            if (component != null)
+            if (stats != null)
             { 
-                component.Damage(Damage);
+                stats.Damage(Damage);
 
             }
             Destroy(gameObject);

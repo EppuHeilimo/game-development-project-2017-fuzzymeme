@@ -9,22 +9,34 @@ namespace Assets.Scripts.Weapon_Inventary
         public int Ammunition;
         public float ReloadTime = 0.5f;
         public GameObject BulletPrefab;
-        public Transform BulletSpawnPosition;
+
+        private Transform _bulletSpawnPosition;
+        public Transform BulletSpawnPosition
+        {
+            get
+            {
+                if (_bulletSpawnPosition == null)
+                {
+                    Vector3 spawnPosition = new Vector3(transform.position.x,transform.position.y,transform.position.z);
+
+                    _bulletSpawnPosition = transform;
+                }
+
+
+                return _bulletSpawnPosition;
+
+            }
+        }
 
 
         private float _lastShootTime;
 
         void Start()
         {
-            if(BulletSpawnPosition == null)
+            if(_bulletSpawnPosition == null)
             {
-                BulletSpawnPosition = transform.FindChild("BulletSpawnPoint");
+                _bulletSpawnPosition = transform.FindChild("AttackSpawnPoint");
             }
-        }
-
-        public void SetBulletSpawnPosition(Transform transform)
-        {
-            BulletSpawnPosition = transform;
         }
 
         public override int UseAbleAmount
@@ -65,7 +77,10 @@ namespace Assets.Scripts.Weapon_Inventary
 
         }
 
-
+        public override void OnBeingSelected()
+        {
+            _lastShootTime = Time.time;
+        }
         public override void Use()
         {
             Attack();
@@ -77,7 +92,7 @@ namespace Assets.Scripts.Weapon_Inventary
             Weapon weapon = addComponent as Weapon;
             weapon.Ammunition = Ammunition;
             weapon.BulletPrefab = BulletPrefab;
-            weapon.BulletSpawnPosition = BulletSpawnPosition;
+            //weapon._bulletSpawnPosition = _bulletSpawnPosition;
             weapon.ReloadTime = ReloadTime;
             weapon._lastShootTime = _lastShootTime;
             weapon.InventaryItemName = InventaryItemName;

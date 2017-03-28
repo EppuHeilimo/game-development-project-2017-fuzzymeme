@@ -10,7 +10,7 @@ namespace Assets.Scripts
     public class DestroyAfterZeroLifePoints : MonoBehaviour
     {
 
-        public Stats Stats;
+        private Stats Stats { get; set; }
 
         void Start()
         {

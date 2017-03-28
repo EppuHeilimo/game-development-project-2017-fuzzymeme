@@ -7,45 +7,71 @@ namespace Assets.Scripts.Weapon_Inventary
 {
     public class InventoryViewer : MonoBehaviour
     {
-        public Inventory Inventary;
-        public Text Text;
-        public Text InventaryText;
+        private Inventory inventory;
+        private Text pickUpText;
+        private Text _inventoryText;
         private Boolean showsText = false;
+
+        public void Start()
+        {
+            inventory = gameObject.GetComponent<Inventory>();
+
+            GameObject o = GameObject.Find(Constants.InventaryText);
+            if (o != null)
+            {
+                _inventoryText = o.GetComponent<Text>();
+            }
+
+            GameObject find = GameObject.Find(Constants.PickUpItems);
+            if (find != null)
+            {
+                pickUpText = find.GetComponent<Text>();
+
+            }
+         
+        }
 
         public void Update()
         {
-            bool notNullInventary = Inventary != null;
-            bool selectedItem = Inventary.SelectedTakeableItemsAround != null;
-            bool dataToShow = selectedItem && notNullInventary;
-            if (dataToShow)
+
+            if (pickUpText != null)
             {
+                bool notNullInventary = _inventoryText != null;
+                bool selectedItem = inventory.SelectedPickUpAround != null;
+                bool dataToShow = selectedItem && notNullInventary;
+                if (dataToShow)
+                {
 
 
 
-                Text.text = "[" + (Inventary.SelectedTakeableItemsAroundIndex + 1) + ":" +
-                            Inventary.TakeableItemsAround.Count + "]  " + Inventary.SelectedTakeableItemsAround.InventaryItemName;
+                    pickUpText.text = "[" + (inventory.SelectedPickUpArroundIndex + 1) + ":" +
+                                inventory.PickUpsAround.Count + "]  " + inventory.SelectedPickUpAround.InventaryItemName;
 
 
 
-                showsText = true;
+                    showsText = true;
+                }
+                else if (showsText)
+                {
+                    pickUpText.text = "";
+                }
+
+
             }
-            else if (showsText)
-            {
-                Text.text = "";
+
+
+            if (_inventoryText != null)
+            {          
+                String fullText = "";
+                for (int i = 0; i < inventory.Items.Count; i++)
+                {
+                    fullText += getItem(i);
+                }
+
+
+                _inventoryText.text = fullText;
+
             }
-
-
-            String fullText = "";
-            for (int i = 0; i < Inventary.Items.Count; i++)
-            {
-                fullText += getItem(i);
-            }
-
-
-            InventaryText.text = fullText;
-
-
-
 
 
 
@@ -57,7 +83,7 @@ namespace Assets.Scripts.Weapon_Inventary
         protected String getItem(int index)
         {
             String text = " [";
-            if (index == Inventary.index)
+            if (index == inventory.Index)
             {
                 text += "->";
             }
@@ -66,7 +92,7 @@ namespace Assets.Scripts.Weapon_Inventary
                 text += "  ";
 
             }
-            InventoryItem inventaryItem = Inventary.Items[index];
+            InventoryItem inventaryItem = inventory.Items[index];
             if (inventaryItem == null)
             {
                 text += "      ";
@@ -78,7 +104,7 @@ namespace Assets.Scripts.Weapon_Inventary
             }
 
 
-            if (index == Inventary.index)
+            if (index == inventory.Index)
             {
                 text += "<-";
             }

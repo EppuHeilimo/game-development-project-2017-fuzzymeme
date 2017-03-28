@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour {
     public Vector3 player;
     private Camera main_camera;
     public int speed = 5;
+    private PlayerAnimation animation;
 
     Vector3 previous;
     float playerVelocity;
@@ -19,7 +20,7 @@ public class PlayerMovement : MonoBehaviour {
     void Start () {
         main_camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         inventory = GetComponent<Inventory>();
-
+        animation = GetComponent<PlayerAnimation>();
 
     }
 	
@@ -75,6 +76,10 @@ public class PlayerMovement : MonoBehaviour {
         Vector3 direction = new Vector3(0, 0, 0);
         direction.z = Input.GetAxisRaw("Vertical");
         direction.x = Input.GetAxisRaw("Horizontal");
+        //animation stuff
+        animation.inputHorizontal = direction.x;
+        animation.inputVertical = direction.z;
+
         direction.Normalize(); // normalize for the diretion -1 - 1.
         
         transform.Translate(direction.x * speed * Time.deltaTime, 0, direction.z * speed * Time.deltaTime, Space.World); // our WASD controls is related to the WORLD, not the players axis.

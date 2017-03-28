@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
+
+
     public Transform playerTransform;
     private Transform LockedTo;
-    private Vector3 offset;
 
+    
     private bool translating = false;
     private float translationSpeed = 35f;
 
@@ -18,31 +20,32 @@ public class CameraMovement : MonoBehaviour
 	void Start ()
 	{
 	    playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-	    offset = Vector3.zero;
 	    LockedTo = playerTransform;
 	    transform.position = LockedTo.position;
+        
 	}
 	
 	// Update is called once per frame
 	void LateUpdate ()
 	{
-        if(!translating && !playerTeleported)
-	        transform.position = LockedTo.position + offset;
-        else if(translating)
-        {
-            MoveTowardsTransform(translationSpeed * Time.deltaTime);
-            if (Vector3.Distance(transform.position, LockedTo.position) < 0.3f)
-            {
-                translating = false;
-            }
-        }
-        else if (playerTeleported)
-        {
-            TeleportToTransform(targetEntryPoint.cameraTarget);
-            translating = true;
-            playerTeleported = false;
-            LockedTo = playerTransform;
-        }
+	    if (!translating && !playerTeleported)
+	        transform.position = LockedTo.position;
+	    else if (translating)
+	    {
+	        MoveTowardsTransform(translationSpeed*Time.deltaTime);
+	        if (Vector3.Distance(transform.position, LockedTo.position) < 0.3f)
+	        {
+	            translating = false;
+	        }
+	    }
+	    else if (playerTeleported)
+	    {
+	        TeleportToTransform(targetEntryPoint.cameraTarget);
+	        translating = true;
+	        playerTeleported = false;
+	        LockedTo = playerTransform;
+	    }
+
 	}
 
     public void ToEntryPoint(Transform t1, EntryPoint targetEntrypoint)

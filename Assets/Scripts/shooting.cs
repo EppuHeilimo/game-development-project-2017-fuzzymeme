@@ -10,9 +10,14 @@ public class Shooting : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if(Input.GetKey(KeyCode.Mouse0))
+        if (Input.GetKey(KeyCode.Mouse0))
         {
             GetComponent<Inventory>().Use();  
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            
+            GetComponent<PlayerAnimation>().AnimateSlash();
         }
     }
 }

@@ -70,13 +70,6 @@ public class EntryPoint : MonoBehaviour
                 break;
         }
 
-        /*
-        Vector2 north = new Vector2(center.x, center.y + localCenter.y);
-        Vector2 east = new Vector2(center.x + localCenter.y, center.y);
-        Vector2 south = new Vector2(center.x, center.y - localCenter.y);
-        Vector2 west = new Vector2(center.x - localCenter.x, center.y);
-        */
-
     }
 
     void FindParentTerrain()

@@ -39,11 +39,10 @@ namespace Assets.Scripts.Weapon_Inventary
             {
                 if (Time.time - InitTimer > InitTime)
                 {
-                    Debug.Log(target.name);
                     Collision(collision);
                 }
             }
-            else if(collision.CompareTag("Bullet") || (collision.CompareTag("Enemy") && shooter.CompareTag("Enemy")))
+            else if(collision.CompareTag("isHit") || (collision.CompareTag("Enemy") && shooter.CompareTag("Enemy")))
             {
                 // do nothing
             }

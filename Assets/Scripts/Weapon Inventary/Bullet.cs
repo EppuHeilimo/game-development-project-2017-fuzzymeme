@@ -34,22 +34,29 @@ namespace Assets.Scripts.Weapon_Inventary
         void OnTriggerEnter(Collider collision)
         {
             GameObject target = collision.gameObject;
-            
-            if (shooter.CompareTag("Player") && target == shooter)
+            if (shooter != null)
             {
-                if (Time.time - InitTimer > InitTime)
+                if (shooter.CompareTag("Player") && target == shooter)
+                {
+                    if (Time.time - InitTimer > InitTime)
+                    {
+                        Collision(collision);
+                    }
+                }
+                else if (collision.CompareTag("isHit") || (collision.CompareTag("Enemy") && shooter.CompareTag("Enemy")))
+                {
+                    // do nothing
+                }
+                else
                 {
                     Collision(collision);
                 }
-            }
-            else if(collision.CompareTag("isHit") || (collision.CompareTag("Enemy") && shooter.CompareTag("Enemy")))
-            {
-                // do nothing
             }
             else
             {
                 Collision(collision);
             }
+
         }
 
         void Collision(Collider collision)

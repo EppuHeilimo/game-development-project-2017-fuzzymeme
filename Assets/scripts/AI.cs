@@ -25,6 +25,10 @@ public class AI : MonoBehaviour
     private float obstructionTimer = 0f;
     private float idleTimer = 0f;
     private Weapon weapon;
+
+    private bool moving;
+
+    private TeddyAnimation anim;
     enum AIState
     {
         Idle,
@@ -35,17 +39,29 @@ public class AI : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+	    anim = GetComponent<TeddyAnimation>();
 	    agent = GetComponent<NavMeshAgent>();
 	    player = GameObject.FindGameObjectWithTag("Player").transform;
         state = AIState.Idle;
         playerDistance = Vector3.Distance(transform.position, player.position);
         playerDirection = (transform.position - player.position) / playerDistance;
         weapon = GetComponent<Weapon>();
-    }
+	    shootdistance = weapon.BulletPrefab.GetComponent<Bullet>().Distance;
+	}
 	
 	// Update is called once per frame
-	void Update () {
-	    switch (state)
+	void Update ()
+	{
+	    if (agent.hasPath)
+	    {
+            moving = true;
+        }
+	    else
+	    {
+            moving = false;
+        }
+	    
+        switch (state)
 	    {
 	        case AIState.Idle:
                 Idle();
@@ -55,6 +71,7 @@ public class AI : MonoBehaviour
                 Attack();
             break;
 	    }
+	    anim.moving = moving;
 	}
 
 
@@ -104,7 +121,6 @@ public class AI : MonoBehaviour
             idleTimer = 0;
             agent.SetDestination(RndPointInArea(5f, NavMesh.AllAreas));
         }
-
     }
 
     Vector3 RndPointInArea(float walkradius, int areaindex)
@@ -126,15 +142,15 @@ public class AI : MonoBehaviour
 
     void Attack()
     {
-        weapon.Use();
+        
         transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
         if (obstructed)
         {
+            moving = true;
             obstructionTimer += Time.deltaTime;
             if (obstructionTimer > obstructionHandlingTime)
             {
                 obstructionCleared();
-                
             }
             else
             {
@@ -146,10 +162,11 @@ public class AI : MonoBehaviour
             
             float step = speed * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, player.position, step);
+            moving = true;
         }
-        if(shootdistance < playerDistance)
+        if(shootdistance > playerDistance)
         {
-            
+            weapon.Use();
         }
  
     }

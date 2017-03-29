@@ -1,0 +1,344 @@
+fileFormatVersion: 2
+guid: d38e25c78ce37444c9f6f8445f84afee
+timeCreated: 1490809486
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Armature
+    100002: ArmIK.L
+    100004: ArmIK.L.001
+    100006: ArmIK.L.001_end
+    100008: ArmIK.L_end
+    100010: ArmIK.R
+    100012: ArmIK.R_end
+    100014: Head
+    100016: Head_end
+    100018: Leg.L
+    100020: Leg.L_end
+    100022: Leg.R
+    100024: Leg.R_end
+    100026: LowerArm.L
+    100028: LowerArm.R
+    100030: LowerArm.R_end
+    100032: LowerTorso
+    100034: //RootNode
+    100036: teddysculp
+    100038: UpperArm.L
+    100040: UpperArm.R
+    100042: UpperTorso
+    400000: Armature
+    400002: ArmIK.L
+    400004: ArmIK.L.001
+    400006: ArmIK.L.001_end
+    400008: ArmIK.L_end
+    400010: ArmIK.R
+    400012: ArmIK.R_end
+    400014: Head
+    400016: Head_end
+    400018: Leg.L
+    400020: Leg.L_end
+    400022: Leg.R
+    400024: Leg.R_end
+    400026: LowerArm.L
+    400028: LowerArm.R
+    400030: LowerArm.R_end
+    400032: LowerTorso
+    400034: //RootNode
+    400036: teddysculp
+    400038: UpperArm.L
+    400040: UpperArm.R
+    400042: UpperTorso
+    4300000: teddysculp
+    7400000: TwoHandedHold
+    7400002: TwoHandedHold.001
+    7400004: Armature|Run
+    7400006: RunForward
+    7400008: TwoHandedHold
+    7400010: Idle
+    9500000: //RootNode
+    13700000: teddysculp
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: RunForward
+      takeName: Armature|RunForward
+      firstFrame: 0
+      lastFrame: 62
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/ArmIK.L
+        weight: 1
+      - path: Armature/ArmIK.L/ArmIK.L_end
+        weight: 1
+      - path: Armature/ArmIK.R
+        weight: 1
+      - path: Armature/ArmIK.R/ArmIK.R_end
+        weight: 1
+      - path: Armature/LowerTorso
+        weight: 1
+      - path: Armature/LowerTorso/Leg.L
+        weight: 1
+      - path: Armature/LowerTorso/Leg.L/Leg.L_end
+        weight: 1
+      - path: Armature/LowerTorso/Leg.R
+        weight: 1
+      - path: Armature/LowerTorso/Leg.R/Leg.R_end
+        weight: 1
+      - path: Armature/LowerTorso/UpperTorso
+        weight: 1
+      - path: Armature/LowerTorso/UpperTorso/Head
+        weight: 1
+      - path: Armature/LowerTorso/UpperTorso/Head/Head_end
+        weight: 1
+      - path: Armature/LowerTorso/UpperTorso/UpperArm.L
+        weight: 1
+      - path: Armature/LowerTorso/UpperTorso/UpperArm.L/LowerArm.L
+        weight: 1
+      - path: Armature/LowerTorso/UpperTorso/UpperArm.L/LowerArm.L/ArmIK.L.001
+        weight: 1
+      - path: Armature/LowerTorso/UpperTorso/UpperArm.L/LowerArm.L/ArmIK.L.001/ArmIK.L.001_end
+        weight: 1
+      - path: Armature/LowerTorso/UpperTorso/UpperArm.R
+        weight: 1
+      - path: Armature/LowerTorso/UpperTorso/UpperArm.R/LowerArm.R
+        weight: 1
+      - path: Armature/LowerTorso/UpperTorso/UpperArm.R/LowerArm.R/LowerArm.R_end
+        weight: 1
+      - path: teddysculp
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: TwoHandedHold
+      takeName: Armature|TwoHandedHold
+      firstFrame: 0
+      lastFrame: 62
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/ArmIK.L
+        weight: 1
+      - path: Armature/ArmIK.L/ArmIK.L_end
+        weight: 1
+      - path: Armature/ArmIK.R
+        weight: 1
+      - path: Armature/ArmIK.R/ArmIK.R_end
+        weight: 1
+      - path: Armature/LowerTorso
+        weight: 1
+      - path: Armature/LowerTorso/Leg.L
+        weight: 1
+      - path: Armature/LowerTorso/Leg.L/Leg.L_end
+        weight: 1
+      - path: Armature/LowerTorso/Leg.R
+        weight: 1
+      - path: Armature/LowerTorso/Leg.R/Leg.R_end
+        weight: 1
+      - path: Armature/LowerTorso/UpperTorso
+        weight: 1
+      - path: Armature/LowerTorso/UpperTorso/Head
+        weight: 1
+      - path: Armature/LowerTorso/UpperTorso/Head/Head_end
+        weight: 1
+      - path: Armature/LowerTorso/UpperTorso/UpperArm.L
+        weight: 1
+      - path: Armature/LowerTorso/UpperTorso/UpperArm.L/LowerArm.L
+        weight: 1
+      - path: Armature/LowerTorso/UpperTorso/UpperArm.L/LowerArm.L/ArmIK.L.001
+        weight: 1
+      - path: Armature/LowerTorso/UpperTorso/UpperArm.L/LowerArm.L/ArmIK.L.001/ArmIK.L.001_end
+        weight: 1
+      - path: Armature/LowerTorso/UpperTorso/UpperArm.R
+        weight: 1
+      - path: Armature/LowerTorso/UpperTorso/UpperArm.R/LowerArm.R
+        weight: 1
+      - path: Armature/LowerTorso/UpperTorso/UpperArm.R/LowerArm.R/LowerArm.R_end
+        weight: 1
+      - path: teddysculp
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Idle
+      takeName: Armature|Idle
+      firstFrame: 0
+      lastFrame: 62
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/ArmIK.L
+        weight: 1
+      - path: Armature/ArmIK.L/ArmIK.L_end
+        weight: 1
+      - path: Armature/ArmIK.R
+        weight: 1
+      - path: Armature/ArmIK.R/ArmIK.R_end
+        weight: 1
+      - path: Armature/LowerTorso
+        weight: 1
+      - path: Armature/LowerTorso/Leg.L
+        weight: 1
+      - path: Armature/LowerTorso/Leg.L/Leg.L_end
+        weight: 1
+      - path: Armature/LowerTorso/Leg.R
+        weight: 1
+      - path: Armature/LowerTorso/Leg.R/Leg.R_end
+        weight: 1
+      - path: Armature/LowerTorso/UpperTorso
+        weight: 1
+      - path: Armature/LowerTorso/UpperTorso/Head
+        weight: 1
+      - path: Armature/LowerTorso/UpperTorso/Head/Head_end
+        weight: 1
+      - path: Armature/LowerTorso/UpperTorso/UpperArm.L
+        weight: 1
+      - path: Armature/LowerTorso/UpperTorso/UpperArm.L/LowerArm.L
+        weight: 1
+      - path: Armature/LowerTorso/UpperTorso/UpperArm.L/LowerArm.L/ArmIK.L.001
+        weight: 1
+      - path: Armature/LowerTorso/UpperTorso/UpperArm.L/LowerArm.L/ArmIK.L.001/ArmIK.L.001_end
+        weight: 1
+      - path: Armature/LowerTorso/UpperTorso/UpperArm.R
+        weight: 1
+      - path: Armature/LowerTorso/UpperTorso/UpperArm.R/LowerArm.R
+        weight: 1
+      - path: Armature/LowerTorso/UpperTorso/UpperArm.R/LowerArm.R/LowerArm.R_end
+        weight: 1
+      - path: teddysculp
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -49,14 +49,25 @@ namespace Assets.Scripts.Interface
         public virtual void Drop()
         {
 
-            GameObject pickupItemObject = new GameObject();
-            pickupItemObject.transform.position = new Vector3(transform.position.x,0.5f,transform.position.z);
-            pickupItemObject.transform.rotation = transform.rotation;
-            //pickupItemObject.transform.localScale=new Vector3(0.5f,0.5f,0.5f);
+            //GameObject pickupItemObject = new GameObject();
+            //pickupItemObject.transform.position = new Vector3(transform.position.x,0.5f,transform.position.z);
+            //pickupItemObject.transform.rotation = transform.rotation;
+            ////pickupItemObject.transform.localScale=new Vector3(0.5f,0.5f,0.5f);
 
-            InventoryItemHolder itemHolder = pickupItemObject.AddComponent<InventoryItemHolder>();
-            InventoryItem inventoryItem = CreateCopy(pickupItemObject);
-            itemHolder.SetInventoryItem(inventoryItem);
+            //InventoryItemHolder itemHolder = pickupItemObject.AddComponent<InventoryItemHolder>();
+            //InventoryItem inventoryItem = CreateCopy(pickupItemObject);
+            //itemHolder.SetInventoryItem(inventoryItem);
+
+
+            DropHelper.DropItem(GetType(),transform, item =>
+            {
+                item.InventaryItemName = InventaryItemName;
+                item.PickUpPrefab = PickUpPrefab;
+                item.InventaryItemName = InventaryItemName;
+                item.PickUpPrefab = PickUpPrefab;
+                OnCreateCopy(item);
+            });
+
            
         }
 

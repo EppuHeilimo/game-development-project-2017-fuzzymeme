@@ -20,13 +20,21 @@ namespace Assets.Scripts.Weapon_Inventary
 
         private Image item3Image;
         private Image item4Image;
-        int lastIndex = -1;
+        private InventoryItem lastInventoryItem = null;
         private Sprite notSelectedSprite;
         private Sprite SelectedSprite;
         private Text selectedWeaponText;
         private Image refillImage;
         private float height;
 
+        private Text item1Text;
+        private Text item2Text;
+        private Text item3Text;
+        private Text item4Text;
+        private int last1Amount = -2;
+        private int last2Amount = -2;
+        private int last3Amount = -2;
+        private int last4Amount = -2;
 
         public void Start()
         {
@@ -53,30 +61,7 @@ namespace Assets.Scripts.Weapon_Inventary
         //public void Update()
         //{
 
-        //    if (pickUpText != null)
-        //    {
-        //        bool notNullInventary = _inventoryText != null;
-        //        bool selectedItem = inventory.SelectedPickUpAround != null;
-        //        bool dataToShow = selectedItem && notNullInventary;
-        //        if (dataToShow)
-        //        {
-
-
-
-        //            pickUpText.text = "[" + (inventory.SelectedPickUpArroundIndex + 1) + ":" +
-        //                        inventory.PickUpsAround.Count + "]  " + inventory.SelectedPickUpAround.InventaryItemName;
-
-
-
-        //            showsText = true;
-        //        }
-        //        else if (showsText)
-        //        {
-        //            pickUpText.text = "";
-        //        }
-
-
-        //    }
+        //   
 
 
         //    if (_inventoryText != null)
@@ -105,6 +90,15 @@ namespace Assets.Scripts.Weapon_Inventary
             item2Image = GameObject.Find("Inventory/LeftSide/Item2").GetComponent<Image>();
             item3Image = GameObject.Find("Inventory/LeftSide/Item3").GetComponent<Image>();
             item4Image = GameObject.Find("Inventory/LeftSide/Item4").GetComponent<Image>();
+
+          
+            item1Text = GameObject.Find("Inventory/LeftSide/Item1/Text").GetComponent<Text>();
+           
+            item2Text = GameObject.Find("Inventory/LeftSide/Item2/Text").GetComponent<Text>();
+    
+            item3Text = GameObject.Find("Inventory/LeftSide/Item3/Text").GetComponent<Text>();
+         
+            item4Text = GameObject.Find("Inventory/LeftSide/Item4/Text").GetComponent<Text>();
             Resources.Load<Sprite>("awesome");
             notSelectedSprite = Resources.Load<Sprite>("item_border");
             SelectedSprite = Resources.Load<Sprite>("selected_item_border");
@@ -118,17 +112,38 @@ namespace Assets.Scripts.Weapon_Inventary
         {
 
             UpdateSelectedItem();
-
-
-
-
-
-        }
-
-        public void FixedUpdate()
-        {
             UpdateReloadBar();
+            UpdateUseAmount();
+
+            if (pickUpText != null)
+            {
+                bool notNullInventary = pickUpText != null;
+                bool selectedItem = inventory.SelectedPickUpAround != null;
+                bool dataToShow = selectedItem && notNullInventary;
+                if (dataToShow)
+                {
+
+
+
+                    pickUpText.text = "[" + (inventory.SelectedPickUpArroundIndex + 1) + ":" +
+                                inventory.PickUpsAround.Count + "]  " + inventory.SelectedPickUpAround.InventaryItemName;
+
+
+
+                    showsText = true;
+                }
+                else if (showsText)
+                {
+                    pickUpText.text = "";
+                }
+
+
+            }
+
+
         }
+
+
 
         private bool is100 = false;
         private void UpdateReloadBar()
@@ -156,16 +171,107 @@ namespace Assets.Scripts.Weapon_Inventary
             refillImage.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, heightint);
         }
 
+        private void UpdateUseAmount()
+        {
+
+
+            InventoryItem item = inventory.Items[0];
+            int lastTemp = last1Amount;
+            UpdateUseAmount(item, ref lastTemp);
+            if (lastTemp != last1Amount)
+            {
+                last1Amount = lastTemp;
+
+                ChangeText(item1Text, lastTemp);
+            }
+
+          
+
+            item = inventory.Items[1];
+            lastTemp = last2Amount;
+            UpdateUseAmount(item, ref lastTemp);
+            if (lastTemp != last2Amount)
+            {
+                last2Amount = lastTemp;
+                ChangeText(item2Text, lastTemp);
+
+
+            }
+
+             item = inventory.Items[2];
+             lastTemp = last3Amount;
+            UpdateUseAmount(item, ref lastTemp);
+            if (lastTemp != last3Amount)
+            {
+                last3Amount = lastTemp;
+                ChangeText(item3Text, lastTemp);
+
+            }
+
+            item = inventory.Items[3];
+            lastTemp = last4Amount;
+            UpdateUseAmount(item, ref lastTemp);
+            if (lastTemp != last4Amount)
+            {
+                last4Amount = lastTemp;
+                ChangeText(item4Text, lastTemp);
+
+            }
+
+        }
+
+        private void ChangeText(Text textComponent, int i)
+        {
+
+            String text;
+            if (i == -2)
+            {
+                text = "";
+            }
+            else if (i == -1)
+            {
+                text = "∞";
+                textComponent.fontSize = 30;
+            }
+            else
+            {
+                text = i + "";
+                textComponent.fontSize = 15;
+
+            }
+            textComponent.text = text;
+        }
+
+       
+
+        private void UpdateUseAmount(InventoryItem item, ref int lastAmount)
+        {
+            if (item == null)
+            {
+                if (lastAmount != -2)
+                {
+
+                    last1Amount = -2;
+                }
+               
+            }else if (item.UseAbleAmount != lastAmount)
+            {
+
+                lastAmount = item.UseAbleAmount;
+            }
+        }
+    
+
         private void UpdateSelectedItem()
         {
-            int index = inventory.Index;
-            if (index != lastIndex)
+            InventoryItem item = inventory.Items[inventory.Index];
+            if (item != lastInventoryItem)
             {
                 item1Image.sprite = notSelectedSprite;
                 item2Image.sprite = notSelectedSprite;
                 item3Image.sprite = notSelectedSprite;
                 item4Image.sprite = notSelectedSprite;
-
+                int index = inventory.Index;
                 if (index == 0)
                 {
                     item1Image.sprite = SelectedSprite;
@@ -191,10 +297,9 @@ namespace Assets.Scripts.Weapon_Inventary
                     throw new RuntimeException("Unsupported index");
                 }
 
-                InventoryItem inventoryItem = inventory.Items[index];
-                selectedWeaponText.text = inventoryItem.InventaryItemName + " | A:" + " | " + " | D:";
+                selectedWeaponText.text = item.InventaryItemName + " | A:" + " | " + " | D:";
 
-                lastIndex = index;
+                lastInventoryItem = item;
             }
         }
 

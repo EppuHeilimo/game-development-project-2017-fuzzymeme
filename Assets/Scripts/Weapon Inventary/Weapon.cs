@@ -97,7 +97,11 @@ namespace Assets.Scripts.Weapon_Inventary
             BulletSpawnPosition.position,
             BulletSpawnPosition.rotation);
             Bullet component = bullet.GetComponent<Bullet>();
-            Ammunition--;
+            if (Ammunition != -1)
+            {
+                Ammunition--;
+            }
+          
             _lastShootTime = Time.time;
             component.shooter = gameObject;
 

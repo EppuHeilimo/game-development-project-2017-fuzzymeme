@@ -27,6 +27,14 @@ namespace Assets.Scripts.Weapon_Inventary
         private Image refillImage;
         private float height;
 
+        private Text item1Text;
+        private Text item2Text;
+        private Text item3Text;
+        private Text item4Text;
+        private int last1Amount = -2;
+        private int last2Amount = -2;
+        private int last3Amount = -2;
+        private int last4Amount = -2;
 
         public void Start()
         {
@@ -105,6 +113,15 @@ namespace Assets.Scripts.Weapon_Inventary
             item2Image = GameObject.Find("Inventory/LeftSide/Item2").GetComponent<Image>();
             item3Image = GameObject.Find("Inventory/LeftSide/Item3").GetComponent<Image>();
             item4Image = GameObject.Find("Inventory/LeftSide/Item4").GetComponent<Image>();
+
+          
+            item1Text = GameObject.Find("Inventory/LeftSide/Item1/Text").GetComponent<Text>();
+           
+            item2Text = GameObject.Find("Inventory/LeftSide/Item2/Text").GetComponent<Text>();
+    
+            item3Text = GameObject.Find("Inventory/LeftSide/Item3/Text").GetComponent<Text>();
+         
+            item4Text = GameObject.Find("Inventory/LeftSide/Item4/Text").GetComponent<Text>();
             Resources.Load<Sprite>("awesome");
             notSelectedSprite = Resources.Load<Sprite>("item_border");
             SelectedSprite = Resources.Load<Sprite>("selected_item_border");
@@ -118,17 +135,15 @@ namespace Assets.Scripts.Weapon_Inventary
         {
 
             UpdateSelectedItem();
-
-
-
-
-
-        }
-
-        public void FixedUpdate()
-        {
             UpdateReloadBar();
+            UpdateUseAmount();
+
+
+
+
         }
+
+        
 
         private bool is100 = false;
         private void UpdateReloadBar()
@@ -155,6 +170,97 @@ namespace Assets.Scripts.Weapon_Inventary
             float heightint =(float)( height* percentage);
             refillImage.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, heightint);
         }
+
+        private void UpdateUseAmount()
+        {
+
+
+            InventoryItem item = inventory.Items[0];
+            int lastTemp = last1Amount;
+            UpdateUseAmount(item, ref lastTemp);
+            if (lastTemp != last1Amount)
+            {
+                last1Amount = lastTemp;
+
+                ChangeText(item1Text, lastTemp);
+            }
+
+          
+
+            item = inventory.Items[1];
+            lastTemp = last2Amount;
+            UpdateUseAmount(item, ref lastTemp);
+            if (lastTemp != last2Amount)
+            {
+                last2Amount = lastTemp;
+                ChangeText(item2Text, lastTemp);
+
+
+            }
+
+             item = inventory.Items[2];
+             lastTemp = last3Amount;
+            UpdateUseAmount(item, ref lastTemp);
+            if (lastTemp != last3Amount)
+            {
+                last3Amount = lastTemp;
+                ChangeText(item3Text, lastTemp);
+
+            }
+
+            item = inventory.Items[3];
+            lastTemp = last4Amount;
+            UpdateUseAmount(item, ref lastTemp);
+            if (lastTemp != last4Amount)
+            {
+                last4Amount = lastTemp;
+                ChangeText(item4Text, lastTemp);
+
+            }
+
+        }
+
+        private void ChangeText(Text textComponent, int i)
+        {
+
+            String text;
+            if (i == -2)
+            {
+                text = "";
+            }
+            else if (i == -1)
+            {
+                text = "∞";
+                textComponent.fontSize = 30;
+            }
+            else
+            {
+                text = i + "";
+                textComponent.fontSize = 15;
+
+            }
+            textComponent.text = text;
+        }
+
+       
+
+        private void UpdateUseAmount(InventoryItem item, ref int lastAmount)
+        {
+            if (item == null)
+            {
+                if (lastAmount != -2)
+                {
+
+                    last1Amount = -2;
+                }
+               
+            }else if (item.UseAbleAmount != lastAmount)
+            {
+
+                lastAmount = item.UseAbleAmount;
+            }
+        }
+    
 
         private void UpdateSelectedItem()
         {

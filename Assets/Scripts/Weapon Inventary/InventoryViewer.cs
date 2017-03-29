@@ -20,7 +20,7 @@ namespace Assets.Scripts.Weapon_Inventary
 
         private Image item3Image;
         private Image item4Image;
-        int lastIndex = -1;
+        private InventoryItem lastInventoryItem = null;
         private Sprite notSelectedSprite;
         private Sprite SelectedSprite;
         private Text selectedWeaponText;
@@ -61,30 +61,7 @@ namespace Assets.Scripts.Weapon_Inventary
         //public void Update()
         //{
 
-        //    if (pickUpText != null)
-        //    {
-        //        bool notNullInventary = _inventoryText != null;
-        //        bool selectedItem = inventory.SelectedPickUpAround != null;
-        //        bool dataToShow = selectedItem && notNullInventary;
-        //        if (dataToShow)
-        //        {
-
-
-
-        //            pickUpText.text = "[" + (inventory.SelectedPickUpArroundIndex + 1) + ":" +
-        //                        inventory.PickUpsAround.Count + "]  " + inventory.SelectedPickUpAround.InventaryItemName;
-
-
-
-        //            showsText = true;
-        //        }
-        //        else if (showsText)
-        //        {
-        //            pickUpText.text = "";
-        //        }
-
-
-        //    }
+        //   
 
 
         //    if (_inventoryText != null)
@@ -138,12 +115,35 @@ namespace Assets.Scripts.Weapon_Inventary
             UpdateReloadBar();
             UpdateUseAmount();
 
+            if (pickUpText != null)
+            {
+                bool notNullInventary = pickUpText != null;
+                bool selectedItem = inventory.SelectedPickUpAround != null;
+                bool dataToShow = selectedItem && notNullInventary;
+                if (dataToShow)
+                {
 
+
+
+                    pickUpText.text = "[" + (inventory.SelectedPickUpArroundIndex + 1) + ":" +
+                                inventory.PickUpsAround.Count + "]  " + inventory.SelectedPickUpAround.InventaryItemName;
+
+
+
+                    showsText = true;
+                }
+                else if (showsText)
+                {
+                    pickUpText.text = "";
+                }
+
+
+            }
 
 
         }
 
-        
+
 
         private bool is100 = false;
         private void UpdateReloadBar()
@@ -264,14 +264,14 @@ namespace Assets.Scripts.Weapon_Inventary
 
         private void UpdateSelectedItem()
         {
-            int index = inventory.Index;
-            if (index != lastIndex)
+            InventoryItem item = inventory.Items[inventory.Index];
+            if (item != lastInventoryItem)
             {
                 item1Image.sprite = notSelectedSprite;
                 item2Image.sprite = notSelectedSprite;
                 item3Image.sprite = notSelectedSprite;
                 item4Image.sprite = notSelectedSprite;
-
+                int index = inventory.Index;
                 if (index == 0)
                 {
                     item1Image.sprite = SelectedSprite;
@@ -297,10 +297,9 @@ namespace Assets.Scripts.Weapon_Inventary
                     throw new RuntimeException("Unsupported index");
                 }
 
-                InventoryItem inventoryItem = inventory.Items[index];
-                selectedWeaponText.text = inventoryItem.InventaryItemName + " | A:" + " | " + " | D:";
+                selectedWeaponText.text = item.InventaryItemName + " | A:" + " | " + " | D:";
 
-                lastIndex = index;
+                lastInventoryItem = item;
             }
         }
 

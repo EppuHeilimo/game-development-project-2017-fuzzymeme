@@ -35,7 +35,7 @@ namespace Assets.Scripts
             }
             
             boxCollider.center = new Vector3(0,1,0);
-            boxCollider.size = new Vector3(2,2,2);
+            boxCollider.size = new Vector3(3,3,3);
             boxCollider.isTrigger = true;
 
             
@@ -73,8 +73,9 @@ namespace Assets.Scripts
 
                     gameObject.GetComponent<MeshRenderer>().material =
                         pickUpPrefab.GetComponent<MeshRenderer>().sharedMaterial;
-                    transform.localScale = inventoryItem.transform.localScale;
-               
+                    transform.localScale = pickUpPrefab.transform.localScale;
+                    transform.rotation = pickUpPrefab.transform.rotation;
+
             }
         }
     }

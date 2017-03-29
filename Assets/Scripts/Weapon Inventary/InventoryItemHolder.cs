@@ -66,7 +66,6 @@ namespace Assets.Scripts
                 
                     GameObject pickUpPrefab = inventoryItem.PickUpPrefab;
 
-                    
 
                     Mesh sharedMesh = pickUpPrefab.GetComponent<MeshFilter>().sharedMesh;
                     gameObject.GetComponent<MeshFilter>().sharedMesh = sharedMesh;

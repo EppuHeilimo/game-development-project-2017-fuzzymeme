@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Interface;
+﻿using Assets.Script;
+using Assets.Scripts.Interface;
 using UnityEngine;
 
 namespace Assets.Scripts.Weapon_Inventary
@@ -11,6 +12,8 @@ namespace Assets.Scripts.Weapon_Inventary
         public GameObject BulletPrefab;
         private float _lastShootTime;
 
+        public PlayerAnimation.WeaponType holdingType;
+        private GameObject weaponHolder;
         private Transform _bulletSpawnPosition;
         public Transform BulletSpawnPosition
         {
@@ -22,10 +25,7 @@ namespace Assets.Scripts.Weapon_Inventary
 
                     _bulletSpawnPosition = transform;
                 }
-
-
                 return _bulletSpawnPosition;
-
             }
         }
 
@@ -33,9 +33,18 @@ namespace Assets.Scripts.Weapon_Inventary
 
         void Start()
         {
-            if(_bulletSpawnPosition == null)
+            if (transform.CompareTag("Player"))
             {
-                _bulletSpawnPosition = transform.FindChild("AttackSpawnPoint");
+                weaponHolder = transform.FindDeepChild("WeaponHolder").gameObject;
+                Inventory inv = GetComponent<Inventory>();
+                weaponHolder.GetComponent<MeshFilter>().sharedMesh = inv.Items[inv.Index].PickUpPrefab.GetComponent<MeshFilter>().sharedMesh;
+                weaponHolder.GetComponent<MeshRenderer>().sharedMaterial = inv.Items[inv.Index].PickUpPrefab.GetComponent<MeshRenderer>().sharedMaterial;
+                GetComponent<PlayerAnimation>().wepType = holdingType;
+            }
+
+            if (_bulletSpawnPosition == null)
+            {
+                _bulletSpawnPosition = transform.FindDeepChild("AttackSpawnPoint");
             }
         }
 
@@ -90,12 +99,15 @@ namespace Assets.Scripts.Weapon_Inventary
                 return;
 
             }
-
+            if (transform.CompareTag("Player") && holdingType == PlayerAnimation.WeaponType.Melee) 
+            {
+                GetComponent<PlayerAnimation>().AnimateSlash();
+            }
 
             var bullet = (GameObject)Instantiate(
             BulletPrefab,
             BulletSpawnPosition.position,
-            BulletSpawnPosition.rotation);
+            BulletSpawnPosition.root.rotation);
             Bullet component = bullet.GetComponent<Bullet>();
             Ammunition--;
             _lastShootTime = Time.time;
@@ -106,6 +118,9 @@ namespace Assets.Scripts.Weapon_Inventary
         public override void OnBeingSelected()
         {
             _lastShootTime = Time.time;
+            weaponHolder.GetComponent<MeshFilter>().sharedMesh = transform.GetComponent<MeshFilter>().sharedMesh;
+            weaponHolder.GetComponent<MeshRenderer>().sharedMaterial = transform.GetComponent<MeshRenderer>().sharedMaterial;
+            GetComponent<PlayerAnimation>().wepType = holdingType;
         }
         public override void Use()
         {

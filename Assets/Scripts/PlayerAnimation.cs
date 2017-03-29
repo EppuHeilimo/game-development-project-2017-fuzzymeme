@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
 {
-    enum WeaponType
+    public enum WeaponType
     {
         Melee = 0,
         OneHanded,
@@ -14,13 +15,14 @@ public class PlayerAnimation : MonoBehaviour
     public float inputHorizontal = 0;
     public float inputVertical = 0;
     public int quadrant;
-    private WeaponType wepType;
+    public WeaponType wepType;
+    private AnimationClip[] animations;
     
     // Use this for initialization
     void Start ()
 	{
-	    anim = transform.FindChild("girl").GetComponent<Animator>();
-        wepType = WeaponType.TwoHanded;
+        anim = transform.FindChild("girl").GetComponent<Animator>();
+        wepType = WeaponType.Melee;
     }
 	
 	// Update is called once per frame
@@ -49,12 +51,21 @@ public class PlayerAnimation : MonoBehaviour
             anim.SetFloat("Horizontal", -1 * inputVertical);
         }
 
-        anim.SetInteger("Holding", (int)wepType);
+        anim.SetInteger("WeaponType", (int)wepType);
 
     }
 
     public void AnimateSlash()
     {
+        
         anim.Play("Slash", 1);
+    }
+
+    private IEnumerator WaitForAnimation(Animation animation)
+    {
+        do
+        {
+            yield return null;
+        } while (animation.isPlaying);
     }
 }

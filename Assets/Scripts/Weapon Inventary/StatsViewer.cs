@@ -16,9 +16,9 @@ namespace Assets.Scripts.Weapon_Inventary
 
         public void Start()
         {
-            image = GameObject.Find("floatLifeBar/LifeBarEmpty/LifebarFull").GetComponent<Image>();
+            image = GameObject.FindGameObjectWithTag("LifeBar").GetComponent<Image>();
             width=image.rectTransform.rect.width;
-            stats = GetComponent<Stats>();
+            stats = transform.GetComponent<Stats>();
         }
 
         private double lastValue = -1;

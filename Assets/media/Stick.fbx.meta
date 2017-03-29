@@ -1,27 +1,15 @@
 fileFormatVersion: 2
-guid: e9e8e1e59d24f6c449e1a513c6f612f0
-timeCreated: 1490702374
+guid: 12edfb08468e2424d8d7db4ca61c2d80
+timeCreated: 1490780933
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: Armature
-    100002: Bone
-    100004: Bone_end
-    100006: Camera
-    100008: Cylinder
-    100010: Lamp
-    100012: //RootNode
-    400000: Armature
-    400002: Bone
-    400004: Bone_end
-    400006: Camera
-    400008: Cylinder
-    400010: Lamp
-    400012: //RootNode
-    4300000: Cylinder
-    9500000: //RootNode
-    13700000: Cylinder
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Branch
   materials:
     importMaterials: 1
     materialName: 0
@@ -84,7 +72,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

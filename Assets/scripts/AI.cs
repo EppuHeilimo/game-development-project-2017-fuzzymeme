@@ -126,7 +126,7 @@ public class AI : MonoBehaviour
 
     void Attack()
     {
-        
+        weapon.Use();
         transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
         if (obstructed)
         {
@@ -149,7 +149,7 @@ public class AI : MonoBehaviour
         }
         if(shootdistance < playerDistance)
         {
-            weapon.Use();
+            
         }
  
     }
@@ -158,7 +158,7 @@ public class AI : MonoBehaviour
     {   
         if (state == AIState.Attack)
         {
-            if (!collision.transform.CompareTag("Player"))
+            if (!collision.transform.CompareTag("Player") && !collision.transform.CompareTag("IsHit"))
             {
                 obstructed = true;
                 Debug.Log("Obstructed: " + obstructed);

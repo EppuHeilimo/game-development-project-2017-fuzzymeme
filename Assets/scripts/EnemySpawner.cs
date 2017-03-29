@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Assets.Script;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
@@ -38,7 +39,14 @@ public class EnemySpawner : MonoBehaviour
         foreach (Transform t in spawnPoints)
         {
             if (t.CompareTag("EnemySpawnPoint"))
-                Instantiate(EnemyPrefab, t.position, Quaternion.Euler(new Vector3(0.0f, Random.Range(0.0f, 360.0f), 0.0f)));
+            {
+                GameObject go = Instantiate(EnemyPrefab, t.position, Quaternion.Euler(new Vector3(0.0f, Random.Range(0.0f, 360.0f), 0.0f)));
+                float rand = Random.Range(0.5f, 1.0f);
+                
+                go.transform.FindDeepChild("teddysculp").GetComponent<SkinnedMeshRenderer>().material.color = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));
+                go.transform.localScale = new Vector3(rand, rand, rand);
+            }
+                
         }
     }
 }

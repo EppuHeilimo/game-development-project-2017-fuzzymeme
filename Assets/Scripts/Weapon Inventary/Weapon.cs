@@ -122,8 +122,9 @@ namespace Assets.Scripts.Weapon_Inventary
         public override void OnBeingSelected()
         {
             _lastShootTime = Time.time;
-            weaponHolder.GetComponent<MeshFilter>().sharedMesh = transform.GetComponent<MeshFilter>().sharedMesh;
-            weaponHolder.GetComponent<MeshRenderer>().sharedMaterial = transform.GetComponent<MeshRenderer>().sharedMaterial;
+            Inventory inv = GetComponent<Inventory>();
+            weaponHolder.GetComponent<MeshFilter>().mesh = inv.Items[inv.Index].PickUpPrefab.GetComponent<MeshFilter>().sharedMesh;
+            weaponHolder.GetComponent<MeshRenderer>().material = inv.Items[inv.Index].PickUpPrefab.GetComponent<MeshRenderer>().sharedMaterial;
             GetComponent<PlayerAnimation>().wepType = holdingType;
         }
         public override void Use()

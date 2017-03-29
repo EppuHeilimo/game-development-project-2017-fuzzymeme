@@ -51,7 +51,7 @@ public class PlayerAnimation : MonoBehaviour
             anim.SetFloat("Horizontal", -1 * inputVertical);
         }
 
-        anim.SetInteger("WeaponType", (int)wepType);
+        
 
     }
 
@@ -67,5 +67,10 @@ public class PlayerAnimation : MonoBehaviour
         {
             yield return null;
         } while (animation.isPlaying);
+    }
+
+    public void SetWeaponType(WeaponType type)
+    {
+        anim.SetInteger("WeaponType", (int)type);
     }
 }

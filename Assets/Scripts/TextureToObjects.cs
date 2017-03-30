@@ -40,6 +40,10 @@ public class TextureToObjects : MonoBehaviour
         public GameObject prefab;
         public GameObject parent;
 
+        public bool RandomizeScale = false;
+        public bool RandomizeRotation = false;
+        public Vector2 RandomScaleRange = new Vector2(0.0f, 0.4f);
+
         public ColorObject(RGBColor color, GameObject prefab)
         {
             this.color = color;
@@ -56,10 +60,10 @@ public class TextureToObjects : MonoBehaviour
     }
 
     public List<ColorObject> ColorsToObjects;
-
     private GameObject terrain;
     private Vector2 TerrainSize;
 
+    public float tileSize = 2f;
     public Texture2D Texture;
     private byte[] rawTextureData;
 
@@ -73,8 +77,8 @@ public class TextureToObjects : MonoBehaviour
 	{
 	    terrain = GameObject.FindGameObjectWithTag("Area");
 	    trees = terrain.transform.FindChild("Trees").gameObject;
-        TerrainSize.x = terrain.GetComponent<Terrain>().terrainData.size.x / 2;
-        TerrainSize.y = terrain.GetComponent<Terrain>().terrainData.size.z / 2;
+        TerrainSize.x = terrain.GetComponent<Terrain>().terrainData.size.x / tileSize;
+        TerrainSize.y = terrain.GetComponent<Terrain>().terrainData.size.z / tileSize;
 
         TerrainGrid = new Vector3[(int)TerrainSize.x, (int)TerrainSize.y];
 
@@ -85,8 +89,8 @@ public class TextureToObjects : MonoBehaviour
 	    {
 	        for (int j = 0; j < TerrainSize.y; j++)
 	        {
-	            TerrainGrid[i, j].x = i * 1.75f;
-                TerrainGrid[i, j].z = j * 1.75f;
+	            TerrainGrid[i, j].x = i * tileSize;
+                TerrainGrid[i, j].z = j * tileSize;
             }
 	    }
 	    int count = 0;
@@ -113,6 +117,16 @@ public class TextureToObjects : MonoBehaviour
                     if (rawTextureColor[count].Equals(ctob.color))
                     {
                         GameObject go = Instantiate(ctob.prefab, TerrainGrid[x, y], Quaternion.identity);
+                        if (ctob.RandomizeScale)
+                        {
+                            go.transform.localScale = new Vector3(go.transform.localScale.x + UnityEngine.Random.Range(ctob.RandomScaleRange.x, ctob.RandomScaleRange.y),
+                                 go.transform.localScale.y + UnityEngine.Random.Range(ctob.RandomScaleRange.x, ctob.RandomScaleRange.y),
+                                 go.transform.localScale.z + UnityEngine.Random.Range(ctob.RandomScaleRange.x, ctob.RandomScaleRange.y));
+                        }
+                        if (ctob.RandomizeRotation)
+                        {
+                            go.transform.Rotate(Vector3.up, UnityEngine.Random.Range(0.0f, 360.0f));
+                        }
                         if (ctob.parent != null)
                         {
                             go.transform.parent = trees.transform;

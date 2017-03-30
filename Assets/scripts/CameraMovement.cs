@@ -22,7 +22,6 @@ public class CameraMovement : MonoBehaviour
 	    playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 	    LockedTo = playerTransform;
 	    transform.position = LockedTo.position;
-        
 	}
 	
 	// Update is called once per frame

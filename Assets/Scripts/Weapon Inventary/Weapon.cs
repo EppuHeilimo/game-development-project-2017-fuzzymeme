@@ -125,7 +125,7 @@ namespace Assets.Scripts.Weapon_Inventary
             Inventory inv = GetComponent<Inventory>();
             weaponHolder.GetComponent<MeshFilter>().mesh = inv.Items[inv.Index].PickUpPrefab.GetComponent<MeshFilter>().sharedMesh;
             weaponHolder.GetComponent<MeshRenderer>().material = inv.Items[inv.Index].PickUpPrefab.GetComponent<MeshRenderer>().sharedMaterial;
-            GetComponent<PlayerAnimation>().wepType = holdingType;
+            GetComponent<PlayerAnimation>().SetWeaponType(holdingType);
         }
         public override void Use()
         {
@@ -142,6 +142,7 @@ namespace Assets.Scripts.Weapon_Inventary
             weapon.ReloadTime = ReloadTime;
             weapon._lastShootTime = _lastShootTime;
             weapon.InventaryItemName = InventaryItemName;
+            weapon.holdingType = holdingType;
         }
     }
 

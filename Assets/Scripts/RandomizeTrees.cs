@@ -9,11 +9,11 @@ public class RandomizeTrees : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        scaleRange = new Vector2(0, 0.2f);
+        scaleRange = new Vector2(0, 0.4f);
         transforms = GetComponentsInChildren<Transform>();
         RandomizeRotation();
 	    RandomizeScale();
-        GetComponent<CombineMeshes>().combineMeshes();
+        //GetComponent<CombineMeshes>().combineMeshes();
 	}
 
     void RandomizeRotation()

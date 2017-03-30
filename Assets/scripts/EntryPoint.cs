@@ -101,7 +101,7 @@ public class EntryPoint : MonoBehaviour
         }
     }
 
-    public void init(bool isEntry)
+    public void Init(bool isEntry)
     {
         blockingÓbject.SetActive(!isEntry);
         vine.SetActive(isEntry);

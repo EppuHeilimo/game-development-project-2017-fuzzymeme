@@ -14,10 +14,5 @@ public class Shooting : MonoBehaviour {
         {
             GetComponent<Inventory>().Use();  
         }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            
-            GetComponent<PlayerAnimation>().AnimateSlash();
-        }
     }
 }

@@ -71,6 +71,7 @@ public class PlayerAnimation : MonoBehaviour
 
     public void SetWeaponType(WeaponType type)
     {
+        wepType = type;
         anim.SetInteger("WeaponType", (int)type);
     }
 }

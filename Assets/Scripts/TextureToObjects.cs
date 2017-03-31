@@ -76,7 +76,6 @@ public class TextureToObjects : MonoBehaviour
 	void Start ()
 	{
 	    terrain = GameObject.FindGameObjectWithTag("Area");
-	    trees = terrain.transform.FindChild("Trees").gameObject;
         TerrainSize.x = terrain.GetComponent<Terrain>().terrainData.size.x / tileSize;
         TerrainSize.y = terrain.GetComponent<Terrain>().terrainData.size.z / tileSize;
 
@@ -129,7 +128,7 @@ public class TextureToObjects : MonoBehaviour
                         }
                         if (ctob.parent != null)
                         {
-                            go.transform.parent = trees.transform;
+                            go.transform.parent = ctob.parent.transform;
                         }
                     }
                 }

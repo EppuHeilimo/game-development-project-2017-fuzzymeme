@@ -37,9 +37,12 @@ namespace Assets.Scripts.Weapon_Inventary
             {
                 weaponHolder = transform.FindDeepChild("WeaponHolder").gameObject;
                 Inventory inv = GetComponent<Inventory>();
-                weaponHolder.GetComponent<MeshFilter>().sharedMesh = inv.Items[inv.Index].PickUpPrefab.GetComponent<MeshFilter>().sharedMesh;
-                weaponHolder.GetComponent<MeshRenderer>().sharedMaterial = inv.Items[inv.Index].PickUpPrefab.GetComponent<MeshRenderer>().sharedMaterial;
-                GetComponent<PlayerAnimation>().wepType = holdingType;
+                Transform holderParent = weaponHolder.transform.parent;
+                weaponHolder.transform.SetParent(null);
+                weaponHolder.GetComponent<MeshFilter>().mesh = inv.Items[inv.Index].PickUpPrefab.GetComponent<MeshFilter>().sharedMesh;
+                weaponHolder.GetComponent<MeshRenderer>().material = inv.Items[inv.Index].PickUpPrefab.GetComponent<MeshRenderer>().sharedMaterial;
+                weaponHolder.transform.localScale = new Vector3(1, 1, 1);
+                weaponHolder.transform.parent = holderParent;
             }
 
             if (_bulletSpawnPosition == null)
@@ -123,8 +126,13 @@ namespace Assets.Scripts.Weapon_Inventary
         {
             _lastShootTime = Time.time;
             Inventory inv = GetComponent<Inventory>();
+            Transform holderParent = weaponHolder.transform.parent;
+            weaponHolder.transform.SetParent(null);
             weaponHolder.GetComponent<MeshFilter>().mesh = inv.Items[inv.Index].PickUpPrefab.GetComponent<MeshFilter>().sharedMesh;
             weaponHolder.GetComponent<MeshRenderer>().material = inv.Items[inv.Index].PickUpPrefab.GetComponent<MeshRenderer>().sharedMaterial;
+            weaponHolder.transform.localScale = new Vector3(1,1,1);
+            weaponHolder.transform.parent = holderParent;
+
             GetComponent<PlayerAnimation>().SetWeaponType(holdingType);
         }
         public override void Use()

@@ -85,7 +85,7 @@ public class EntryPoint : MonoBehaviour
 
     public void OpenPath()
     {
-        if (vine.activeSelf)
+        if (vine.activeSelf && otherSidePoint != null)
         {
             vineAnim.Open();
             obstacle.enabled = false;

@@ -32,12 +32,12 @@ public class GameManager : MonoBehaviour
         this.currentArea = currentArea;
         if (currentArea.transform.CompareTag("Area"))
         {
-            areasSpawner = currentArea.transform.FindDeepChild("EnemySpawnPoints").GetComponent<EnemySpawner>();
-            areasSpawner.SpawnAll();
+            if (!currentArea.Completed)
+            {
+                areasSpawner = currentArea.transform.FindDeepChild("EnemySpawnPoints").GetComponent<EnemySpawner>();
+                areasSpawner.SpawnAll();
+            }
         }
-
-        
-
     }
 
     public Level GetCurrentArea()
@@ -55,6 +55,7 @@ public class GameManager : MonoBehaviour
                 t.OpenPath();
             }
         }
+        currentArea.Completed = true;
     }
 
     public void CloseCurrentAreasEntries()

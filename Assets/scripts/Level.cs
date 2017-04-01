@@ -12,6 +12,7 @@ public class Level : MonoBehaviour
     public int roomCount;
     public RenderTexture minimapTexture;
     public RenderTexture fogOfWarTexture;
+    public bool Completed = false;
     // Use this for initialization
     void Start ()
 	{

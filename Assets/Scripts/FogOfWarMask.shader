@@ -2,6 +2,7 @@
 	Properties {
 		_Color ("Main Color", Color) = (1,1,1,1)
 		_MainTex ("Base (RGB)", 2D) = "white" {}
+		_SecTex ("Base (RGB)", 2D) = "white" {}
 	}
 	SubShader{
 		Tags { "Queue"="Transparent" "RenderType" = "Transparent" "LightMode" = "ForwardBase" }
@@ -24,15 +25,17 @@
 
 		fixed4 _Color;
 		sampler2D _MainTex;
+		sampler2D _SecTex;
 
 		struct Input {
 			float2 uv_MainTex;
+			float2 uv_SecTex;
 		};
 
 		void surf(Input IN, inout SurfaceOutput o) {
-			fixed4 baseColor = tex2D(_MainTex, IN.uv_MainTex);
-			o.Albedo = _Color.rgb * baseColor.b;
-			o.Alpha = _Color.a - baseColor.g; // green - color of aperture mask
+			half4 baseColor = tex2D(_SecTex, IN.uv_SecTex);
+			o.Albedo = _Color.rgb * baseColor;
+			o.Alpha = _Color.a - tex2D(_MainTex, IN.uv_MainTex).g; // green - color of aperture mask
 		}
 		ENDCG
 	}

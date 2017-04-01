@@ -41,10 +41,16 @@ public class EnemySpawner : MonoBehaviour
             if (t.CompareTag("EnemySpawnPoint"))
             {
                 GameObject go = Instantiate(EnemyPrefab, t.position, Quaternion.Euler(new Vector3(0.0f, Random.Range(0.0f, 360.0f), 0.0f)));
-                float rand = Random.Range(0.5f, 1.0f);
+                Transform minimapObj = go.transform.FindChild("MinimapObject");
+                minimapObj.parent = null;
+                minimapObj.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+                float rand = Random.Range(0.7f, 0.9f);
                 
                 go.transform.FindDeepChild("teddysculp").GetComponent<SkinnedMeshRenderer>().material.color = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));
                 go.transform.localScale = new Vector3(rand, rand, rand);
+
+                minimapObj.parent = go.transform;
+
             }
                 
         }

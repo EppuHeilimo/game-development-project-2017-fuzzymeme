@@ -15,8 +15,8 @@ public class Level : MonoBehaviour
     // Use this for initialization
     void Start ()
 	{
-        minimapTexture = new RenderTexture(256, 256, 0, RenderTextureFormat.ARGB32);
-        fogOfWarTexture = new RenderTexture(256, 256, 0, RenderTextureFormat.ARGB32);
+        minimapTexture = new RenderTexture(1024, 1024, 0, RenderTextureFormat.ARGB32);
+        fogOfWarTexture = new RenderTexture(512, 512, 0, RenderTextureFormat.ARGB32);
         //get all children and find entrypoints from them
         entrypoints = new List<Transform>();
 	    Transform ep = transform.Find("EntryPoints");

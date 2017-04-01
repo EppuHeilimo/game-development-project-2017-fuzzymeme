@@ -113,7 +113,7 @@
 				fixed4 detail = tex2D(_DetailTex, i.texcoord * -1) * _Color;
 				//color.rgb = lerp(color.rgb, color.rgb * detail.rgb, detail.a * _Strength);
 				//color = color * _Color;
-				if (color.r < 0.35f && color.g < 0.35f && color.b < 0.35f)
+				if (color.r < 0.2f && color.g < 0.2f && color.b < 0.2f)
 				{
 					color = detail;
 				}

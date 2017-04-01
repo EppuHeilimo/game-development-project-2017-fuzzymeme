@@ -75,7 +75,6 @@ namespace Assets.Scripts.Weapon_Inventary
                 else
                 {
                     float percentage = passedTime / ReloadTime;
-                    Debug.Log(percentage);
                     return percentage;
                 }
             }

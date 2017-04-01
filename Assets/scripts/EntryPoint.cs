@@ -111,7 +111,6 @@ public class EntryPoint : MonoBehaviour
     {
         if (other.CompareTag("Player") && otherSidePoint != null && !locked)
         {
-            Debug.Log("Teleported to " + transform.parent.parent.name);
             player.GetComponent<NavMeshAgent>().Warp(otherSidePoint.playerTeleportPoint.position);
             mainCamera.GetComponent<CameraMovement>().ToEntryPoint(cameraTarget, otherSidePoint);
             GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().SetCurrentArea(otherSidePoint.parentTerrain.GetComponent<Level>());

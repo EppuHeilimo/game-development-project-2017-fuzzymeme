@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Assets.Script;
+using Assets.Scripts;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -8,10 +10,13 @@ public class GameManager : MonoBehaviour
     private Level currentArea;
     private EnemySpawner areasSpawner;
     public List<GameObject> weapons;
+
+    
 	// Use this for initialization
 	void Start () {
         Object[] loadedweapons = Resources.LoadAll("/Assets/Weapons");
-        foreach(Object weapon in loadedweapons)
+	    
+        foreach (Object weapon in loadedweapons)
         {
             weapons.Add((GameObject)weapon);
         }
@@ -25,8 +30,14 @@ public class GameManager : MonoBehaviour
     public void SetCurrentArea(Level currentArea)
     {
         this.currentArea = currentArea;
-        areasSpawner = currentArea.transform.FindChild("EnemySpawnPoints").GetComponent<EnemySpawner>();
-        areasSpawner.SpawnAll();
+        if (currentArea.transform.CompareTag("Area"))
+        {
+            areasSpawner = currentArea.transform.FindDeepChild("EnemySpawnPoints").GetComponent<EnemySpawner>();
+            areasSpawner.SpawnAll();
+        }
+
+        
+
     }
 
     public Level GetCurrentArea()

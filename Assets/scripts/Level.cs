@@ -10,9 +10,13 @@ public class Level : MonoBehaviour
 {
     private List<Transform> entrypoints;
     public int roomCount;
-	// Use this for initialization
-	void Start ()
+    public RenderTexture minimapTexture;
+    public RenderTexture fogOfWarTexture;
+    // Use this for initialization
+    void Start ()
 	{
+        minimapTexture = new RenderTexture(256, 256, 0, RenderTextureFormat.ARGB32);
+        fogOfWarTexture = new RenderTexture(256, 256, 0, RenderTextureFormat.ARGB32);
         //get all children and find entrypoints from them
         entrypoints = new List<Transform>();
 	    Transform ep = transform.Find("EntryPoints");

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts;
 using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
@@ -16,13 +17,15 @@ public class CameraMovement : MonoBehaviour
 
     private EntryPoint targetEntryPoint;
     private bool playerTeleported = false;
-	// Use this for initialization
-	void Start ()
+    private Minimap minimap;
+    // Use this for initialization
+    void Start ()
 	{
 	    playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 	    LockedTo = playerTransform;
 	    transform.position = LockedTo.position;
-	}
+        minimap = GameObject.FindGameObjectWithTag("MinimapCamera").GetComponent<Minimap>();
+    }
 	
 	// Update is called once per frame
 	void LateUpdate ()
@@ -43,7 +46,8 @@ public class CameraMovement : MonoBehaviour
 	        translating = true;
 	        playerTeleported = false;
 	        LockedTo = playerTransform;
-	    }
+            minimap.SetArea(GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().GetCurrentArea().transform);
+        }
 
 	}
 

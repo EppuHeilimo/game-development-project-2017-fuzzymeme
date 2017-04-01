@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -30,6 +31,7 @@ public class LevelGeneration : MonoBehaviour
 
         //set player location to start
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().SetCurrentArea(startingArea.GetComponent<Level>());
+        GameObject.FindGameObjectWithTag("MinimapCamera").GetComponent<Minimap>().SetArea(startingArea.transform);
         GameObject.FindGameObjectWithTag("Player").GetComponent<NavMeshAgent>().Warp(startingEntryPoint.playerTeleportPoint.position);
     }
 }

@@ -43,7 +43,7 @@ public class Level : MonoBehaviour
         EntryPoint entry = entrypoints[rnd].GetComponent<EntryPoint>();
 
         //ensure that the next area entrance isn't in the same direction as the one you just left
-        if (prevArea != null && entry.compassDirection == prevArea.compassDirection)
+        if (prevArea != null && entry.compassDirection == prevArea.compassDirection && entrypoints.Count > 1)
         {
             entrypoints.RemoveAt(rnd);
             rnd = Random.Range(0, entrypoints.Count);
@@ -55,12 +55,7 @@ public class Level : MonoBehaviour
         entrypoints[rnd].GetComponent<EntryPoint>().Init(true);
         //set previous area for the entrance
         entrypoints[rnd].GetComponent<EntryPoint>().otherSidePoint = prevArea;
-        //set player location to start
-        if (prevArea == null)
-        {
-            
-            
-        }
+
             
         //remove used entrypoint
         entrypoints.RemoveAt(rnd);
@@ -77,18 +72,12 @@ public class Level : MonoBehaviour
             if (last)
             {
                 //find bossarea and assign random entrypoint for bossroom
-                try
-                {
-                    Level area = GameObject.FindGameObjectWithTag("BossArea").GetComponent<Level>();
-                    rnd = Random.Range(0, entrypoints.Count);
-                    entrypoints[rnd].GetComponent<EntryPoint>().Init(true);
-                    entrypoints[rnd].GetComponent<EntryPoint>().otherSidePoint = area.init(availableAreas, entrypoints[rnd].GetComponent<EntryPoint>(), true);
-                    entrypoints.RemoveAt(rnd);
-                }
-                catch (Exception)
-                {
-                    Debug.Log("No area with 'BossArea' tag found!");
-                }
+                Level area = GameObject.FindGameObjectWithTag("BossArea").GetComponent<Level>();
+                rnd = Random.Range(0, entrypoints.Count);
+                entrypoints[rnd].GetComponent<EntryPoint>().Init(true);
+                entrypoints[rnd].GetComponent<EntryPoint>().otherSidePoint = area.init(availableAreas, entrypoints[rnd].GetComponent<EntryPoint>(), true);
+                entrypoints.RemoveAt(rnd);
+
                 Dictionary<EntryPoint, Level> usedareas = new Dictionary<EntryPoint, Level>();
                 //use the rest of the available rooms if there's any
                 for (int i = 0; i < availableAreas.Count; i++)

@@ -33,8 +33,10 @@
 		};
 
 		void surf(Input IN, inout SurfaceOutput o) {
+			//sample secondary texture, make it the base color of the plane
 			half4 baseColor = tex2D(_SecTex, IN.uv_SecTex);
 			o.Albedo = _Color.rgb * baseColor;
+			//sample maintexture (aperture mask) green value, and make it the alpha value. 
 			o.Alpha = _Color.a - tex2D(_MainTex, IN.uv_MainTex).g; // green - color of aperture mask
 		}
 		ENDCG

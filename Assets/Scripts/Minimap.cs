@@ -34,6 +34,7 @@ namespace Assets.Scripts
             fogOfWarCamera.targetTexture = area.GetComponent<Level>().fogOfWarTexture;
             miniMapCamera.targetTexture = area.GetComponent<Level>().minimapTexture;
             fogOfWarPlane.GetComponent<Renderer>().material.SetTexture("_MainTex", fogOfWarCamera.targetTexture);
+            fogOfWarPlane.localScale = size / 10;
             GameObject.FindGameObjectWithTag("CanvasMinimap").GetComponent<RawImage>().texture =
                 miniMapCamera.targetTexture;
 

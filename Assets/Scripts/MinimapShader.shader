@@ -109,10 +109,11 @@
 
 			fixed4 frag(v2f i) : COLOR
 			{
-				fixed4 color = (tex2D(_MainTex, i.texcoord)); // +_TextureSampleAdd) * i.color;
+				//sample render texture
+				fixed4 color = (tex2D(_MainTex, i.texcoord)); 
+				//sample the map detail texture
 				fixed4 detail = tex2D(_DetailTex, i.texcoord * -1) * _Color;
-				//color.rgb = lerp(color.rgb, color.rgb * detail.rgb, detail.a * _Strength);
-				//color = color * _Color;
+				//if render texture has black area, fill it with detail texture
 				if (color.r < 0.2f && color.g < 0.2f && color.b < 0.2f)
 				{
 					color = detail;

@@ -28,7 +28,7 @@ namespace Assets.Scripts
             currentArea = area;
             Vector3 size = currentArea.GetComponent<Terrain>().terrainData.size;
             Vector3 center = new Vector3(size.x / 2, 0, size.z / 2);
-            transform.position = new Vector3(currentArea.transform.position.x + center.x, 50, currentArea.transform.position.z + center.z);
+            transform.position = new Vector3(currentArea.transform.position.x + center.x, 100, currentArea.transform.position.z + center.z);
             miniMapCamera.orthographicSize = size.x / 2;
             fogOfWarCamera.orthographicSize = size.x/2;
             fogOfWarCamera.targetTexture = area.GetComponent<Level>().fogOfWarTexture;

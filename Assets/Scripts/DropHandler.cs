@@ -10,10 +10,17 @@ using UnityEngine;
 
 public class DropHandler : MonoBehaviour {
 
-    public double DropChance = 1.0; // Has to be a value between 0.0 and 1.0
+    //public double DropChance = 1.0f; // Has to be a value between 0.0 and 1.0
     private List<GameObject> differentWeapons; // List of all the weapon prefabs 
     private GameObject test;  // test value
 
+
+    /**
+     * Droprates for different weapons
+     **/
+    private readonly double droprate1 = 0.3f;
+    private readonly double droprate2 = 0.3f;
+    private readonly double droprate3 = 0.8f;
 
     /**
      * First function to be executed!
@@ -32,14 +39,9 @@ public class DropHandler : MonoBehaviour {
         foreach (UnityEngine.Object weapon in loadedweapons)
         {
             differentWeapons.Add((GameObject)weapon);
-        }  
-
-
-        foreach (GameObject obj in differentWeapons)
-        {
-            Debug.Log(obj);
         }
-        createDropLoot(differentWeapons[0]);
+
+        calculateDropRates();
       
 
 
@@ -55,19 +57,49 @@ public class DropHandler : MonoBehaviour {
      **/
     public void calculateDropRates() 
     {
-        double dropValue = UnityEngine.Random.value;
-
-        if ( dropValue <= DropChance)
+        if (doesItDrop(droprate1) == true)
         {
-            createDropLoot(test);
+            createDropLoot(differentWeapons[0]); 
         }
+        else
+        {
+            if (doesItDrop(droprate2) == true)
+            {
+                createDropLoot(differentWeapons[1]);
+            }
+            else
+            {
+                if (doesItDrop(droprate3) == true)
+                {
+                    createDropLoot(differentWeapons[2]);
+                }
+            }
+        }
+        
 
-     }
+    }
+
+    /**
+     * This method validates if the item according to the given rates
+     * will be dropped
+     **/
+    private bool doesItDrop(double dropRate)
+    {
+        double rateIndex = UnityEngine.Random.value;
+        if (dropRate > rateIndex)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
     /**
      * This method will return the current location the current enemy is standing at.
      * This will guarantee, the loot will be dropped at the same location the enemy has been killed.
-     **/ 
+     **/
     private Transform getSpawnLocation()
     {
         Transform spawnLocation = this.transform;
@@ -81,17 +113,5 @@ public class DropHandler : MonoBehaviour {
     {
         Transform spawnLocation = getSpawnLocation();
         var itemToDrop = (GameObject)Instantiate(prefab, spawnLocation.position, spawnLocation.rotation);
-    }
-
-    /**
-     * Create a copy of the weapon to be dropped
-     **/
-     private DropHandler createCopy(GameObject obj)
-    {
-        Type type = this.GetType();
-        Component newComponent = obj.AddComponent(type);
-        DropHandler drop = newComponent as DropHandler;
-        drop.test = test;
-        return drop;
     }
  }

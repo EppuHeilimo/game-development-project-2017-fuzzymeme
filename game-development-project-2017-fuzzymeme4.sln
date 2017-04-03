@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "game-development-project-2017-fuzzymeme4", "game-development-project-2017-fuzzymeme4.csproj", "{18F2F2A4-2572-D77A-83B3-AA5FB5095082}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{18F2F2A4-2572-D77A-83B3-AA5FB5095082}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18F2F2A4-2572-D77A-83B3-AA5FB5095082}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18F2F2A4-2572-D77A-83B3-AA5FB5095082}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18F2F2A4-2572-D77A-83B3-AA5FB5095082}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

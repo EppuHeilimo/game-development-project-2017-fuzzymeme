@@ -31,7 +31,7 @@ namespace Assets.Scripts.Weapon_Inventary
 
 
 
-        void Start()
+        public override void Start()
         {
             if (transform.CompareTag("Player"))
             {
@@ -124,15 +124,19 @@ namespace Assets.Scripts.Weapon_Inventary
         public override void OnBeingSelected()
         {
             _lastShootTime = Time.time;
-            Inventory inv = GetComponent<Inventory>();
             Transform holderParent = weaponHolder.transform.parent;
             weaponHolder.transform.SetParent(null);
-            weaponHolder.GetComponent<MeshFilter>().mesh = inv.Items[inv.Index].PickUpPrefab.GetComponent<MeshFilter>().sharedMesh;
-            weaponHolder.GetComponent<MeshRenderer>().material = inv.Items[inv.Index].PickUpPrefab.GetComponent<MeshRenderer>().sharedMaterial;
+            weaponHolder.GetComponent<MeshFilter>().mesh = PickUpPrefab.GetComponent<MeshFilter>().sharedMesh;
+            weaponHolder.GetComponent<MeshRenderer>().material = PickUpPrefab.GetComponent<MeshRenderer>().sharedMaterial;
             weaponHolder.transform.localScale = new Vector3(1,1,1);
             weaponHolder.transform.parent = holderParent;
 
             GetComponent<PlayerAnimation>().SetWeaponType(holdingType);
+
+
+
+
+
         }
         public override void Use()
         {

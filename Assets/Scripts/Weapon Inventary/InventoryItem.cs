@@ -12,16 +12,14 @@ namespace Assets.Scripts.Interface
 
 
         public GameObject PickUpPrefab;
+
         public String InventaryItemName;
 
 
-        public void Start()
+        public virtual void Start()
         {
-
-            gameObject.GetComponent<MeshFilter>().sharedMesh = PickUpPrefab.GetComponent<MeshFilter>().sharedMesh;
-            gameObject.GetComponent<MeshRenderer>().sharedMaterial = PickUpPrefab.GetComponent<MeshRenderer>().sharedMaterial;
-
         }
+
 
 
         public virtual double ReloadPercentage
@@ -49,20 +47,11 @@ namespace Assets.Scripts.Interface
         public virtual void Drop()
         {
 
-            //GameObject pickupItemObject = new GameObject();
-            //pickupItemObject.transform.position = new Vector3(transform.position.x,0.5f,transform.position.z);
-            //pickupItemObject.transform.rotation = transform.rotation;
-            ////pickupItemObject.transform.localScale=new Vector3(0.5f,0.5f,0.5f);
-
-            //InventoryItemHolder itemHolder = pickupItemObject.AddComponent<InventoryItemHolder>();
-            //InventoryItem inventoryItem = CreateCopy(pickupItemObject);
-            //itemHolder.SetInventoryItem(inventoryItem);
+           
 
 
             DropHelper.DropItem(GetType(),transform, item =>
             {
-                item.InventaryItemName = InventaryItemName;
-                item.PickUpPrefab = PickUpPrefab;
                 item.InventaryItemName = InventaryItemName;
                 item.PickUpPrefab = PickUpPrefab;
                 OnCreateCopy(item);

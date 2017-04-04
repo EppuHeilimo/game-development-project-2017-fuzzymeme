@@ -37,7 +37,6 @@ namespace Assets.Scripts.Weapon_Inventary
             weaponHolder = transform.FindDeepChild("WeaponHolder").gameObject;
             if (transform.CompareTag("Player"))
             {
-                Debug.Log("asd");
                 Inventory inv = GetComponent<Inventory>();
                 Transform holderParent = weaponHolder.transform.parent;
                 weaponHolder.transform.SetParent(null);

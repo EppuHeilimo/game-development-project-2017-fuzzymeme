@@ -3,6 +3,7 @@
  * weapons and afterwards, if necessary, creates the drop itself.
  * It will place the gameobject on the field
  **/
+using Assets.Scripts.Weapon_Inventary;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,108 +11,172 @@ using UnityEngine;
 
 public class DropHandler : MonoBehaviour {
 
-    //public double DropChance = 1.0f; // Has to be a value between 0.0 and 1.0
-    private List<GameObject> differentWeapons; // List of all the weapon prefabs 
-    private GameObject test;  // test value
+    private List<GameObject> WeaponPrefabs; // List of all the weapon prefabs 
+    private List<GameObject> BulletPrefabs; // List of all the bullet prefabs
 
+  
+    private List<WeaponDefinition> definitions = new List<WeaponDefinition>();  // List of all weapon definitions
+
+    public void OnZeroLifePoints(object sender, EventArgs e)
+    {
+
+
+       double randomValue = UnityEngine.Random.value;
+       if(randomValue > 0.5)
+        {
+            int ProbabilitySum=0;
+            foreach(WeaponDefinition definition in definitions)
+            {
+                ProbabilitySum += definition.ProbabilitySize;
+            }
+
+             randomValue = UnityEngine.Random.value;
+            int number = (int)Math.Round( ProbabilitySum* randomValue);
+
+            WeaponDefinition chosenDefinition=null;
+            foreach (WeaponDefinition definition in definitions)
+            {
+              number =  number - definition.ProbabilitySize;
+                if(number < 0)
+                {
+                    chosenDefinition = definition;
+                    break;
+                }
+            }
+            //drop
+            DropHelper.DropItem<Weapon>(transform, (weapon) => {
+
+                weapon.InventaryItemName = chosenDefinition.InventaryItemName;
+                weapon.Ammunition = chosenDefinition.Ammunition;
+                weapon.PickUpPrefab = chosenDefinition.PickUpPrefab;
+                weapon.ReloadTime = chosenDefinition.ReloadTime;
+                weapon.BulletPrefab = chosenDefinition.BulletPrefab;
+                weapon.holdingType = chosenDefinition.HoldingType;
+
+
+
+            });
+
+
+        }
+
+
+    }
+
+    IZeroLifePointNotify zeroPointnotifier;
 
     /**
-     * Droprates for different weapons
-     **/
-    private readonly double droprate1 = 0.3f;
-    private readonly double droprate2 = 0.3f;
-    private readonly double droprate3 = 0.8f;
-
-    /**
-     * First function to be executed!
-     * Gets the list of all weapon prefabs used  in the project. 
-     **/
+* First function to be executed! 
+**/
     private void Start()
     {
-        differentWeapons = new List<GameObject>();
-        /*
-        GameObject obj = GameObject.FindGameObjectWithTag("GameManager");
-        GameManager gm = obj.GetComponent<GameManager>();
-        differentWeapons = gm.weapons;
-        test = differentWeapons[0];     */
+        getPrefabs();
+        createWeaponDefinitions();
+        zeroPointnotifier = GetComponent<IZeroLifePointNotify>();
+        zeroPointnotifier.ZeroLifePoints += OnZeroLifePoints;  
+
+    }
+
+    private void OnDestroy()
+    {
+        zeroPointnotifier.ZeroLifePoints -= OnZeroLifePoints;
+    }
+
+    /**
+     * This method needs to be called from other scripts.
+     * For example if enemy dies, you will need this method to set up the drops
+     * Gets the list of all weapon prefabs used in the project.
+     **/
+    private void getPrefabs()
+    {
+        WeaponPrefabs = new List<GameObject>();
+        BulletPrefabs = new List<GameObject>();
         
+
         UnityEngine.Object[] loadedweapons = Resources.LoadAll("Weapons");
         foreach (UnityEngine.Object weapon in loadedweapons)
         {
-            differentWeapons.Add((GameObject)weapon);
+            WeaponPrefabs.Add((GameObject)weapon);
         }
 
-        calculateDropRates();
-      
 
-
-
-    }
-
-    /**
-     * Using the droprates this function should be possible if or what item will be dropped.
-     * Call the createDropLoot - method with the right game object to be dropped
-     * 
-     * TODO: Needs to be extended as soon as we have prefabs
-     * and an idea about the droprates
-     **/
-    public void calculateDropRates() 
-    {
-        if (doesItDrop(droprate1) == true)
+        UnityEngine.Object[] loadbullets = Resources.LoadAll("Bullets");
+        foreach (UnityEngine.Object bullet in loadbullets)
         {
-            createDropLoot(differentWeapons[0]); 
-        }
-        else
-        {
-            if (doesItDrop(droprate2) == true)
-            {
-                createDropLoot(differentWeapons[1]);
-            }
-            else
-            {
-                if (doesItDrop(droprate3) == true)
-                {
-                    createDropLoot(differentWeapons[2]);
-                }
-            }
+            BulletPrefabs.Add((GameObject)bullet);
         }
         
-
     }
 
-    /**
-     * This method validates if the item according to the given rates
-     * will be dropped
-     **/
-    private bool doesItDrop(double dropRate)
-    {
-        double rateIndex = UnityEngine.Random.value;
-        if (dropRate > rateIndex)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
 
     /**
-     * This method will return the current location the current enemy is standing at.
-     * This will guarantee, the loot will be dropped at the same location the enemy has been killed.
-     **/
-    private Transform getSpawnLocation()
+     * Create the definitions of the used weapons
+    **/
+    private void createWeaponDefinitions()
     {
-        Transform spawnLocation = this.transform;
-        return spawnLocation;
+        WeaponDefinition temp = new WeaponDefinition();
+
+        // GUN
+
+        temp.Ammunition = 10;
+        temp.BulletPrefab = BulletPrefabs[1];
+        temp.HoldingType = PlayerAnimation.WeaponType.OneHanded;
+        temp.InventaryItemName = "Gun";
+        temp.ProbabilitySize = 30;
+        temp.Description = "Simple one handed gun. Doesn't make that much damage, but at least its ranged.";
+        temp.PickUpPrefab = WeaponPrefabs[0];
+        temp.ReloadTime = 1;
+
+        definitions.Add(temp);
+
+        // Machinegun
+
+        temp.Ammunition = 70;
+        temp.BulletPrefab = BulletPrefabs[1];
+        temp.HoldingType = PlayerAnimation.WeaponType.TwoHanded;
+        temp.InventaryItemName = "Machinegun";
+        temp.ProbabilitySize = 15;
+        temp.Description = "Single bullets do not deal too much damage, but therefore you will fire even more with it!";
+        temp.PickUpPrefab = WeaponPrefabs[1];
+        temp.ReloadTime = 2;
+
+        definitions.Add(temp);
+
+
+        // Shotgun
+
+        temp.Ammunition = 5;
+        temp.BulletPrefab = BulletPrefabs[1];
+        temp.HoldingType = PlayerAnimation.WeaponType.TwoHanded;
+        temp.InventaryItemName = "Shotgun";
+        temp.ProbabilitySize = 5;
+        temp.Description = "Blow those motherfuckers up";
+        temp.PickUpPrefab = WeaponPrefabs[2];
+        temp.ReloadTime = 5;
+
+        definitions.Add(temp);
     }
 
-    /**
-     * Give different parameters for different prefabs to be created
-     **/
-    private void createDropLoot(GameObject prefab) 
+
+    private class WeaponDefinition
     {
-        Transform spawnLocation = getSpawnLocation();
-        var itemToDrop = (GameObject)Instantiate(prefab, spawnLocation.position, spawnLocation.rotation);
+        
+        public int ProbabilitySize { get; set; }
+
+        public String InventaryItemName { get; set; }
+
+        public String Description { get; set; }
+
+        public int Ammunition { get; set; }
+
+        public GameObject PickUpPrefab { get; set; }
+
+        public int ReloadTime { get; set; }
+
+        public GameObject BulletPrefab { get; set; }
+
+        public PlayerAnimation.WeaponType HoldingType { get; set; }
+
+
     }
  }

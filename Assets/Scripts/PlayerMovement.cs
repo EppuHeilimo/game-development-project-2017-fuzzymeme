@@ -53,15 +53,32 @@ public class PlayerMovement : MonoBehaviour {
 
     void Aiming()
     {
+        Vector3 point = new Vector3();
+      
         Ray cameraRay = main_camera.ScreenPointToRay(Input.mousePosition);
-        Plane groundPlane = new Plane(Vector3.up,transform.position);
-        float rayLength;
-        if (groundPlane.Raycast(cameraRay, out rayLength))
+        LayerMask layer = (1 << 11) | (1 << 13);
+        RaycastHit hit;
+        if(Physics.Raycast(cameraRay, out hit, float.PositiveInfinity, layer))
         {
-            Vector3 pointToLook = cameraRay.GetPoint(rayLength); // Where the player looks
-            //Debug.DrawLine(cameraRay.origin, pointToLook, Color.blue);
-            transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z)); //look to directions on plane level (x,z)
+            Debug.Log(hit.collider.gameObject.name);
+            if(hit.collider.gameObject.transform.CompareTag("Enemy"))
+            {
+                Debug.Log("hit enemy");
+                point = new Vector3(hit.collider.gameObject.transform.position.x, hit.collider.gameObject.transform.position.y, hit.collider.gameObject.transform.position.z);
+            }
+            else
+            {
+                Plane groundPlane = new Plane(Vector3.up, transform.position);
+                float rayLength;
+                if (groundPlane.Raycast(cameraRay, out rayLength))
+                {
+                    point = cameraRay.GetPoint(rayLength); // Where the player looks
+                                                           
+                }
+            }
         }
+
+        transform.LookAt(new Vector3(point.x, transform.position.y, point.z)); //look to directions on plane level (x,z)
     }
 
     void SpeedLimit()

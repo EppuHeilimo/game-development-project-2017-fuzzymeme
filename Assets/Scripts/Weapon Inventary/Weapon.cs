@@ -33,22 +33,25 @@ namespace Assets.Scripts.Weapon_Inventary
 
         public override void Start()
         {
+
+            weaponHolder = transform.FindDeepChild("WeaponHolder").gameObject;
             if (transform.CompareTag("Player"))
             {
-                weaponHolder = transform.FindDeepChild("WeaponHolder").gameObject;
+                Debug.Log("asd");
                 Inventory inv = GetComponent<Inventory>();
                 Transform holderParent = weaponHolder.transform.parent;
                 weaponHolder.transform.SetParent(null);
                 weaponHolder.GetComponent<MeshFilter>().mesh = inv.Items[inv.Index].PickUpPrefab.GetComponent<MeshFilter>().sharedMesh;
                 weaponHolder.GetComponent<MeshRenderer>().material = inv.Items[inv.Index].PickUpPrefab.GetComponent<MeshRenderer>().sharedMaterial;
-                weaponHolder.transform.localScale = new Vector3(1, 1, 1);
+                weaponHolder.transform.localScale = inv.Items[inv.Index].PickUpPrefab.transform.localScale;
                 weaponHolder.transform.parent = holderParent;
             }
-
+            
             if (_bulletSpawnPosition == null)
             {
                 _bulletSpawnPosition = transform.FindDeepChild("AttackSpawnPoint");
             }
+            
         }
 
         public override int UseAbleAmount
@@ -128,14 +131,9 @@ namespace Assets.Scripts.Weapon_Inventary
             weaponHolder.transform.SetParent(null);
             weaponHolder.GetComponent<MeshFilter>().mesh = PickUpPrefab.GetComponent<MeshFilter>().sharedMesh;
             weaponHolder.GetComponent<MeshRenderer>().material = PickUpPrefab.GetComponent<MeshRenderer>().sharedMaterial;
-            weaponHolder.transform.localScale = new Vector3(1,1,1);
+            weaponHolder.transform.localScale = PickUpPrefab.transform.localScale; 
             weaponHolder.transform.parent = holderParent;
-
             GetComponent<PlayerAnimation>().SetWeaponType(holdingType);
-
-
-
-
 
         }
         public override void Use()

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Script;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
@@ -11,7 +12,10 @@ public class TextureToObjectsV2 : MonoBehaviour
 {
 
 
+    public bool AdaptTerrainSizeToImage = false;
     public bool Create = false;
+    public bool Paint = false;
+    public bool PaintOnlyBlack = false;
 
     [Serializable]
     public class RGBColor
@@ -66,7 +70,7 @@ public class TextureToObjectsV2 : MonoBehaviour
         }
     }
 
-    public List<ColorObject> ColorsToObjects;
+    public List<ColorObject> ColorsToObjects = new List<ColorObject>(5);
     private GameObject terrain;
 
     public float tileSize = 2f;
@@ -75,30 +79,180 @@ public class TextureToObjectsV2 : MonoBehaviour
 
     private Vector3[,] TerrainGrid;
 
-    private GameObject trees;
 
 
+    void Start()
+    {
 
+    # if UNITY_EDITOR
+        GameObject trees;
+        Transform findChild = gameObject.transform.FindChild("Trees");
+        if (findChild == null)
+        {
+            trees = new GameObject("Trees");
+            trees.transform.parent = transform;
+        }
+        else
+        {
+            trees = findChild.gameObject;
+
+
+        }
+
+     
+
+
+        GameObject enemySpawnPoints;
+        Transform enemySpawnPointsTransform = gameObject.transform.FindChild("Enemy Spawn Points");
+        if (enemySpawnPointsTransform == null)
+        {
+            enemySpawnPoints = new GameObject("Enemy Spawn Points");
+            enemySpawnPoints.transform.parent = transform;
+        }
+        else
+        {
+            enemySpawnPoints = enemySpawnPointsTransform.gameObject;
+        }
+
+
+        GameObject treePrefab = Resources.Load<GameObject>("Tree");
+        GameObject enemySpawnPointPreFab = Resources.Load<GameObject>("SpawnPoint");
+
+        ColorObject colorsToObjectTree = new ColorObject(new RGBColor(0, 0, 0), treePrefab, trees.gameObject);
+        colorsToObjectTree.RandomizeRotation = true;
+        colorsToObjectTree.RandomizeScale = true;
+        colorsToObjectTree.RandomScaleRange = new Vector2(0.9f,1.6f);
+        ColorsToObjects.Add(colorsToObjectTree);
+
+        ColorObject colorsToObject = new ColorObject(new RGBColor(255, 0, 0), enemySpawnPointPreFab, enemySpawnPoints.gameObject);
+        ColorsToObjects.Add(colorsToObject);
+
+        LoadAndAddTextures();
+#endif
+    }
 
 
     // Update is called once per frame
-    void Update () {
+    void Update()
+    {
+
+#if UNITY_EDITOR
 
         if (Create)
         {
             Create = false;
-            LoadAndAddTextures();
             CreateStuff();
+        }
+
+
+        if (Paint)
+        {
+            Paint = false;
+            PaintTextures(GetColors(), false);
+        }
+        if (PaintOnlyBlack)
+        {
+            PaintOnlyBlack = false;
+            PaintTextures(GetColors(), true);
+        }
+        if (AdaptTerrainSizeToImage)
+        {
+            UpdateTerainSize();
+            AdaptTerrainSizeToImage = false;
+        }
+
+#endif
+
+    }
+
+    private void UpdateTerainSize()
+    {
+        if (Texture != null)
+        {
+            int newTerainWidth = Texture.width*2;
+            int newTerainHeight = Texture.height*2;
+            Terrain component = GetComponent<Terrain>();
+            component.terrainData.size = new Vector3(newTerainWidth,100, newTerainHeight);
+
+
         }
     }
 
 
+    public RGBColor[,] GetColors1()
+    {
+        var textureData = Texture.GetRawTextureData();
+        int width = (int)Math.Sqrt(textureData.Length / 3.0);
+        RGBColor[,] rawTextureColor = new RGBColor[width, width];
+
+        for (int z = 0; z < width; z++)
+        {
+
+            for (int i = 0; i < width * 3; i += 3)
+            {
+                int offset = z * width * 3;
+                int index = offset + i;
+                RGBColor rgbColor = new RGBColor();
+                rgbColor.r = textureData[index];
+                rgbColor.g = textureData[index + 1];
+                rgbColor.b = textureData[index + 2];
+
+
+
+                rawTextureColor[(z), i / 3] = rgbColor;
+
+
+            }
+
+        }
+
+        return rawTextureColor;
+    }
+
+    public RGBColor[,] GetColors()
+    {
+        int width1 = Texture.width;
+        int height = Texture.height;
+
+
+        RGBColor[,] rawTextureColor = new RGBColor[height, width1];
+
+        for (int z = 0; z < height; z++)
+        {
+
+            for (int i = 0; i < width1; i++)
+            {
+
+                Color pixel = Texture.GetPixel(i, z);
+
+                RGBColor rgbColor = new RGBColor();
+                rgbColor.r = (byte)(255 * pixel.r);
+                rgbColor.g = (byte)(255 * pixel.g);
+                rgbColor.b = (byte)(255 * pixel.b);
+
+                if (rgbColor.r < 10)
+                {
+                    int b = 4;
+                }
+
+                rawTextureColor[(z), i] = rgbColor;
+
+
+            }
+
+        }
+
+        return rawTextureColor;
+    }
+
+
+
     private void CreateStuff()
     {
-        terrain = GameObject.FindGameObjectWithTag("Area");
-        Terrain component = terrain.GetComponent<Terrain>();
-        float xTerrainSize = component.terrainData.size.x / tileSize;
-        float zTerrainSize = component.terrainData.size.z / tileSize;
+        Terrain component = GetComponent<Terrain>();
+        Vector3 size = component.terrainData.size;
+        float xTerrainSize = size.x / tileSize;
+        float zTerrainSize = size.z / tileSize;
 
         TerrainGrid = new Vector3[(int)xTerrainSize, (int)zTerrainSize];
 
@@ -109,8 +263,8 @@ public class TextureToObjectsV2 : MonoBehaviour
         {
             for (int j = 0; j < zTerrainSize; j++)
             {
-                TerrainGrid[i, j].x = i * tileSize;
-                TerrainGrid[i, j].z = j * tileSize;
+                TerrainGrid[i, j].x = i * tileSize + transform.position.x;
+                TerrainGrid[i, j].z = j * tileSize + transform.position.z;
             }
         }
         int count = 0;
@@ -118,14 +272,30 @@ public class TextureToObjectsV2 : MonoBehaviour
 
         RGBColor[] rawTextureColor = new RGBColor[(int)xTerrainSize * (int)zTerrainSize];
 
-        for (int i = 0; i < rawTextureData.Length; i += 3)
+
+
+
+        RGBColor[,] rgbColors = GetColors();
+        var length = rgbColors.GetLength(0);
+        var length1 = rgbColors.GetLength(1);
+        Debug.Log(length + "            " + length1);
+        Debug.Log(zTerrainSize + "     terain       " + xTerrainSize);
+        for (int i = 0; i < zTerrainSize; i++)
         {
-            rawTextureColor[count] = new RGBColor();
-            rawTextureColor[count].r = rawTextureData[i];
-            rawTextureColor[count].g = rawTextureData[i + 1];
-            rawTextureColor[count].b = rawTextureData[i + 2];
-            count++;
+            for (int x = 0; x < xTerrainSize; x++)
+            {
+                var rgbColor = rgbColors[i, x];
+                rawTextureColor[count] = new RGBColor();
+                rawTextureColor[count].r = rgbColor.r;
+                rawTextureColor[count].g = rgbColor.g;
+                rawTextureColor[count].b = rgbColor.b;
+                count++;
+
+            }
+
+
         }
+
 
         count = 0;
         for (int y = 0; y < zTerrainSize; y++)
@@ -158,6 +328,9 @@ public class TextureToObjectsV2 : MonoBehaviour
                 count++;
             }
         }
+
+
+
     }
 
     private void LoadAndAddTextures()
@@ -181,7 +354,7 @@ public class TextureToObjectsV2 : MonoBehaviour
             }
         }
 
-        List< SplatPrototype > newSplatPrototypes = new List<SplatPrototype>();
+        List<SplatPrototype> newSplatPrototypes = new List<SplatPrototype>();
 
         while (normalTextures.Count != 0)
         {
@@ -208,7 +381,7 @@ public class TextureToObjectsV2 : MonoBehaviour
             newSplatPrototype.texture = textures[0];
             textures.Remove(textures[0]);
             newSplatPrototypes.Add(newSplatPrototype);
-           
+
         }
 
 
@@ -227,89 +400,244 @@ public class TextureToObjectsV2 : MonoBehaviour
             {
                 allSplatPrototypes.Add(prototype);
             }
-            
+
         }
+
+
+
         allSplatPrototypes.AddRange(newSplatPrototypes);
         SplatPrototype[] array = allSplatPrototypes.ToArray();
-    
+
+        var count = allSplatPrototypes.Count;
+        for (int i = 0; i < count; i++)
+        {
+            var splat = array[i];
+            if (splat.texture.name.Equals("blackterrain"))
+            {
+                var splat0 = array[0];
+                array[0] = splat;
+                array[i] = splat0;
+
+            }
+
+            if (splat.texture.name.Equals("grassseamless"))
+            {
+                var splat1 = array[1];
+                array[1] = splat;
+                array[i] = splat1;
+            }
+
+        }
+
+
         terrainData.splatPrototypes = array;
-     
 
 
-   
+
+
+
+
+
+
 
     }
 
-    void Blub()
+
+
+
+
+    private void PaintTextures(RGBColor[,] rawTextureColor, bool repaintOnlyBlack)
     {
+        int xLenght = rawTextureColor.GetLength(1);
+        int zLenght = rawTextureColor.GetLength(0);
 
 
-        
+        Terrain terain = GetComponent<Terrain>();
+        TerrainData terrainData = terain.terrainData;
+        int terrainWidth = terrainData.alphamapWidth;
+        int terrainHeight = terrainData.alphamapHeight;
 
+        double xScale = terrainWidth / (double)xLenght;
+        double zScale = terrainHeight / (double)zLenght;
 
-        // Get the attached terrain component
-        Terrain terrain = GetComponent<Terrain>();
+        short[,] map = new short[terrainWidth, terrainHeight];
 
-        // Get a reference to the terrain data
-        TerrainData terrainData = terrain.terrainData;
-
-        // Splatmap data is stored internally as a 3d array of floats, so declare a new empty array ready for your custom splatmap data:
-        float[,,] splatmapData = new float[terrainData.alphamapWidth, terrainData.alphamapHeight, terrainData.alphamapLayers];
-
-        for (int y = 0; y < terrainData.alphamapHeight; y++)
+        for (int i = 0; i < terrainWidth; i++)
         {
-            for (int x = 0; x < terrainData.alphamapWidth; x++)
+            for (int j = 0; j < terrainHeight; j++)
             {
-                // Normalise x/y coordinates to range 0-1 
-                float y_01 = (float)y / (float)terrainData.alphamapHeight;
-                float x_01 = (float)x / (float)terrainData.alphamapWidth;
+                map[i, j] = 1;
+            }
+        }
 
-                // Sample the height at this location (note GetHeight expects int coordinates corresponding to locations in the heightmap array)
-                float height = terrainData.GetHeight(Mathf.RoundToInt(y_01 * terrainData.heightmapHeight), Mathf.RoundToInt(x_01 * terrainData.heightmapWidth));
+        Stack<Coordinate> openList = new Stack<Coordinate>();
+        openList.Push(new Coordinate(0, 0));
 
-                // Calculate the normal of the terrain (note this is in normalised coordinates relative to the overall terrain dimensions)
-                Vector3 normal = terrainData.GetInterpolatedNormal(y_01, x_01);
+        Boolean[,] closedList = new Boolean[terrainWidth, terrainHeight];
+        for (int i = 0; i < terrainWidth; i++)
+        {
+            for (int j = 0; j < terrainHeight; j++)
+            {
+                closedList[i, j] = false;
+            }
+        }
+        int maxSize = terrainHeight * terrainWidth;
+        int rounds = 0;
+        while (openList.Count != 0)
+        {
+            rounds++;
 
-                // Calculate the steepness of the terrain
-                float steepness = terrainData.GetSteepness(y_01, x_01);
+            if (openList.Count > maxSize)
+            {
+                break;
+            }
+            var coordinate = openList.Pop();
+            closedList[coordinate.X, coordinate.Z] = true;
 
-                // Setup an array to record the mix of texture weights at this point
-                float[] splatWeights = new float[terrainData.alphamapLayers];
+            bool isBlackPixel = IsBlackPixel(rawTextureColor, coordinate, xScale, zScale);
 
-                // CHANGE THE RULES BELOW TO SET THE WEIGHTS OF EACH TEXTURE ON WHATEVER RULES YOU WANT
+            if (isBlackPixel)
+            {
+                Debug.Log("black pixel at: " + coordinate.X + ": " + coordinate.Z);
+            }
+            else
+            {
+                map[coordinate.Z, coordinate.X] = 0;
+                Coordinate x_Minux1 = new Coordinate(coordinate.X - 1, coordinate.Z);
+                Coordinate x_Plus1 = new Coordinate(coordinate.X + 1, coordinate.Z);
+                Coordinate z_Minux1 = new Coordinate(coordinate.X, coordinate.Z - 1);
+                Coordinate z_Plus1 = new Coordinate(coordinate.X, coordinate.Z + 1);
 
-                // Texture[0] has constant influence
-                splatWeights[0] = 0.5f;
+                if (IsValidCoordinate(x_Minux1, terrainWidth, terrainHeight, closedList))
+                {
+                    openList.Push(x_Minux1);
+                }
+                if (IsValidCoordinate(x_Plus1, terrainWidth, terrainHeight, closedList))
+                {
+                    openList.Push(x_Plus1);
+                }
+                if (IsValidCoordinate(z_Minux1, terrainWidth, terrainHeight, closedList))
+                {
+                    openList.Push(z_Minux1);
+                }
+                if (IsValidCoordinate(z_Plus1, terrainWidth, terrainHeight, closedList))
+                {
+                    openList.Push(z_Plus1);
+                }
 
-                // Texture[1] is stronger at lower altitudes
-                splatWeights[1] = Mathf.Clamp01((terrainData.heightmapHeight - height));
+            }
 
-                // Texture[2] stronger on flatter terrain
-                // Note "steepness" is unbounded, so we "normalise" it by dividing by the extent of heightmap height and scale factor
-                // Subtract result from 1.0 to give greater weighting to flat surfaces
-                splatWeights[2] = 1.0f - Mathf.Clamp01(steepness * steepness / (terrainData.heightmapHeight / 5.0f));
 
-                // Texture[3] increases with height but only on surfaces facing positive Z axis 
-                splatWeights[3] = height * Mathf.Clamp01(normal.z);
+        }
 
-                // Sum of all textures weights must add to 1, so calculate normalization factor from sum of weights
-                float z = splatWeights.Sum();
 
-                // Loop through each terrain texture
-                for (int i = 0; i < terrainData.alphamapLayers; i++)
+
+        float[,,] alphaData = terrainData.GetAlphamaps(0, 0, terrainWidth, terrainHeight);
+        var numberOfSplats = terrainData.splatPrototypes.Length;
+        for (int z = 0; z < terrainHeight; z++)
+        {
+            for (int x = 0; x < terrainWidth; x++)
+            {
+
+                short val = map[z, x];
+                bool repaint = true;
+                if (repaintOnlyBlack)
+                {
+                    repaint = val == 0;
+                }
+
+                if (repaint)
                 {
 
-                    // Normalize so that sum of all texture weights = 1
-                    splatWeights[i] /= z;
+                    for (int i = 0; i < numberOfSplats; i++)
+                    {
+                        alphaData[z, x, i] = 0;
+                    }
 
-                    // Assign this point to the splatmap array
-                    splatmapData[x, y, i] = splatWeights[i];
+                    if (val == 0)
+                    {
+                        alphaData[z, x, 0] = 1;
+                    }
+                    else
+                    {
+                        alphaData[z, x, 1] = 1;
+                    }
                 }
             }
         }
 
-        // Finally assign the new splatmap to the terrainData:
-        terrainData.SetAlphamaps(0, 0, splatmapData);
+        terrainData.SetAlphamaps(0, 0, alphaData);
+
+
+
+
     }
 
+    private bool IsBlackPixel(RGBColor[,] rawTextureColor, Coordinate coordinate, double xScale, double zScale)
+    {
+        int imageX = (int)Math.Floor(coordinate.X / xScale);
+        int imageZ = (int)Math.Floor(coordinate.Z / zScale);
+        RGBColor rgbColor = rawTextureColor[imageZ, imageX];
+        bool blackPixel = rgbColor.r == 0 && rgbColor.b == 0 && rgbColor.g == 0;
+        if (imageZ == 4 && imageX == 30)
+        {
+            int b = 4;
+        }
+        return blackPixel;
+    }
+
+    private bool IsValidCoordinate(Coordinate coordinate, int lenght, int height, Boolean[,] closedList)
+    {
+        if (coordinate.X < 0 || coordinate.X >= lenght)
+        {
+            return false;
+        }
+        if (coordinate.Z < 0 || coordinate.Z >= height)
+        {
+            return false;
+        }
+        bool closed = closedList[coordinate.X, coordinate.Z];
+        if (closed)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public class Coordinate
+    {
+        protected bool Equals(Coordinate other)
+        {
+            return X == other.X && Z == other.Z;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Coordinate)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (X * 397) ^ Z;
+            }
+        }
+
+        public int X { get; set; }
+        public int Z { get; set; }
+
+        public Coordinate(int x, int z)
+        {
+            X = x;
+            Z = z;
+        }
+        public Coordinate()
+        {
+
+        }
+    }
 }

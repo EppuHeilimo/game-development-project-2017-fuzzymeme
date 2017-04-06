@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     private Level currentArea;
     private EnemySpawner areasSpawner;
     public List<GameObject> weapons;
+    public int progression = 0;
 
     
 	// Use this for initialization
@@ -27,15 +28,16 @@ public class GameManager : MonoBehaviour
 		
 	}
 
-    public void SetCurrentArea(Level currentArea)
+    public void SetCurrentArea(Level area)
     {
-        this.currentArea = currentArea;
+        this.currentArea = area;
         if (currentArea.transform.CompareTag("Area"))
         {
             if (!currentArea.Completed)
             {
                 areasSpawner = currentArea.transform.FindDeepChild("EnemySpawnPoints").GetComponent<EnemySpawner>();
                 areasSpawner.SpawnAll();
+                CloseCurrentAreasEntries();
             }
         }
     }
@@ -47,6 +49,11 @@ public class GameManager : MonoBehaviour
 
     public void OpenCurrentAreasEntries()
     {
+        if (!currentArea.Completed)
+        {
+            currentArea.Completed = true;
+            progression++;
+        }
         EntryPoint[] entries = currentArea.GetComponentsInChildren<EntryPoint>();
         foreach (EntryPoint t in entries)
         { 
@@ -55,7 +62,6 @@ public class GameManager : MonoBehaviour
                 t.OpenPath();
             }
         }
-        currentArea.Completed = true;
     }
 
     public void CloseCurrentAreasEntries()

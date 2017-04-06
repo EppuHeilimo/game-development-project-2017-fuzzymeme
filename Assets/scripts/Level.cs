@@ -13,6 +13,7 @@ public class Level : MonoBehaviour
     public RenderTexture minimapTexture;
     public RenderTexture fogOfWarTexture;
     public bool Completed = false;
+    private int enemyCount = 0;
 
 
     //public void Awake()
@@ -40,13 +41,20 @@ public class Level : MonoBehaviour
         }
         roomCount = Random.Range(2, entrypoints.Count + 1);
     }
+
+    public void SetEnemyCount(int count)
+    {
+        enemyCount = count;
+    }
 	
 	// Update is called once per frame
 	void Update () {
-		
+
+	    if (enemyCount <= 0 && !transform.root.CompareTag("BossArea"))
+	    {
+	        GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().OpenCurrentAreasEntries();
+	    }
 	}
-
-
 
     //inits the room and returns the entrypoint used to enter the room (RECURSIVE)
     public EntryPoint init(List<GameObject> availableAreas, EntryPoint prevArea, bool deadend)

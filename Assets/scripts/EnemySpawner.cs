@@ -36,6 +36,7 @@ public class EnemySpawner : MonoBehaviour
         {
             Init();
         }
+        int count = 0;
         foreach (Transform t in spawnPoints)
         {
             if (t.CompareTag("EnemySpawnPoint"))
@@ -50,9 +51,9 @@ public class EnemySpawner : MonoBehaviour
                 go.transform.localScale = new Vector3(rand, rand, rand);
 
                 minimapObj.parent = go.transform;
-
-            }
-                
+                count++;
+            }  
         }
+        transform.root.GetComponent<Level>().SetEnemyCount(count);
     }
 }

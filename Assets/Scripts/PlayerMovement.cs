@@ -60,10 +60,8 @@ public class PlayerMovement : MonoBehaviour {
         RaycastHit hit;
         if(Physics.Raycast(cameraRay, out hit, float.PositiveInfinity, layer))
         {
-            Debug.Log(hit.collider.gameObject.name);
             if(hit.collider.gameObject.transform.CompareTag("Enemy"))
             {
-                Debug.Log("hit enemy");
                 point = new Vector3(hit.collider.gameObject.transform.position.x, hit.collider.gameObject.transform.position.y, hit.collider.gameObject.transform.position.z);
             }
             else

@@ -1,14 +1,19 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Assets.Scripts;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class LevelGeneration : MonoBehaviour
 {
     private List<GameObject> areas;
     private GameObject startingArea;
+    public String FirstRoomName = null;
+
 
 	// Use this for initialization
 	void Start ()
@@ -25,7 +30,16 @@ public class LevelGeneration : MonoBehaviour
     //uses all areas recursively
     void RecursivelyInitLevels()
     {
-        startingArea = areas[Random.Range(0, areas.Count)];
+        FirstRoomName = FirstRoomName.Trim();
+        if (FirstRoomName.Equals(""))
+        {
+            startingArea = areas[Random.Range(0, areas.Count)];
+
+        }
+        else
+        {
+            startingArea = areas.First(o => o.gameObject.name.Equals(FirstRoomName));
+        }
         areas.Remove(startingArea);
         EntryPoint startingEntryPoint = startingArea.GetComponent<Level>().init(areas, null, false);
 

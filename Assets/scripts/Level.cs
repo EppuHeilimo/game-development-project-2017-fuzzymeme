@@ -13,6 +13,18 @@ public class Level : MonoBehaviour
     public RenderTexture minimapTexture;
     public RenderTexture fogOfWarTexture;
     public bool Completed = false;
+
+
+    //public void Awake()
+    //{
+    //    bool compareTo = CompareTag("Area");
+    //    if (!compareTo)
+    //    {
+    //        tag = "Area";
+    //    }
+
+    //}
+
     // Use this for initialization
     void Start ()
 	{

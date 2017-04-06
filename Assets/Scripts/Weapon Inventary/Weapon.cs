@@ -10,7 +10,7 @@ namespace Assets.Scripts.Weapon_Inventary
         public int Ammunition;
         public float ReloadTime = 0.5f;
         public GameObject BulletPrefab;
-        private float _lastShootTime;
+        protected float _lastShootTime;
 
         public PlayerAnimation.WeaponType holdingType;
         private GameObject weaponHolder;
@@ -90,7 +90,7 @@ namespace Assets.Scripts.Weapon_Inventary
             }
         }
 
-        public void Attack()
+        public virtual void Attack()
         {
 
             if (Ammunition == 0)

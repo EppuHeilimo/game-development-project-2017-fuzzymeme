@@ -17,6 +17,7 @@ namespace Assets.Scripts.Weapon_Inventary
             InitTimer = Time.time;
             float time = Distance / Speed;
             Destroy(gameObject, time);
+            gameObject.tag = "Bullet";
         }
 
         void Update()
@@ -46,7 +47,11 @@ namespace Assets.Scripts.Weapon_Inventary
                 else if (collision.CompareTag("isHit") || (collision.CompareTag("Enemy") && shooter.CompareTag("Enemy")))
                 {
                     // do nothing
+                }else if (collision.gameObject.CompareTag("Bullet"))
+                {
+                    //do nothing
                 }
+                
                 else
                 {
                     Collision(collision);

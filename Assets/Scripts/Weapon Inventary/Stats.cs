@@ -16,17 +16,43 @@ namespace Assets.Scripts.Weapon_Inventary
         public double CurrentLifeEnergy;
 
         public event EventHandler ZeroLifePoints;
+        private ParticleSystem bloodParticles;
 
+        public void Start()
+        {
+
+            Transform t = transform;
+            foreach (Transform tr in t)
+            {
+                if (tr.tag == "BloodScript")
+                {
+                    bloodParticles = tr.GetComponent<ParticleSystem>();
+
+                }
+            }
+ 
+        }
         private void Notify()
         {
             if(ZeroLifePoints != null)
             {
                 ZeroLifePoints(this,EventArgs.Empty);
             }
+
         }
 
         public void Damage(float damage)
         {
+            var hasBloodParticles = bloodParticles != null;
+            if (hasBloodParticles)
+            {
+                bloodParticles.Play(true);
+                bloodParticles.enableEmission = true;
+            }
+            
+
+
+      
             double newLifeEnergy = CurrentLifeEnergy - damage;
             if (newLifeEnergy <= 0)
             {

@@ -99,7 +99,8 @@ public class TextureToObjectsV2 : MonoBehaviour
 
         }
 
-     
+        var component = terrain.GetComponent<Terrain>();
+        component.materialType = Terrain.MaterialType.BuiltInLegacyDiffuse;
 
 
         GameObject enemySpawnPoints;

@@ -28,6 +28,13 @@ public class EnemySpawner : MonoBehaviour
         {
             spawnPoints.Add(t);
         }
+
+        if(EnemyPrefab == null)
+        {
+            GameObject[] load = Resources.LoadAll<GameObject>("Enemies/");
+            var range = Random.Range(0, load.Length);
+            EnemyPrefab=load[range];
+        }
     }
 
     public void SpawnAll()

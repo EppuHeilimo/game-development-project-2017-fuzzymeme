@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Script;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
@@ -78,13 +79,14 @@ public class TextureToObjectsV2 : MonoBehaviour
     private byte[] rawTextureData;
 
     private Vector3[,] TerrainGrid;
-
+    private int Terrain = 11;
 
 
     void Start()
     {
+    #if UNITY_EDITOR
+        if (EditorApplication.isPlaying) return;
 
-    # if UNITY_EDITOR
         GameObject trees;
         Transform findChild = gameObject.transform.FindChild("Trees");
         if (findChild == null)
@@ -100,14 +102,15 @@ public class TextureToObjectsV2 : MonoBehaviour
         }
 
         var component = GetComponent<Terrain>();
-        component.materialType = Terrain.MaterialType.BuiltInLegacyDiffuse;
+        
+        component.materialType = UnityEngine.Terrain.MaterialType.BuiltInLegacyDiffuse;
 
 
         GameObject enemySpawnPoints;
-        Transform enemySpawnPointsTransform = gameObject.transform.FindChild("Enemy Spawn Points");
+        Transform enemySpawnPointsTransform = gameObject.transform.FindChild("EnemySpawnPoints");
         if (enemySpawnPointsTransform == null)
         {
-            enemySpawnPoints = new GameObject("Enemy Spawn Points");
+            enemySpawnPoints = new GameObject("EnemySpawnPoints");
             enemySpawnPoints.transform.parent = transform;
         }
         else
@@ -135,6 +138,14 @@ public class TextureToObjectsV2 : MonoBehaviour
             ColorsToObjects.Add(colorsToObject);
         }
 
+        if (GetComponent<Level>() == null)
+        {
+            gameObject.AddComponent<Level>();
+        }
+
+        gameObject.tag = "Area";
+        gameObject.layer = Terrain;
+
         LoadAndAddTextures();
 #endif
     }
@@ -145,7 +156,7 @@ public class TextureToObjectsV2 : MonoBehaviour
     {
 
 #if UNITY_EDITOR
-
+        if (EditorApplication.isPlaying) return;
         if (Create)
         {
             Create = false;

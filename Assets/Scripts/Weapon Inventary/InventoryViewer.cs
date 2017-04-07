@@ -251,7 +251,7 @@ namespace Assets.Scripts.Weapon_Inventary
                 if (lastAmount != -2)
                 {
 
-                    last1Amount = -2;
+                    lastAmount = -2;
                 }
                
             }else if (item.UseAbleAmount != lastAmount)

@@ -99,7 +99,7 @@ public class TextureToObjectsV2 : MonoBehaviour
 
         }
 
-        var component = terrain.GetComponent<Terrain>();
+        var component = GetComponent<Terrain>();
         component.materialType = Terrain.MaterialType.BuiltInLegacyDiffuse;
 
 
@@ -115,18 +115,25 @@ public class TextureToObjectsV2 : MonoBehaviour
             enemySpawnPoints = enemySpawnPointsTransform.gameObject;
         }
 
+        GameObject teddy =Resources.Load<GameObject>("Enemies/Teddy");
+        EnemySpawner enemySpawner = enemySpawnPoints.AddComponent<EnemySpawner>();
+        enemySpawner.EnemyPrefab = teddy;
 
-        GameObject treePrefab = Resources.Load<GameObject>("Tree");
-        GameObject enemySpawnPointPreFab = Resources.Load<GameObject>("SpawnPoint");
+        if (ColorsToObjects.Count == 0)
+        {
+            
+            GameObject treePrefab = Resources.Load<GameObject>("Tree");
+            GameObject enemySpawnPointPreFab = Resources.Load<GameObject>("SpawnPoint");
 
-        ColorObject colorsToObjectTree = new ColorObject(new RGBColor(0, 0, 0), treePrefab, trees.gameObject);
-        colorsToObjectTree.RandomizeRotation = true;
-        colorsToObjectTree.RandomizeScale = true;
-        colorsToObjectTree.RandomScaleRange = new Vector2(0.9f,1.6f);
-        ColorsToObjects.Add(colorsToObjectTree);
+            ColorObject colorsToObjectTree = new ColorObject(new RGBColor(0, 0, 0), treePrefab, trees.gameObject);
+            colorsToObjectTree.RandomizeRotation = true;
+            colorsToObjectTree.RandomizeScale = true;
+            colorsToObjectTree.RandomScaleRange = new Vector2(0.1f,0.25f);
+            ColorsToObjects.Add(colorsToObjectTree);
 
-        ColorObject colorsToObject = new ColorObject(new RGBColor(255, 0, 0), enemySpawnPointPreFab, enemySpawnPoints.gameObject);
-        ColorsToObjects.Add(colorsToObject);
+            ColorObject colorsToObject = new ColorObject(new RGBColor(255, 0, 0), enemySpawnPointPreFab, enemySpawnPoints.gameObject);
+            ColorsToObjects.Add(colorsToObject);
+        }
 
         LoadAndAddTextures();
 #endif

@@ -38,7 +38,8 @@ public class LevelGeneration : MonoBehaviour
         }
         else
         {
-            startingArea = areas.First(o => o.gameObject.name.Equals(FirstRoomName));
+            var startingAreaTemp = areas.First(o => o.gameObject.name.Equals(FirstRoomName));
+            startingArea = startingAreaTemp;
         }
         areas.Remove(startingArea);
         EntryPoint startingEntryPoint = startingArea.GetComponent<Level>().init(areas, null, false);

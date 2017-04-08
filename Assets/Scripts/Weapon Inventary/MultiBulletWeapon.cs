@@ -8,8 +8,6 @@ namespace Assets.Scripts.Weapon_Inventary
     public class MultiBulletWeapon : Weapon
     {
 
-
-
         public int Number = 5;
         public float AngleBetweenBullets= 12;
    

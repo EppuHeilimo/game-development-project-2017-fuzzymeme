@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Script;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
@@ -78,13 +79,14 @@ public class TextureToObjectsV2 : MonoBehaviour
     private byte[] rawTextureData;
 
     private Vector3[,] TerrainGrid;
-
+    private int Terrain = 11;
 
 
     void Start()
     {
+    #if UNITY_EDITOR
+        if (EditorApplication.isPlaying) return;
 
-    # if UNITY_EDITOR
         GameObject trees;
         Transform findChild = gameObject.transform.FindChild("Trees");
         if (findChild == null)
@@ -99,15 +101,16 @@ public class TextureToObjectsV2 : MonoBehaviour
 
         }
 
-        var component = terrain.GetComponent<Terrain>();
-        component.materialType = Terrain.MaterialType.BuiltInLegacyDiffuse;
+        var component = GetComponent<Terrain>();
+        
+        component.materialType = UnityEngine.Terrain.MaterialType.BuiltInLegacyDiffuse;
 
 
         GameObject enemySpawnPoints;
-        Transform enemySpawnPointsTransform = gameObject.transform.FindChild("Enemy Spawn Points");
+        Transform enemySpawnPointsTransform = gameObject.transform.FindChild("EnemySpawnPoints");
         if (enemySpawnPointsTransform == null)
         {
-            enemySpawnPoints = new GameObject("Enemy Spawn Points");
+            enemySpawnPoints = new GameObject("EnemySpawnPoints");
             enemySpawnPoints.transform.parent = transform;
         }
         else
@@ -115,18 +118,33 @@ public class TextureToObjectsV2 : MonoBehaviour
             enemySpawnPoints = enemySpawnPointsTransform.gameObject;
         }
 
+        GameObject teddy =Resources.Load<GameObject>("Enemies/Teddy");
+        EnemySpawner enemySpawner = enemySpawnPoints.AddComponent<EnemySpawner>();
+        enemySpawner.EnemyPrefab = teddy;
 
-        GameObject treePrefab = Resources.Load<GameObject>("Tree");
-        GameObject enemySpawnPointPreFab = Resources.Load<GameObject>("SpawnPoint");
+        if (ColorsToObjects.Count == 0)
+        {
+            
+            GameObject treePrefab = Resources.Load<GameObject>("Tree");
+            GameObject enemySpawnPointPreFab = Resources.Load<GameObject>("SpawnPoint");
 
-        ColorObject colorsToObjectTree = new ColorObject(new RGBColor(0, 0, 0), treePrefab, trees.gameObject);
-        colorsToObjectTree.RandomizeRotation = true;
-        colorsToObjectTree.RandomizeScale = true;
-        colorsToObjectTree.RandomScaleRange = new Vector2(0.9f,1.6f);
-        ColorsToObjects.Add(colorsToObjectTree);
+            ColorObject colorsToObjectTree = new ColorObject(new RGBColor(0, 0, 0), treePrefab, trees.gameObject);
+            colorsToObjectTree.RandomizeRotation = true;
+            colorsToObjectTree.RandomizeScale = true;
+            colorsToObjectTree.RandomScaleRange = new Vector2(0.1f,0.25f);
+            ColorsToObjects.Add(colorsToObjectTree);
 
-        ColorObject colorsToObject = new ColorObject(new RGBColor(255, 0, 0), enemySpawnPointPreFab, enemySpawnPoints.gameObject);
-        ColorsToObjects.Add(colorsToObject);
+            ColorObject colorsToObject = new ColorObject(new RGBColor(255, 0, 0), enemySpawnPointPreFab, enemySpawnPoints.gameObject);
+            ColorsToObjects.Add(colorsToObject);
+        }
+
+        if (GetComponent<Level>() == null)
+        {
+            gameObject.AddComponent<Level>();
+        }
+
+        gameObject.tag = "Area";
+        gameObject.layer = Terrain;
 
         LoadAndAddTextures();
 #endif
@@ -138,7 +156,7 @@ public class TextureToObjectsV2 : MonoBehaviour
     {
 
 #if UNITY_EDITOR
-
+        if (EditorApplication.isPlaying) return;
         if (Create)
         {
             Create = false;

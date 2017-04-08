@@ -12,6 +12,7 @@ public class EnemySpawner : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+
 	    Init();
 	}
 	
@@ -26,6 +27,13 @@ public class EnemySpawner : MonoBehaviour
         foreach (Transform t in transform)
         {
             spawnPoints.Add(t);
+        }
+
+        if(EnemyPrefab == null)
+        {
+            GameObject[] load = Resources.LoadAll<GameObject>("Enemies/");
+            var range = Random.Range(0, load.Length);
+            EnemyPrefab=load[range];
         }
     }
 

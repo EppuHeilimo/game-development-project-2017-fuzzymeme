@@ -99,6 +99,12 @@ namespace Assets.Scripts.Weapon_Inventary
             item3Text = GameObject.Find("Inventory/LeftSide/Item3/Text").GetComponent<Text>();
          
             item4Text = GameObject.Find("Inventory/LeftSide/Item4/Text").GetComponent<Text>();
+
+            item1Text.text = "";
+            item2Text.text = "";
+            item3Text.text = "";
+            item4Text.text = "";
+
             Resources.Load<Sprite>("awesome");
             notSelectedSprite = Resources.Load<Sprite>("item_border");
             SelectedSprite = Resources.Load<Sprite>("selected_item_border");
@@ -251,7 +257,7 @@ namespace Assets.Scripts.Weapon_Inventary
                 if (lastAmount != -2)
                 {
 
-                    last1Amount = -2;
+                    lastAmount = -2;
                 }
                
             }else if (item.UseAbleAmount != lastAmount)

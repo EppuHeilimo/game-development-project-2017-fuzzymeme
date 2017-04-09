@@ -6,6 +6,7 @@
 		_Color("Main Color", Color) = (1,1,1,1)
 
 		_DetailTex("Detail (RGB)", 2D) = "white" {}
+		_DetailTint("Detail Tint", Color) = (1,1,1,1)
 		_Strength("Detail Strength", Range(0.0, 1.0)) = 0.2
 
 		_StencilComp("Stencil Comparison", Float) = 8
@@ -79,6 +80,7 @@
 
 			sampler2D _MainTex;
 			sampler2D _DetailTex;
+			fixed4 _DetailTint;
 			float4 _MainTex_ST;
 			float4 _DetailTex_ST;
 			float4 _DetailTex_TexelSize;
@@ -116,7 +118,7 @@
 				//if render texture has black area, fill it with detail texture
 				if (color.r < 0.2f && color.g < 0.2f && color.b < 0.2f)
 				{
-					color = detail;
+					color = detail * _DetailTint;
 				}
 
 				#ifdef UNITY_UI_ALPHACLIP

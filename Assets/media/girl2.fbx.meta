@@ -1,0 +1,197 @@
+fileFormatVersion: 2
+guid: 87238284612302548847edbce919ccfd
+timeCreated: 1491740395
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Ankle.L
+    100002: Ankle.R
+    100004: Armature
+    100006: ArmIK.L
+    100008: ArmIK.L_end
+    100010: ArmIK.R
+    100012: ArmIK.R_end
+    100014: ArmTargetPole.L
+    100016: ArmTargetPole.L_end
+    100018: ArmTargetPole.R
+    100020: ArmTargetPole.R_end
+    100022: Cube
+    100024: Foot.L
+    100026: Foot.L_end
+    100028: Foot.R
+    100030: Foot.R_end
+    100032: //RootNode
+    100034: Hand.L
+    100036: Hand.L_end
+    100038: Hand.R
+    100040: Hand.R_end
+    100042: HandWeaponPoint.L
+    100044: HandWeaponPoint.L_end
+    100046: HandWeaponPoint.R
+    100048: HandWeaponPoint.R_end
+    100050: Head
+    100052: Head_end
+    100054: LegControl.L
+    100056: LegControl.R
+    100058: LegIK.L
+    100060: LegIK.L_end
+    100062: LegIK.R
+    100064: LegIK.R_end
+    100066: LegTargetPole.L
+    100068: LegTargetPole.L_end
+    100070: LegTargetPole.R
+    100072: LegTargetPole.R_end
+    100074: LowerArm.L
+    100076: LowerArm.R
+    100078: LowerLeg.L
+    100080: LowerLeg.L_end
+    100082: LowerLeg.R
+    100084: LowerLeg.R_end
+    100086: LowerTorso
+    100088: Neck
+    100090: Root
+    100092: UpperArm.L
+    100094: UpperArm.R
+    100096: UpperLeg.L
+    100098: UpperLeg.R
+    100100: UpperTorso
+    100102: Cube.001
+    400000: Ankle.L
+    400002: Ankle.R
+    400004: Armature
+    400006: ArmIK.L
+    400008: ArmIK.L_end
+    400010: ArmIK.R
+    400012: ArmIK.R_end
+    400014: ArmTargetPole.L
+    400016: ArmTargetPole.L_end
+    400018: ArmTargetPole.R
+    400020: ArmTargetPole.R_end
+    400022: Cube
+    400024: Foot.L
+    400026: Foot.L_end
+    400028: Foot.R
+    400030: Foot.R_end
+    400032: //RootNode
+    400034: Hand.L
+    400036: Hand.L_end
+    400038: Hand.R
+    400040: Hand.R_end
+    400042: HandWeaponPoint.L
+    400044: HandWeaponPoint.L_end
+    400046: HandWeaponPoint.R
+    400048: HandWeaponPoint.R_end
+    400050: Head
+    400052: Head_end
+    400054: LegControl.L
+    400056: LegControl.R
+    400058: LegIK.L
+    400060: LegIK.L_end
+    400062: LegIK.R
+    400064: LegIK.R_end
+    400066: LegTargetPole.L
+    400068: LegTargetPole.L_end
+    400070: LegTargetPole.R
+    400072: LegTargetPole.R_end
+    400074: LowerArm.L
+    400076: LowerArm.R
+    400078: LowerLeg.L
+    400080: LowerLeg.L_end
+    400082: LowerLeg.R
+    400084: LowerLeg.R_end
+    400086: LowerTorso
+    400088: Neck
+    400090: Root
+    400092: UpperArm.L
+    400094: UpperArm.R
+    400096: UpperLeg.L
+    400098: UpperLeg.R
+    400100: UpperTorso
+    400102: Cube.001
+    4300000: Cube
+    4300002: Cube.001
+    7400000: RunForward
+    7400002: Armature|HoldingStick
+    7400004: Armature|Idle
+    7400006: Armature|OneHandedCarry
+    7400008: Armature|RunBackwards
+    7400010: Armature|RunForward
+    7400012: Armature|Slash
+    7400014: Armature|StepLeft
+    7400016: Armature|StepRight
+    7400018: Armature|TwoHandedCarry
+    7400020: Armature|Walk
+    7400022: Cube|RunBackwards
+    7400024: Cube.001|RunBackwards
+    9500000: //RootNode
+    13700000: Cube
+    13700002: Cube.001
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

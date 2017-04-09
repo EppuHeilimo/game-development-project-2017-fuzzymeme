@@ -59,6 +59,7 @@ ModelImporter:
     100102: UpperLeg.L
     100104: UpperLeg.R
     100106: UpperTorso
+    100108: Cube.001
     400000: Ankle.L
     400002: Ankle.R
     400004: Armature
@@ -113,7 +114,9 @@ ModelImporter:
     400102: UpperLeg.L
     400104: UpperLeg.R
     400106: UpperTorso
+    400108: Cube.001
     4300000: Cube
+    4300002: Cube.001
     7400000: Run
     7400002: Walk
     7400004: Cube|Run
@@ -128,6 +131,7 @@ ModelImporter:
     7400022: TwoHandedCarry
     9500000: //RootNode
     13700000: Cube
+    13700002: Cube.001
   materials:
     importMaterials: 1
     materialName: 0

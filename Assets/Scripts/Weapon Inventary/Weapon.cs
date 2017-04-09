@@ -33,10 +33,7 @@ namespace Assets.Scripts.Weapon_Inventary
 
         public override void Start()
         {
-
             weaponHolder = transform.FindDeepChild("WeaponHolder").gameObject;
-            if(weaponHolder == null)
-                Debug.Log(gameObject.name);
             if (transform.CompareTag("Player"))
             {
                 Inventory inv = GetComponent<Inventory>();
@@ -130,9 +127,9 @@ namespace Assets.Scripts.Weapon_Inventary
             _lastShootTime = Time.time;
             Transform holderParent = weaponHolder.transform.parent;
             weaponHolder.transform.SetParent(null);
-            weaponHolder.GetComponent<MeshFilter>().mesh = PickUpPrefab.GetComponent<MeshFilter>().sharedMesh;
-            weaponHolder.GetComponent<MeshRenderer>().material = PickUpPrefab.GetComponent<MeshRenderer>().sharedMaterial;
-            weaponHolder.transform.localScale = PickUpPrefab.transform.localScale; 
+            weaponHolder.GetComponent<MeshFilter>().sharedMesh = PickUpPrefab.GetComponent<MeshFilter>().sharedMesh;
+            weaponHolder.GetComponent<MeshRenderer>().sharedMaterial = PickUpPrefab.GetComponent<MeshRenderer>().sharedMaterial;
+            weaponHolder.transform.localScale = PickUpPrefab.transform.localScale;           
             weaponHolder.transform.parent = holderParent;
             GetComponent<PlayerAnimation>().SetWeaponType(holdingType);
 

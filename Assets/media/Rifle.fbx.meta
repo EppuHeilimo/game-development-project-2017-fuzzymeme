@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: af86bb7ab38aabc43a7d3587932dee12
-timeCreated: 1491744898
+guid: f0e98c488b0b2e348bf91290b2700e9c
+timeCreated: 1491749799
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -14,9 +14,7 @@ ModelImporter:
     400004: Lamp
     400006: //RootNode
     2300000: Cube
-    2300002: //RootNode
     3300000: Cube
-    3300002: //RootNode
     4300000: Cube
   materials:
     importMaterials: 1

@@ -21,7 +21,6 @@ public class PlayerAnimation : MonoBehaviour
     public float inputVertical = 0;
     public int quadrant;
     public WeaponType wepType;
-    private AnimationClip[] animations;
     
     // Use this for initialization
     void Start ()
@@ -66,13 +65,6 @@ public class PlayerAnimation : MonoBehaviour
         anim.Play("Slash", 1);
     }
 
-    private IEnumerator WaitForAnimation(Animation animation)
-    {
-        do
-        {
-            yield return null;
-        } while (animation.isPlaying);
-    }
 
     public void SetWeaponType(WeaponType type)
     {

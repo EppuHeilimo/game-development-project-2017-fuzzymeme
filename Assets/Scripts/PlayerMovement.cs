@@ -15,12 +15,14 @@ public class PlayerMovement : MonoBehaviour {
     float playerVelocity;
 
     private Inventory inventory;
+    public Vector3 LookPoint;
 
     // Use this for initialization
     void Start () {
         main_camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         inventory = GetComponent<Inventory>();
         animation = GetComponent<PlayerAnimation>();
+        LookPoint = Vector3.zero;
 
     }
 	
@@ -70,13 +72,12 @@ public class PlayerMovement : MonoBehaviour {
                 float rayLength;
                 if (groundPlane.Raycast(cameraRay, out rayLength))
                 {
-                    point = cameraRay.GetPoint(rayLength); // Where the player looks
-                                                           
+                    point = cameraRay.GetPoint(rayLength); // Where the player looks                                       
                 }
             }
         }
-
-        transform.LookAt(new Vector3(point.x, transform.position.y, point.z)); //look to directions on plane level (x,z)
+        LookPoint = new Vector3(point.x, transform.position.y, point.z);
+        transform.LookAt(LookPoint); //look to directions on plane level (x,z)
     }
 
     void SpeedLimit()

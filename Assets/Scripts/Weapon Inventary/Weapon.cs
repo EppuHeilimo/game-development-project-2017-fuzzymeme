@@ -100,10 +100,12 @@ namespace Assets.Scripts.Weapon_Inventary
                 GetComponent<PlayerAnimation>().AnimateSlash();
             }
 
+            Quaternion rotation = BulletSpawnPosition.root.rotation;
+
             var bullet = (GameObject)Instantiate(
             BulletPrefab,
             BulletSpawnPosition.position,
-            BulletSpawnPosition.root.rotation);
+            rotation);
             Bullet component = bullet.GetComponent<Bullet>();
             if (Ammunition != -1)
             {

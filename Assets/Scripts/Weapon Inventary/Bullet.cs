@@ -68,7 +68,7 @@ namespace Assets.Scripts.Weapon_Inventary
         {
             GameObject gameobj1 = collision.gameObject;
             Stats stats = gameobj1.GetComponent<Stats>();
-            
+            Debug.Log(collision.gameObject.name);
             if (stats != null)
             { 
                 stats.Damage(Damage);

@@ -14,6 +14,8 @@ namespace Assets.Scripts.Weapon_Inventary
 
         public PlayerAnimation.WeaponType holdingType;
         private GameObject weaponHolder;
+
+        private Transform attackSpawnPosition;
         private Transform _bulletSpawnPosition;
         public Transform BulletSpawnPosition
         {
@@ -34,20 +36,11 @@ namespace Assets.Scripts.Weapon_Inventary
         public override void Start()
         {
             weaponHolder = transform.FindDeepChild("WeaponHolder").gameObject;
-            if (transform.CompareTag("Player"))
-            {
-                Inventory inv = GetComponent<Inventory>();
-                Transform holderParent = weaponHolder.transform.parent;
-                weaponHolder.transform.SetParent(null);
-                weaponHolder.GetComponent<MeshFilter>().mesh = inv.Items[inv.Index].PickUpPrefab.GetComponent<MeshFilter>().sharedMesh;
-                weaponHolder.GetComponent<MeshRenderer>().material = inv.Items[inv.Index].PickUpPrefab.GetComponent<MeshRenderer>().sharedMaterial;
-                weaponHolder.transform.localScale = inv.Items[inv.Index].PickUpPrefab.transform.localScale;
-                weaponHolder.transform.parent = holderParent;
-            }
             
             if (_bulletSpawnPosition == null)
             {
-                _bulletSpawnPosition = transform.FindDeepChild("AttackSpawnPoint");
+                attackSpawnPosition = transform.FindDeepChild("AttackSpawnPoint");
+                _bulletSpawnPosition = attackSpawnPosition;
             }
             
         }
@@ -132,6 +125,8 @@ namespace Assets.Scripts.Weapon_Inventary
             weaponHolder.transform.localScale = PickUpPrefab.transform.localScale;           
             weaponHolder.transform.parent = holderParent;
             GetComponent<PlayerAnimation>().SetWeaponType(holdingType);
+            attackSpawnPosition.localPosition = PickUpPrefab.transform.FindDeepChild("AttackSpawnPoint").transform.localPosition;
+            _bulletSpawnPosition = attackSpawnPosition;
 
         }
         public override void Use()

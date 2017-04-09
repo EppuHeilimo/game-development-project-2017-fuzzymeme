@@ -31,6 +31,7 @@ public class Inventory : MonoBehaviour
     {
         Index = 0;
         InventarySize = Items.Count;
+        ChangeIndex(Index);
         
     }
     public int SelectedPickUpArroundIndex

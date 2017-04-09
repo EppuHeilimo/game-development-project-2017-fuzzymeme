@@ -1,0 +1,1113 @@
+fileFormatVersion: 2
+guid: 45b5e835ab971ea4bbe42c47275de650
+timeCreated: 1491675215
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Armature
+    100002: BackLegIK.L
+    100004: BackLegIK.L_end
+    100006: BackLegIK.R
+    100008: BackLegIK.R_end
+    100010: BackLegTargetPole.L
+    100012: BackLegTargetPole.L_end
+    100014: BackLegTargetPole.R
+    100016: BackLegTargetPole.R_end
+    100018: BackLowerFoot.L
+    100020: BackLowerFoot.L_end
+    100022: BackLowerFoot.R
+    100024: BackLowerFoot.R_end
+    100026: BackLowerLeg.L
+    100028: BackLowerLeg.R
+    100030: BackUpperFoot.L
+    100032: BackUpperFoot.R
+    100034: BackUpperLeg.L
+    100036: BackUpperLeg.R
+    100038: //RootNode
+    100040: bunny
+    100042: FrontFoot.L
+    100044: FrontFoot.L_end
+    100046: FrontFoot.R
+    100048: FrontFoot.R_end
+    100050: FrontLegIK.L
+    100052: FrontLegIK.L_end
+    100054: FrontLegIK.R
+    100056: FrontLegIK.R_end
+    100058: FrontLegTargetPole.L
+    100060: FrontLegTargetPole.L_end
+    100062: FrontLegTargetPole.R
+    100064: FrontLegTargetPole.R_end
+    100066: FrontLowerLeg.L
+    100068: FrontLowerLeg.R
+    100070: FrontUpperLeg.L
+    100072: FrontUpperLeg.R
+    100074: Head
+    100076: HeadIK
+    100078: HeadIK_end
+    100080: LowerBody
+    100082: LowerEear.L
+    100084: LowerEear.R
+    100086: Neck
+    100088: Root
+    100090: UpperBody
+    100092: UpperEar.L
+    100094: UpperEar.L_end
+    100096: UpperEar.R
+    100098: UpperEar.R_end
+    100100: WeaponPoint
+    100102: WeaponPoint_end
+    400000: Armature
+    400002: BackLegIK.L
+    400004: BackLegIK.L_end
+    400006: BackLegIK.R
+    400008: BackLegIK.R_end
+    400010: BackLegTargetPole.L
+    400012: BackLegTargetPole.L_end
+    400014: BackLegTargetPole.R
+    400016: BackLegTargetPole.R_end
+    400018: BackLowerFoot.L
+    400020: BackLowerFoot.L_end
+    400022: BackLowerFoot.R
+    400024: BackLowerFoot.R_end
+    400026: BackLowerLeg.L
+    400028: BackLowerLeg.R
+    400030: BackUpperFoot.L
+    400032: BackUpperFoot.R
+    400034: BackUpperLeg.L
+    400036: BackUpperLeg.R
+    400038: //RootNode
+    400040: bunny
+    400042: FrontFoot.L
+    400044: FrontFoot.L_end
+    400046: FrontFoot.R
+    400048: FrontFoot.R_end
+    400050: FrontLegIK.L
+    400052: FrontLegIK.L_end
+    400054: FrontLegIK.R
+    400056: FrontLegIK.R_end
+    400058: FrontLegTargetPole.L
+    400060: FrontLegTargetPole.L_end
+    400062: FrontLegTargetPole.R
+    400064: FrontLegTargetPole.R_end
+    400066: FrontLowerLeg.L
+    400068: FrontLowerLeg.R
+    400070: FrontUpperLeg.L
+    400072: FrontUpperLeg.R
+    400074: Head
+    400076: HeadIK
+    400078: HeadIK_end
+    400080: LowerBody
+    400082: LowerEear.L
+    400084: LowerEear.R
+    400086: Neck
+    400088: Root
+    400090: UpperBody
+    400092: UpperEar.L
+    400094: UpperEar.L_end
+    400096: UpperEar.R
+    400098: UpperEar.R_end
+    400100: WeaponPoint
+    400102: WeaponPoint_end
+    4300000: bunny
+    7400000: IdleDown
+    7400002: JumpForward
+    7400004: LayDown
+    7400006: RunBackward
+    7400008: RunForward
+    7400010: StandUp
+    7400012: IdleStand
+    9500000: //RootNode
+    13700000: bunny
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: IdleDown
+      takeName: Armature|IdleDown
+      firstFrame: 0
+      lastFrame: 65
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Root
+        weight: 1
+      - path: Armature/Root/BackLegIK.L
+        weight: 1
+      - path: Armature/Root/BackLegIK.L/BackLegIK.L_end
+        weight: 1
+      - path: Armature/Root/BackLegIK.R
+        weight: 1
+      - path: Armature/Root/BackLegIK.R/BackLegIK.R_end
+        weight: 1
+      - path: Armature/Root/BackLegTargetPole.L
+        weight: 1
+      - path: Armature/Root/BackLegTargetPole.L/BackLegTargetPole.L_end
+        weight: 1
+      - path: Armature/Root/BackLegTargetPole.R
+        weight: 1
+      - path: Armature/Root/BackLegTargetPole.R/BackLegTargetPole.R_end
+        weight: 1
+      - path: Armature/Root/FrontLegIK.L
+        weight: 1
+      - path: Armature/Root/FrontLegIK.L/FrontLegIK.L_end
+        weight: 1
+      - path: Armature/Root/FrontLegIK.R
+        weight: 1
+      - path: Armature/Root/FrontLegIK.R/FrontLegIK.R_end
+        weight: 1
+      - path: Armature/Root/FrontLegTargetPole.L
+        weight: 1
+      - path: Armature/Root/FrontLegTargetPole.L/FrontLegTargetPole.L_end
+        weight: 1
+      - path: Armature/Root/FrontLegTargetPole.R
+        weight: 1
+      - path: Armature/Root/FrontLegTargetPole.R/FrontLegTargetPole.R_end
+        weight: 1
+      - path: Armature/Root/HeadIK
+        weight: 1
+      - path: Armature/Root/HeadIK/HeadIK_end
+        weight: 1
+      - path: Armature/Root/LowerBody
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L/BackLowerLeg.L
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L/BackLowerLeg.L/BackUpperFoot.L
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L/BackLowerLeg.L/BackUpperFoot.L/BackLowerFoot.L
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L/BackLowerLeg.L/BackUpperFoot.L/BackLowerFoot.L/BackLowerFoot.L_end
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R/BackLowerLeg.R
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R/BackLowerLeg.R/BackUpperFoot.R
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R/BackLowerLeg.R/BackUpperFoot.R/BackLowerFoot.R
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R/BackLowerLeg.R/BackUpperFoot.R/BackLowerFoot.R/BackLowerFoot.R_end
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.L/FrontLowerLeg.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.L/FrontLowerLeg.L/FrontFoot.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.L/FrontLowerLeg.L/FrontFoot.L/FrontFoot.L_end
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.R/FrontLowerLeg.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.R/FrontLowerLeg.R/FrontFoot.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.R/FrontLowerLeg.R/FrontFoot.R/FrontFoot.R_end
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.L/UpperEar.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.L/UpperEar.L/UpperEar.L_end
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.R/UpperEar.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.R/UpperEar.R/UpperEar.R_end
+        weight: 1
+      - path: Armature/Root/WeaponPoint
+        weight: 1
+      - path: Armature/Root/WeaponPoint/WeaponPoint_end
+        weight: 1
+      - path: bunny
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: JumpForward
+      takeName: Armature|JumpForward
+      firstFrame: 0
+      lastFrame: 144
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Root
+        weight: 1
+      - path: Armature/Root/BackLegIK.L
+        weight: 1
+      - path: Armature/Root/BackLegIK.L/BackLegIK.L_end
+        weight: 1
+      - path: Armature/Root/BackLegIK.R
+        weight: 1
+      - path: Armature/Root/BackLegIK.R/BackLegIK.R_end
+        weight: 1
+      - path: Armature/Root/BackLegTargetPole.L
+        weight: 1
+      - path: Armature/Root/BackLegTargetPole.L/BackLegTargetPole.L_end
+        weight: 1
+      - path: Armature/Root/BackLegTargetPole.R
+        weight: 1
+      - path: Armature/Root/BackLegTargetPole.R/BackLegTargetPole.R_end
+        weight: 1
+      - path: Armature/Root/FrontLegIK.L
+        weight: 1
+      - path: Armature/Root/FrontLegIK.L/FrontLegIK.L_end
+        weight: 1
+      - path: Armature/Root/FrontLegIK.R
+        weight: 1
+      - path: Armature/Root/FrontLegIK.R/FrontLegIK.R_end
+        weight: 1
+      - path: Armature/Root/FrontLegTargetPole.L
+        weight: 1
+      - path: Armature/Root/FrontLegTargetPole.L/FrontLegTargetPole.L_end
+        weight: 1
+      - path: Armature/Root/FrontLegTargetPole.R
+        weight: 1
+      - path: Armature/Root/FrontLegTargetPole.R/FrontLegTargetPole.R_end
+        weight: 1
+      - path: Armature/Root/HeadIK
+        weight: 1
+      - path: Armature/Root/HeadIK/HeadIK_end
+        weight: 1
+      - path: Armature/Root/LowerBody
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L/BackLowerLeg.L
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L/BackLowerLeg.L/BackUpperFoot.L
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L/BackLowerLeg.L/BackUpperFoot.L/BackLowerFoot.L
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L/BackLowerLeg.L/BackUpperFoot.L/BackLowerFoot.L/BackLowerFoot.L_end
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R/BackLowerLeg.R
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R/BackLowerLeg.R/BackUpperFoot.R
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R/BackLowerLeg.R/BackUpperFoot.R/BackLowerFoot.R
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R/BackLowerLeg.R/BackUpperFoot.R/BackLowerFoot.R/BackLowerFoot.R_end
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.L/FrontLowerLeg.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.L/FrontLowerLeg.L/FrontFoot.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.L/FrontLowerLeg.L/FrontFoot.L/FrontFoot.L_end
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.R/FrontLowerLeg.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.R/FrontLowerLeg.R/FrontFoot.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.R/FrontLowerLeg.R/FrontFoot.R/FrontFoot.R_end
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.L/UpperEar.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.L/UpperEar.L/UpperEar.L_end
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.R/UpperEar.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.R/UpperEar.R/UpperEar.R_end
+        weight: 1
+      - path: Armature/Root/WeaponPoint
+        weight: 1
+      - path: Armature/Root/WeaponPoint/WeaponPoint_end
+        weight: 1
+      - path: bunny
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: LayDown
+      takeName: Armature|LayDown
+      firstFrame: 0
+      lastFrame: 80
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Root
+        weight: 1
+      - path: Armature/Root/BackLegIK.L
+        weight: 1
+      - path: Armature/Root/BackLegIK.L/BackLegIK.L_end
+        weight: 1
+      - path: Armature/Root/BackLegIK.R
+        weight: 1
+      - path: Armature/Root/BackLegIK.R/BackLegIK.R_end
+        weight: 1
+      - path: Armature/Root/BackLegTargetPole.L
+        weight: 1
+      - path: Armature/Root/BackLegTargetPole.L/BackLegTargetPole.L_end
+        weight: 1
+      - path: Armature/Root/BackLegTargetPole.R
+        weight: 1
+      - path: Armature/Root/BackLegTargetPole.R/BackLegTargetPole.R_end
+        weight: 1
+      - path: Armature/Root/FrontLegIK.L
+        weight: 1
+      - path: Armature/Root/FrontLegIK.L/FrontLegIK.L_end
+        weight: 1
+      - path: Armature/Root/FrontLegIK.R
+        weight: 1
+      - path: Armature/Root/FrontLegIK.R/FrontLegIK.R_end
+        weight: 1
+      - path: Armature/Root/FrontLegTargetPole.L
+        weight: 1
+      - path: Armature/Root/FrontLegTargetPole.L/FrontLegTargetPole.L_end
+        weight: 1
+      - path: Armature/Root/FrontLegTargetPole.R
+        weight: 1
+      - path: Armature/Root/FrontLegTargetPole.R/FrontLegTargetPole.R_end
+        weight: 1
+      - path: Armature/Root/HeadIK
+        weight: 1
+      - path: Armature/Root/HeadIK/HeadIK_end
+        weight: 1
+      - path: Armature/Root/LowerBody
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L/BackLowerLeg.L
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L/BackLowerLeg.L/BackUpperFoot.L
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L/BackLowerLeg.L/BackUpperFoot.L/BackLowerFoot.L
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L/BackLowerLeg.L/BackUpperFoot.L/BackLowerFoot.L/BackLowerFoot.L_end
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R/BackLowerLeg.R
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R/BackLowerLeg.R/BackUpperFoot.R
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R/BackLowerLeg.R/BackUpperFoot.R/BackLowerFoot.R
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R/BackLowerLeg.R/BackUpperFoot.R/BackLowerFoot.R/BackLowerFoot.R_end
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.L/FrontLowerLeg.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.L/FrontLowerLeg.L/FrontFoot.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.L/FrontLowerLeg.L/FrontFoot.L/FrontFoot.L_end
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.R/FrontLowerLeg.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.R/FrontLowerLeg.R/FrontFoot.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.R/FrontLowerLeg.R/FrontFoot.R/FrontFoot.R_end
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.L/UpperEar.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.L/UpperEar.L/UpperEar.L_end
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.R/UpperEar.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.R/UpperEar.R/UpperEar.R_end
+        weight: 1
+      - path: Armature/Root/WeaponPoint
+        weight: 1
+      - path: Armature/Root/WeaponPoint/WeaponPoint_end
+        weight: 1
+      - path: bunny
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: RunBackward
+      takeName: Armature|RunBackward
+      firstFrame: 0
+      lastFrame: 64
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Root
+        weight: 1
+      - path: Armature/Root/BackLegIK.L
+        weight: 1
+      - path: Armature/Root/BackLegIK.L/BackLegIK.L_end
+        weight: 1
+      - path: Armature/Root/BackLegIK.R
+        weight: 1
+      - path: Armature/Root/BackLegIK.R/BackLegIK.R_end
+        weight: 1
+      - path: Armature/Root/BackLegTargetPole.L
+        weight: 1
+      - path: Armature/Root/BackLegTargetPole.L/BackLegTargetPole.L_end
+        weight: 1
+      - path: Armature/Root/BackLegTargetPole.R
+        weight: 1
+      - path: Armature/Root/BackLegTargetPole.R/BackLegTargetPole.R_end
+        weight: 1
+      - path: Armature/Root/FrontLegIK.L
+        weight: 1
+      - path: Armature/Root/FrontLegIK.L/FrontLegIK.L_end
+        weight: 1
+      - path: Armature/Root/FrontLegIK.R
+        weight: 1
+      - path: Armature/Root/FrontLegIK.R/FrontLegIK.R_end
+        weight: 1
+      - path: Armature/Root/FrontLegTargetPole.L
+        weight: 1
+      - path: Armature/Root/FrontLegTargetPole.L/FrontLegTargetPole.L_end
+        weight: 1
+      - path: Armature/Root/FrontLegTargetPole.R
+        weight: 1
+      - path: Armature/Root/FrontLegTargetPole.R/FrontLegTargetPole.R_end
+        weight: 1
+      - path: Armature/Root/HeadIK
+        weight: 1
+      - path: Armature/Root/HeadIK/HeadIK_end
+        weight: 1
+      - path: Armature/Root/LowerBody
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L/BackLowerLeg.L
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L/BackLowerLeg.L/BackUpperFoot.L
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L/BackLowerLeg.L/BackUpperFoot.L/BackLowerFoot.L
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L/BackLowerLeg.L/BackUpperFoot.L/BackLowerFoot.L/BackLowerFoot.L_end
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R/BackLowerLeg.R
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R/BackLowerLeg.R/BackUpperFoot.R
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R/BackLowerLeg.R/BackUpperFoot.R/BackLowerFoot.R
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R/BackLowerLeg.R/BackUpperFoot.R/BackLowerFoot.R/BackLowerFoot.R_end
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.L/FrontLowerLeg.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.L/FrontLowerLeg.L/FrontFoot.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.L/FrontLowerLeg.L/FrontFoot.L/FrontFoot.L_end
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.R/FrontLowerLeg.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.R/FrontLowerLeg.R/FrontFoot.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.R/FrontLowerLeg.R/FrontFoot.R/FrontFoot.R_end
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.L/UpperEar.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.L/UpperEar.L/UpperEar.L_end
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.R/UpperEar.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.R/UpperEar.R/UpperEar.R_end
+        weight: 1
+      - path: Armature/Root/WeaponPoint
+        weight: 1
+      - path: Armature/Root/WeaponPoint/WeaponPoint_end
+        weight: 1
+      - path: bunny
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: RunForward
+      takeName: Armature|RunForward
+      firstFrame: 0
+      lastFrame: 64
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Root
+        weight: 1
+      - path: Armature/Root/BackLegIK.L
+        weight: 1
+      - path: Armature/Root/BackLegIK.L/BackLegIK.L_end
+        weight: 1
+      - path: Armature/Root/BackLegIK.R
+        weight: 1
+      - path: Armature/Root/BackLegIK.R/BackLegIK.R_end
+        weight: 1
+      - path: Armature/Root/BackLegTargetPole.L
+        weight: 1
+      - path: Armature/Root/BackLegTargetPole.L/BackLegTargetPole.L_end
+        weight: 1
+      - path: Armature/Root/BackLegTargetPole.R
+        weight: 1
+      - path: Armature/Root/BackLegTargetPole.R/BackLegTargetPole.R_end
+        weight: 1
+      - path: Armature/Root/FrontLegIK.L
+        weight: 1
+      - path: Armature/Root/FrontLegIK.L/FrontLegIK.L_end
+        weight: 1
+      - path: Armature/Root/FrontLegIK.R
+        weight: 1
+      - path: Armature/Root/FrontLegIK.R/FrontLegIK.R_end
+        weight: 1
+      - path: Armature/Root/FrontLegTargetPole.L
+        weight: 1
+      - path: Armature/Root/FrontLegTargetPole.L/FrontLegTargetPole.L_end
+        weight: 1
+      - path: Armature/Root/FrontLegTargetPole.R
+        weight: 1
+      - path: Armature/Root/FrontLegTargetPole.R/FrontLegTargetPole.R_end
+        weight: 1
+      - path: Armature/Root/HeadIK
+        weight: 1
+      - path: Armature/Root/HeadIK/HeadIK_end
+        weight: 1
+      - path: Armature/Root/LowerBody
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L/BackLowerLeg.L
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L/BackLowerLeg.L/BackUpperFoot.L
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L/BackLowerLeg.L/BackUpperFoot.L/BackLowerFoot.L
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L/BackLowerLeg.L/BackUpperFoot.L/BackLowerFoot.L/BackLowerFoot.L_end
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R/BackLowerLeg.R
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R/BackLowerLeg.R/BackUpperFoot.R
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R/BackLowerLeg.R/BackUpperFoot.R/BackLowerFoot.R
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R/BackLowerLeg.R/BackUpperFoot.R/BackLowerFoot.R/BackLowerFoot.R_end
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.L/FrontLowerLeg.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.L/FrontLowerLeg.L/FrontFoot.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.L/FrontLowerLeg.L/FrontFoot.L/FrontFoot.L_end
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.R/FrontLowerLeg.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.R/FrontLowerLeg.R/FrontFoot.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.R/FrontLowerLeg.R/FrontFoot.R/FrontFoot.R_end
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.L/UpperEar.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.L/UpperEar.L/UpperEar.L_end
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.R/UpperEar.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.R/UpperEar.R/UpperEar.R_end
+        weight: 1
+      - path: Armature/Root/WeaponPoint
+        weight: 1
+      - path: Armature/Root/WeaponPoint/WeaponPoint_end
+        weight: 1
+      - path: bunny
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: StandUp
+      takeName: Armature|StandUp
+      firstFrame: 0
+      lastFrame: 80
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Root
+        weight: 1
+      - path: Armature/Root/BackLegIK.L
+        weight: 1
+      - path: Armature/Root/BackLegIK.L/BackLegIK.L_end
+        weight: 1
+      - path: Armature/Root/BackLegIK.R
+        weight: 1
+      - path: Armature/Root/BackLegIK.R/BackLegIK.R_end
+        weight: 1
+      - path: Armature/Root/BackLegTargetPole.L
+        weight: 1
+      - path: Armature/Root/BackLegTargetPole.L/BackLegTargetPole.L_end
+        weight: 1
+      - path: Armature/Root/BackLegTargetPole.R
+        weight: 1
+      - path: Armature/Root/BackLegTargetPole.R/BackLegTargetPole.R_end
+        weight: 1
+      - path: Armature/Root/FrontLegIK.L
+        weight: 1
+      - path: Armature/Root/FrontLegIK.L/FrontLegIK.L_end
+        weight: 1
+      - path: Armature/Root/FrontLegIK.R
+        weight: 1
+      - path: Armature/Root/FrontLegIK.R/FrontLegIK.R_end
+        weight: 1
+      - path: Armature/Root/FrontLegTargetPole.L
+        weight: 1
+      - path: Armature/Root/FrontLegTargetPole.L/FrontLegTargetPole.L_end
+        weight: 1
+      - path: Armature/Root/FrontLegTargetPole.R
+        weight: 1
+      - path: Armature/Root/FrontLegTargetPole.R/FrontLegTargetPole.R_end
+        weight: 1
+      - path: Armature/Root/HeadIK
+        weight: 1
+      - path: Armature/Root/HeadIK/HeadIK_end
+        weight: 1
+      - path: Armature/Root/LowerBody
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L/BackLowerLeg.L
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L/BackLowerLeg.L/BackUpperFoot.L
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L/BackLowerLeg.L/BackUpperFoot.L/BackLowerFoot.L
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L/BackLowerLeg.L/BackUpperFoot.L/BackLowerFoot.L/BackLowerFoot.L_end
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R/BackLowerLeg.R
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R/BackLowerLeg.R/BackUpperFoot.R
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R/BackLowerLeg.R/BackUpperFoot.R/BackLowerFoot.R
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R/BackLowerLeg.R/BackUpperFoot.R/BackLowerFoot.R/BackLowerFoot.R_end
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.L/FrontLowerLeg.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.L/FrontLowerLeg.L/FrontFoot.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.L/FrontLowerLeg.L/FrontFoot.L/FrontFoot.L_end
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.R/FrontLowerLeg.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.R/FrontLowerLeg.R/FrontFoot.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.R/FrontLowerLeg.R/FrontFoot.R/FrontFoot.R_end
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.L/UpperEar.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.L/UpperEar.L/UpperEar.L_end
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.R/UpperEar.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.R/UpperEar.R/UpperEar.R_end
+        weight: 1
+      - path: Armature/Root/WeaponPoint
+        weight: 1
+      - path: Armature/Root/WeaponPoint/WeaponPoint_end
+        weight: 1
+      - path: bunny
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: IdleStand
+      takeName: Armature|IdleStand
+      firstFrame: 0
+      lastFrame: 80
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Root
+        weight: 1
+      - path: Armature/Root/BackLegIK.L
+        weight: 1
+      - path: Armature/Root/BackLegIK.L/BackLegIK.L_end
+        weight: 1
+      - path: Armature/Root/BackLegIK.R
+        weight: 1
+      - path: Armature/Root/BackLegIK.R/BackLegIK.R_end
+        weight: 1
+      - path: Armature/Root/BackLegTargetPole.L
+        weight: 1
+      - path: Armature/Root/BackLegTargetPole.L/BackLegTargetPole.L_end
+        weight: 1
+      - path: Armature/Root/BackLegTargetPole.R
+        weight: 1
+      - path: Armature/Root/BackLegTargetPole.R/BackLegTargetPole.R_end
+        weight: 1
+      - path: Armature/Root/FrontLegIK.L
+        weight: 1
+      - path: Armature/Root/FrontLegIK.L/FrontLegIK.L_end
+        weight: 1
+      - path: Armature/Root/FrontLegIK.R
+        weight: 1
+      - path: Armature/Root/FrontLegIK.R/FrontLegIK.R_end
+        weight: 1
+      - path: Armature/Root/FrontLegTargetPole.L
+        weight: 1
+      - path: Armature/Root/FrontLegTargetPole.L/FrontLegTargetPole.L_end
+        weight: 1
+      - path: Armature/Root/FrontLegTargetPole.R
+        weight: 1
+      - path: Armature/Root/FrontLegTargetPole.R/FrontLegTargetPole.R_end
+        weight: 1
+      - path: Armature/Root/HeadIK
+        weight: 1
+      - path: Armature/Root/HeadIK/HeadIK_end
+        weight: 1
+      - path: Armature/Root/LowerBody
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L/BackLowerLeg.L
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L/BackLowerLeg.L/BackUpperFoot.L
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L/BackLowerLeg.L/BackUpperFoot.L/BackLowerFoot.L
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.L/BackLowerLeg.L/BackUpperFoot.L/BackLowerFoot.L/BackLowerFoot.L_end
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R/BackLowerLeg.R
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R/BackLowerLeg.R/BackUpperFoot.R
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R/BackLowerLeg.R/BackUpperFoot.R/BackLowerFoot.R
+        weight: 1
+      - path: Armature/Root/LowerBody/BackUpperLeg.R/BackLowerLeg.R/BackUpperFoot.R/BackLowerFoot.R/BackLowerFoot.R_end
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.L/FrontLowerLeg.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.L/FrontLowerLeg.L/FrontFoot.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.L/FrontLowerLeg.L/FrontFoot.L/FrontFoot.L_end
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.R/FrontLowerLeg.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.R/FrontLowerLeg.R/FrontFoot.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/FrontUpperLeg.R/FrontLowerLeg.R/FrontFoot.R/FrontFoot.R_end
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.L/UpperEar.L
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.L/UpperEar.L/UpperEar.L_end
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.R/UpperEar.R
+        weight: 1
+      - path: Armature/Root/LowerBody/UpperBody/Neck/Head/LowerEear.R/UpperEar.R/UpperEar.R_end
+        weight: 1
+      - path: Armature/Root/WeaponPoint
+        weight: 1
+      - path: Armature/Root/WeaponPoint/WeaponPoint_end
+        weight: 1
+      - path: bunny
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

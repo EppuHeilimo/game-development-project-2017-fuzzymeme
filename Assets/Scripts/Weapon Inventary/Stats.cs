@@ -43,6 +43,11 @@ namespace Assets.Scripts.Weapon_Inventary
 
         public void Damage(float damage)
         {
+            if (transform.CompareTag("Enemy"))
+            {
+                GetComponent<AI>().GotAttacked();
+            }
+
             var hasBloodParticles = bloodParticles != null;
             if (hasBloodParticles)
             {

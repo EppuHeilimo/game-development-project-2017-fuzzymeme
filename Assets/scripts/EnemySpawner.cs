@@ -6,7 +6,7 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
 
-    public GameObject EnemyPrefab;
+    public GameObject[] EnemyPrefabs;
     public List<Transform> spawnPoints;
 
 	// Use this for initialization
@@ -29,11 +29,9 @@ public class EnemySpawner : MonoBehaviour
             spawnPoints.Add(t);
         }
 
-        if(EnemyPrefab == null)
+        if(EnemyPrefabs == null || EnemyPrefabs.Length == 0)
         {
-            GameObject[] load = Resources.LoadAll<GameObject>("Enemies/");
-            var range = Random.Range(0, load.Length);
-            EnemyPrefab=load[range];
+            EnemyPrefabs = Resources.LoadAll<GameObject>("Enemies/");
         }
     }
 
@@ -49,15 +47,17 @@ public class EnemySpawner : MonoBehaviour
         {
             if (t.CompareTag("EnemySpawnPoint"))
             {
-                GameObject go = Instantiate(EnemyPrefab, t.position, Quaternion.Euler(new Vector3(0.0f, Random.Range(0.0f, 360.0f), 0.0f)));
+                GameObject go = Instantiate(EnemyPrefabs[Random.Range(0, EnemyPrefabs.Length)], t.position, Quaternion.Euler(new Vector3(0.0f, Random.Range(0.0f, 360.0f), 0.0f)));
                 Transform minimapObj = go.transform.FindChild("MinimapObject");
                 minimapObj.parent = null;
                 minimapObj.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
                 float rand = Random.Range(0.7f, 0.9f);
-                
-                go.transform.FindDeepChild("teddysculp").GetComponent<SkinnedMeshRenderer>().material.color = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));
-                go.transform.localScale = new Vector3(rand, rand, rand);
-
+                //Do randomization only for teddies
+                if (go.transform.FindDeepChild("teddysculp") != null)
+                {
+                    go.transform.FindDeepChild("teddysculp").GetComponent<SkinnedMeshRenderer>().material.color = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));
+                    go.transform.localScale = new Vector3(rand, rand, rand);
+                }
                 minimapObj.parent = go.transform;
                 count++;
             }  

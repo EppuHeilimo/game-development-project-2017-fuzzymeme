@@ -6,6 +6,7 @@ public class TeddyAnimation : MonoBehaviour
 {
     public bool moving = false;
     private Animator anim;
+    private float runSpeed = 3f;
 	// Use this for initialization
 	void Start ()
 	{
@@ -18,10 +19,16 @@ public class TeddyAnimation : MonoBehaviour
 	    if (moving)
 	    {
 	        anim.SetBool("Moving", true);
+	        anim.speed = runSpeed;
 	    }
 	    else
 	    {
             anim.SetBool("Moving", false);
         }
 	}
+
+    public void Init(float runSpeed)
+    {
+        this.runSpeed = runSpeed/3;
+    }
 }

@@ -120,7 +120,7 @@ public class TextureToObjectsV2 : MonoBehaviour
 
         GameObject teddy =Resources.Load<GameObject>("Enemies/Teddy");
         EnemySpawner enemySpawner = enemySpawnPoints.AddComponent<EnemySpawner>();
-        enemySpawner.EnemyPrefab = teddy;
+        //enemySpawner.EnemyPrefab = teddy;
 
         if (ColorsToObjects.Count == 0)
         {

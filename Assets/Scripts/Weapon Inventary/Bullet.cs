@@ -66,14 +66,12 @@ namespace Assets.Scripts.Weapon_Inventary
 
         void Collision(Collider collision)
         {
-             
             GameObject gameobj1 = collision.gameObject;
             Stats stats = gameobj1.GetComponent<Stats>();
             
             if (stats != null)
             { 
                 stats.Damage(Damage);
-
             }
             Destroy(gameObject);
         }

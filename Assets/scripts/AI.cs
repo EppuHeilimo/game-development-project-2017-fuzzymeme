@@ -1,129 +1,127 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 using Assets.Scripts.Weapon_Inventary;
 
-public class AI : MonoBehaviour
+public abstract class AI : MonoBehaviour
 {
-    private Transform player;
-    private float sightDistance = 12f;
-    private Vector3 playerDirection;
-    private float playerDistance;
-    private NavMeshAgent agent;
-    private float speed = 3f;
-    private float shootdistance = 5f;
-    private float giveupdistance = 10f;
-    private bool obstructed = false;
-    private float reactionTime = 0.5f;
-    private float obstructionHandlingTime = 1f;
-    private float idleTime = 1.5f;
-    
-    private float reactionTimer = 0f;
-    private float obstructionTimer = 0f;
-    private float idleTimer = 0f;
-    private Weapon weapon;
+    protected Transform player;
+    protected Vector3 playerDirection;
+    protected float playerDistance;
+    protected NavMeshAgent agent;
+    protected float idleTime = 1.5f;
+    protected float shootdistance = 5f;
+    protected bool obstructed = false;
+    protected float obstructionHandlingTime = 1f;
+    protected float reactionTimer = 0f;
+    protected float obstructionTimer = 0f;
+    protected float idleTimer = 0f;
+    protected Weapon weapon;
+    protected bool moving;
+    protected Transform ThisTransform;
+    protected AIState state;
 
-    private bool moving;
 
-    private TeddyAnimation anim;
-    enum AIState
+    public float RotationSpeed = 5.0f;
+    public float SightDistance = 12f;
+    public float Speed = 3f;
+    public float GiveupDistance = 10f;
+    public float ReactionTime = 0.5f;
+
+    protected enum AIState
     {
         Idle,
+        Seek,
         Attack
     }
 
-    private AIState state;
+    
 	// Use this for initialization
-	void Start ()
+	public void Init()
 	{
-	    anim = GetComponent<TeddyAnimation>();
 	    agent = GetComponent<NavMeshAgent>();
 	    player = GameObject.FindGameObjectWithTag("Player").transform;
         state = AIState.Idle;
         playerDistance = Vector3.Distance(transform.position, player.position);
         playerDirection = (transform.position - player.position) / playerDistance;
         weapon = GetComponent<Weapon>();
-	    shootdistance = weapon.BulletPrefab.GetComponent<Bullet>().Distance;
+	    shootdistance = weapon.BulletPrefab.GetComponent<Bullet>().Distance * 0.8f;
+
+
+       
 	}
 	
 	// Update is called once per frame
-	void Update ()
+	protected void StateUpdate()
 	{
-	    if (agent.hasPath)
-	    {
-            moving = true;
-        }
-	    else
-	    {
-            moving = false;
-        }
-	    
+	    FindPlayer();
         switch (state)
 	    {
 	        case AIState.Idle:
                 Idle();
 	        break;
-
             case AIState.Attack:
                 Attack();
             break;
+            case AIState.Seek:
+                Seek();
+	        break;
 	    }
-	    anim.moving = moving;
 	}
 
+    public void GotAttacked()
+    {
+        if (state == AIState.Idle)
+        {
+            state = AIState.Seek;
+        }
+    }
 
-    void FixedUpdate()
+    void FindPlayer()
     {
         playerDistance = Vector3.Distance(transform.position, player.position);
+
         reactionTimer += Time.fixedDeltaTime;
-        if (reactionTimer > reactionTime && playerDistance <= sightDistance)
+        if (reactionTimer > ReactionTime && playerDistance <= SightDistance)
         {
             reactionTimer = 0;
             RaycastHit hit;
             playerDirection = (player.position - transform.position ) / playerDistance;
             //Debug.DrawRay(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), playerDirection, Color.blue, 5f);
-            if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), playerDirection, out hit, sightDistance))
+            if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), playerDirection, out hit, SightDistance))
             {
                 if (hit.transform.CompareTag("Player"))
                 {
                     if (state == AIState.Idle)
                     {
                         agent.ResetPath();
-                        state = AIState.Attack;
+                        state = AIState.Seek;
                     }
-                    if (obstructed && state == AIState.Attack)
+                    if (obstructed && state == AIState.Seek || state == AIState.Attack)
                     {
-                        obstructionCleared();
-                        //Debug.Log("Obstructed: " + obstructed);
+                        ObstructionCleared();
                     }
                 }
                 else
                 {
-                    if (state == AIState.Attack)
+                    if (state == AIState.Seek || state == AIState.Attack)
                     {
                         obstructed = true;
-                        //Debug.Log("Obstructed: " + obstructed);
                     }
                 }
             }
         }
-        
-    }
-
-    void Idle()
-    {
-        idleTimer += Time.deltaTime;
-        if (idleTimer > idleTime)
+        if (playerDistance > GiveupDistance)
         {
-            idleTimer = 0;
-            agent.SetDestination(RndPointInArea(5f, NavMesh.AllAreas));
+            state = AIState.Idle;
         }
     }
 
-    Vector3 RndPointInArea(float walkradius, int areaindex)
+    protected Vector3 RndPointInArea(float walkradius, int areaindex)
     {
         Vector3 direction = Random.insideUnitSphere* walkradius;
         direction += transform.position;
@@ -133,53 +131,53 @@ public class AI : MonoBehaviour
         return hit.position;
     }
 
-    void obstructionCleared()
+    protected void ObstructionCleared()
     {
         agent.ResetPath();
         obstructed = false;
         obstructionTimer = 0;
     }
 
-    void Attack()
+    public bool RotateTowards(Transform target, float speed)
     {
-        
-        transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
-        if (obstructed)
+        Vector3 direction = (target.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, speed);
+        float transformy = Mathf.Abs(transform.rotation.eulerAngles.y);
+        float looky = Mathf.Abs(lookRotation.eulerAngles.y);
+        if (approx(transformy, looky, 10f))
         {
-            moving = true;
-            obstructionTimer += Time.deltaTime;
-            if (obstructionTimer > obstructionHandlingTime)
-            {
-                obstructionCleared();
-            }
-            else
-            {
-                agent.SetDestination(player.position);
-            }
+            return true;
         }
-        else if (playerDistance > shootdistance)
-        {
-            
-            float step = speed * Time.deltaTime;
-            transform.position = Vector3.MoveTowards(transform.position, player.position, step);
-            moving = true;
-        }
-        if(shootdistance > playerDistance)
-        {
-            weapon.Use();
-        }
- 
+        return false;
     }
 
-    void OnCollisionEnter(Collision collision)
-    {   
-        if (state == AIState.Attack)
+    public bool RotateAwayFrom(Transform target, float speed)
+    {
+        Vector3 direction = (target.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(-direction);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, speed);
+        float transformy = Mathf.Abs(transform.rotation.eulerAngles.y);
+        float looky = Mathf.Abs(lookRotation.eulerAngles.y);
+        if (approx(transformy, looky, 0.1f))
         {
-            if (!collision.transform.CompareTag("Player") && !collision.transform.CompareTag("IsHit"))
-            {
-                obstructed = true;
-                Debug.Log("Obstructed: " + obstructed);
-            }
-        }     
+            return true;
+        }
+        return false;
     }
+
+    private bool approx(float a, float b, float accuracy)
+    {
+        float sub = a - b;
+        if (Mathf.Abs(sub) < accuracy)
+        {
+            return true;
+        }
+        return false;
+
+    }
+
+    protected abstract void Attack();
+    protected abstract void Idle();
+    protected abstract void Seek();
 }

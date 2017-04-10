@@ -84,7 +84,7 @@ namespace Assets.Scripts
                 look.GetComponent<MeshRenderer>().material =
                         pickUpPrefab.GetComponent<MeshRenderer>().sharedMaterial;
 
-                look.transform.localPosition = new Vector3(0f,1,0f);
+                look.transform.localPosition = new Vector3(0f,0.1f,0f);
                 look.transform.localScale = pickUpPrefab.transform.localScale;
                 look.transform.rotation = pickUpPrefab.transform.rotation;
 

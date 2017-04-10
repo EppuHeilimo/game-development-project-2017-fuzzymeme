@@ -45,6 +45,7 @@ public class HealingPotion : InventoryItem
     protected override void OnCreateCopy(InventoryItem addComponent)
     {
         HealingPotion healingPotion = (HealingPotion) addComponent;
+        healingPotion.HealingPoints = HealingPoints;
         healingPotion.used = used;
     }
 

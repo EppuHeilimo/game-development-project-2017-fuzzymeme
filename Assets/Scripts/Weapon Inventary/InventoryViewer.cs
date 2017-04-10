@@ -207,10 +207,7 @@ namespace Assets.Scripts.Weapon_Inventary
             if (lastInventoryItem0 != item)
             {
                 lastInventoryItem0 = item;
-                Icon1.sprite = item.InventarSprite;
-                Icon1.SetNativeSize();
-                Icon1.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 46.4f);
-                Icon1.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 61.4f);
+                ChangeIcon(item, Icon1);
             }
 
 
@@ -218,18 +215,15 @@ namespace Assets.Scripts.Weapon_Inventary
             if (lastInventoryItem1 != item)
             {
                 lastInventoryItem1 = item;
-                Icon2.sprite = item.InventarSprite;
-                Icon2.SetNativeSize();
-                Icon2.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 46.4f);
-                Icon2.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 61.4f);
+                ChangeIcon(item, Icon2);
+
+             
 
             }
             item = inventory.Items[2];
             if (lastInventoryItem2 != item)
             {
-                Icon3.sprite = item.InventarSprite;
-                Icon3.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 46.4f);
-                Icon3.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 61.4f);
+                ChangeIcon(item, Icon3);
                 lastInventoryItem2 = item;
 
             }
@@ -237,13 +231,26 @@ namespace Assets.Scripts.Weapon_Inventary
             if (lastInventoryItem3 != item)
             {
                 lastInventoryItem3 = item;
-                Icon4.sprite = item.InventarSprite;
-                Icon4.SetNativeSize();
-                Icon4.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 46.4f);
-                Icon4.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 61.4f);
+                ChangeIcon(item, Icon4);
+
             }
 
 
+        }
+
+        private void ChangeIcon(InventoryItem item,Image icon)
+        {
+            if (item == null)
+            {
+                icon.sprite = null;
+            }
+            else
+            {
+                icon.sprite = item.InventarSprite;
+                icon.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 46.4f);
+                icon.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 61.4f);
+            }
+            
         }
 
         private void UpdateUseAmount()

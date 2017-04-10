@@ -10,9 +10,20 @@ namespace Assets.Scripts.Weapon_Inventary
 
         public int Number = 5;
         public float AngleBetweenBullets= 12;
-   
 
-     
+
+
+
+        public override string ItemDescription
+        {
+            get
+            {
+                Bullet bullet = BulletPrefab.GetComponent<Bullet>();
+
+                return base.InventaryItemName + " | D:" + bullet.Distance + "  |  A:" +Number+"X " + bullet.Damage;
+            }
+        }
+
         public override void Attack()
         {
 

@@ -379,7 +379,7 @@ namespace Assets.Scripts.Weapon_Inventary
                     throw new RuntimeException("Unsupported index");
                 }
 
-                selectedWeaponText.text = item.InventaryItemName + " | A:" + " | " + " | D:";
+                selectedWeaponText.text = item.ItemDescription;
 
                 lastInventoryItem = item;
             }

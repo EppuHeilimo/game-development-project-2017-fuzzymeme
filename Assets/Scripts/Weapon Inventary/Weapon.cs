@@ -89,7 +89,9 @@ namespace Assets.Scripts.Weapon_Inventary
         {
             get
             {
-                return base.InventaryItemName+" | A: "+" | D:";
+                Bullet bullet = BulletPrefab.GetComponent<Bullet>();
+                
+                return base.InventaryItemName+" | D:"+ bullet.Distance+"  |  A:" + bullet.Damage;
             }
         }
 

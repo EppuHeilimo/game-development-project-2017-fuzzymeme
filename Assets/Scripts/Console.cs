@@ -96,8 +96,7 @@ public class Console : MonoBehaviour
         Inventory inventory = player.GetComponent<Inventory>();
         inventory.Items.Remove(inventory.Items[0]);
         inventory.Items.Insert(0, inventoryItem);
-        inventory.Next();
-        inventory.Previous();
+        inventory.ChangeIndex(0);
 
 
     }

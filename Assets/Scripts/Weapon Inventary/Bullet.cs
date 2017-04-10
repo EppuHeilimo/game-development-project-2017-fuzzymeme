@@ -44,7 +44,7 @@ namespace Assets.Scripts.Weapon_Inventary
                         Collision(collision);
                     }
                 }
-                else if (collision.CompareTag("isHit") || (collision.CompareTag("Enemy") && shooter.CompareTag("Enemy")))
+                else if (collision.CompareTag("isHit") || (collision.CompareTag("Enemy") && shooter.CompareTag("Enemy")) || collision.CompareTag("InventoryItem"))
                 {
                     // do nothing
                 }else if (collision.gameObject.CompareTag("Bullet"))

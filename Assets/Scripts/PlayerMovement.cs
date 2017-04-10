@@ -10,7 +10,9 @@ public class PlayerMovement : MonoBehaviour {
     private Camera main_camera;
     public int speed = 5;
     private PlayerAnimation animation;
-    private float rotateSpeed = 5f;
+    private float rotateSpeed = 3f;
+    
+    
 
     Vector3 previous;
     float playerVelocity;
@@ -25,7 +27,7 @@ public class PlayerMovement : MonoBehaviour {
         inventory = GetComponent<Inventory>();
         animation = GetComponent<PlayerAnimation>();
         LookPoint = transform.FindChild("LookPoint");
-
+        
     }
 	
 	// Update is called once per frame
@@ -79,10 +81,13 @@ public class PlayerMovement : MonoBehaviour {
                 }
             }
         }
-        LookPoint.localPosition = new Vector3(point.x, transform.position.y, point.z);
-        if (CameraMode == 0)
-        {
+        LookPoint.position = new Vector3(point.x, transform.position.y, point.z);
+        if(CameraMode == 0)
             transform.LookAt(LookPoint); //look to directions on plane level (x,z)
+        else if (CameraMode == 1)
+        {
+            float mousex = Input.GetAxis("Mouse X") * rotateSpeed;
+            transform.Rotate(0, mousex, 0);
         }
 
     }
@@ -96,19 +101,20 @@ public class PlayerMovement : MonoBehaviour {
 
     void CharacterMovement()
     {
-
         Vector3 direction = new Vector3(0, 0, 0);
         direction.z = Input.GetAxisRaw("Vertical");
         direction.x = Input.GetAxisRaw("Horizontal");
         //animation stuff
         animation.inputHorizontal = direction.x;
         animation.inputVertical = direction.z;
-
         direction.Normalize(); // normalize for the diretion -1 - 1.
-
-        transform.Translate(direction.x * speed * Time.deltaTime, 0, direction.z * speed * Time.deltaTime, Space.World); // our WASD controls is related to the WORLD, not the players axis.
-
-
-
+        if (CameraMode == 0)
+        {
+            transform.Translate(direction.x * speed * Time.deltaTime, 0, direction.z * speed * Time.deltaTime, Space.World); // our WASD controls is related to the WORLD, not the players axis.
+        }
+        else if (CameraMode == 1)
+        {
+            transform.Translate(direction.x * speed * Time.deltaTime, 0, direction.z * speed * Time.deltaTime, transform); // our WASD controls is related to the WORLD, not the players axis.
+        }
     }   
 }

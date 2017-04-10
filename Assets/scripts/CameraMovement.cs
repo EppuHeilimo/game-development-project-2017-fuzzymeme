@@ -13,8 +13,8 @@ public class CameraMovement : MonoBehaviour
     Vector3 offset;
     private Transform LockedTo;
 
-    private float rotateSpeed = 5f;
-    private float damping = 1f;
+    private float rotateSpeed = 2f;
+    private float damping = 5f;
     private bool translating = false;
     private float translationSpeed = 35f;
 
@@ -22,8 +22,9 @@ public class CameraMovement : MonoBehaviour
     private EntryPoint targetEntryPoint;
     private bool playerTeleported = false;
     private Minimap minimap;
-
+    private float orthoSizeDefault;
     private int cameraMode = 0;
+    private GameObject crosshair;
     // Use this for initialization
     void Start ()
 	{
@@ -34,7 +35,10 @@ public class CameraMovement : MonoBehaviour
         LockedTo = playerTransform;
 	    transform.position = LockedTo.position;
         minimap = GameObject.FindGameObjectWithTag("MinimapCamera").GetComponent<Minimap>();
-    }
+        orthoSizeDefault = Camera.main.orthographicSize;
+        crosshair = GameObject.FindGameObjectWithTag("Crosshair");
+        crosshair.SetActive(false);
+	}
 	
 	// Update is called once per frame
 	void LateUpdate ()
@@ -47,13 +51,14 @@ public class CameraMovement : MonoBehaviour
             }
             else if(cameraMode == 1)
             {
-                float horizontal = Input.GetAxis("Mouse X") * rotateSpeed;
-                playerTransform.Rotate(0, horizontal, 0);
-                float desiredAngle = playerTransform.eulerAngles.y;
-                Quaternion rotation = Quaternion.Euler(0, desiredAngle, 0);
-                transform.position = LockedTo.position - (rotation * offset);
+                transform.position = LockedTo.position;
 
-                transform.LookAt(playerTransform);
+                float desiredAngle = playerTransform.transform.eulerAngles.y;
+                Quaternion rotation = Quaternion.Euler(0, desiredAngle, 0);
+                transform.position = playerTransform.transform.position - (rotation * offset);
+
+                transform.LookAt(playerTransform.transform.position + playerTransform.forward * 10);
+
             }
         } 
 	    else if (translating)
@@ -75,12 +80,21 @@ public class CameraMovement : MonoBehaviour
                 LockedTo = thirdPersonPosition;
             minimap.SetArea(GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().GetCurrentArea().transform);
         }
-        if(Console.GetKeyDown(KeyCode.P))
+        if(Input.GetKeyDown(KeyCode.P))
         {
             ToggleCameraMode();
         }
+	    if (Input.GetKeyDown(KeyCode.LeftAlt))
+	    {
+            if(Cursor.lockState == CursorLockMode.Locked)
+                Cursor.lockState = CursorLockMode.None;
+            if (Cursor.lockState == CursorLockMode.None)
+                Cursor.lockState = CursorLockMode.Locked;
+        }
 
-	}
+
+
+    }
 
     private void ToggleCameraMode()
     {
@@ -88,12 +102,16 @@ public class CameraMovement : MonoBehaviour
         {
             LockedTo = thirdPersonPosition;
             cameraMode = 1;
+            Cursor.lockState = CursorLockMode.Locked;
+            crosshair.SetActive(true);
 
         }
         else if(cameraMode == 1)
         {
             LockedTo = playerTransform;
             cameraMode = 0;
+            crosshair.SetActive(false);
+
         }
         playerTransform.GetComponent<PlayerMovement>().CameraMode = cameraMode;
     }

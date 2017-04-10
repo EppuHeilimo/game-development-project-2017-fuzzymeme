@@ -127,7 +127,7 @@ namespace Assets.Scripts.Weapon_Inventary
             refillImage = GameObject.Find("Inventory/LeftSide/Refill").GetComponent<Image>();
             height = refillImage.rectTransform.rect.height;
 
-            DropItemsText = GameObject.Find("DropItemsAround").GetComponent<Text>();
+            DropItemsText = GameObject.Find("PickupAbleItemsBar/DropItemsAround").GetComponent<Text>();
         }
 
 

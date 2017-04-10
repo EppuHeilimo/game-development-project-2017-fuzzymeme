@@ -103,21 +103,12 @@ public class Level : MonoBehaviour
                 //use the rest of the available rooms if there's any
                 for (int i = 0; i < availableAreas.Count; i++)
                 {
-                    try
-                    {
                         Level area2 = availableAreas[Random.Range(0, availableAreas.Count)].GetComponent<Level>();
                         rnd = Random.Range(0, entrypoints.Count);
                         entrypoints[rnd].GetComponent<EntryPoint>().Init(true);
                         usedareas.Add(entrypoints[rnd].GetComponent<EntryPoint>(), area2);
                         availableAreas.Remove(area2.gameObject);
-                        entrypoints.RemoveAt(rnd);
-                    }
-                    catch (Exception ex)
-                    {
-                        ex = ex;
-                    }
-                   
-                    
+                        entrypoints.RemoveAt(rnd);                        
                 }
                 int count = 0;
                 foreach (KeyValuePair<EntryPoint, Level> pair in usedareas)

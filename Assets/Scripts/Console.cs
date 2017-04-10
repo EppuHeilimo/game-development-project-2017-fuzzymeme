@@ -15,6 +15,7 @@ public class Console : MonoBehaviour
     const int DropSomethingHash = -262007715;
     const int HalfGodHash = -208539993;
     const int LaterHash = 2071488744;
+    const int NotAvailableHash = -210791430;
 
     private static InputField consoleInput;
     private RectTransform rectTransform;
@@ -27,7 +28,7 @@ public class Console : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-	
+
 	    GameObject find = GameObject.Find("ConsoleInput");
         consoleInput=find.GetComponent<InputField>();
 	    consoleInput.enabled = false;
@@ -57,7 +58,11 @@ public class Console : MonoBehaviour
         consoleInput.text = "";
         if (LaterHash.Equals(hash))
         {
-            consoleInput.text = "I will do it... later...";
+            consoleInput.text = "I will do it... later...somewhen...who knows...";
+        }else if (NotAvailableHash.Equals(hash))
+        {
+            consoleInput.text = "That is not available. maybe epu can help.";
+
         }
     }
 

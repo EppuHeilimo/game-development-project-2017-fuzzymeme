@@ -116,7 +116,7 @@
 				//sample the map detail texture
 				fixed4 detail = tex2D(_DetailTex, i.texcoord * -1) * _Color;
 				//if render texture has black area, fill it with detail texture
-				if (color.r < 0.2f && color.g < 0.2f && color.b < 0.2f)
+				if (color.r < 0.1f && color.g < 0.1f && color.b < 0.1f)
 				{
 					color = detail * _DetailTint;
 				}

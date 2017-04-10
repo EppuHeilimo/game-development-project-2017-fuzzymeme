@@ -8,9 +8,13 @@ public class CameraMovement : MonoBehaviour
 
 
     public Transform playerTransform;
+    public Transform thirdPersonPosition;
+    public Transform LookPoint;
+    Vector3 offset;
     private Transform LockedTo;
 
-    
+    private float rotateSpeed = 5f;
+    private float damping = 1f;
     private bool translating = false;
     private float translationSpeed = 35f;
 
@@ -18,11 +22,16 @@ public class CameraMovement : MonoBehaviour
     private EntryPoint targetEntryPoint;
     private bool playerTeleported = false;
     private Minimap minimap;
+
+    private int cameraMode = 0;
     // Use this for initialization
     void Start ()
 	{
-	    playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-	    LockedTo = playerTransform;
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        thirdPersonPosition = playerTransform.FindChild("ThirdPersonCameraPosition");
+        LookPoint = playerTransform.FindChild("LookPoint");
+        offset = playerTransform.position - thirdPersonPosition.position;
+        LockedTo = playerTransform;
 	    transform.position = LockedTo.position;
         minimap = GameObject.FindGameObjectWithTag("MinimapCamera").GetComponent<Minimap>();
     }
@@ -31,7 +40,17 @@ public class CameraMovement : MonoBehaviour
 	void LateUpdate ()
 	{
 	    if (!translating && !playerTeleported)
-	        transform.position = LockedTo.position;
+        {
+            if(cameraMode == 0)
+            {
+                transform.position = LockedTo.position;
+            }
+            else if(cameraMode == 1)
+            {
+                transform.position = LockedTo.position;
+                transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, playerTransform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+            }
+        } 
 	    else if (translating)
 	    {
 	        MoveTowardsTransform(translationSpeed*Time.deltaTime);
@@ -45,11 +64,34 @@ public class CameraMovement : MonoBehaviour
 	        TeleportToTransform(targetEntryPoint.cameraTarget);
 	        translating = true;
 	        playerTeleported = false;
-	        LockedTo = playerTransform;
+            if (cameraMode == 0)
+                LockedTo = playerTransform;
+            else if (cameraMode == 1)
+                LockedTo = thirdPersonPosition;
             minimap.SetArea(GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().GetCurrentArea().transform);
+        }
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            ToggleCameraMode();
         }
 
 	}
+
+    private void ToggleCameraMode()
+    {
+        if(cameraMode == 0)
+        {
+            LockedTo = thirdPersonPosition;
+            cameraMode = 1;
+
+        }
+        else if(cameraMode == 1)
+        {
+            LockedTo = playerTransform;
+            cameraMode = 0;
+        }
+        playerTransform.GetComponent<PlayerMovement>().CameraMode = cameraMode;
+    }
 
     public void ToEntryPoint(Transform t1, EntryPoint targetEntrypoint)
     {

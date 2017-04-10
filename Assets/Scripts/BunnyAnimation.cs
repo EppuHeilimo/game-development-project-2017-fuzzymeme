@@ -44,6 +44,7 @@ public class BunnyAnimation : MonoBehaviour
             animator.SetBool("Standing", Standing);
 	        locked = true;
 	        lockTime = animator.GetCurrentAnimatorStateInfo(0).length;
+            
             ai.locked = locked;
         }
 	    if (locked)

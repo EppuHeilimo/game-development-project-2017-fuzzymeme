@@ -10,19 +10,21 @@ public class PlayerMovement : MonoBehaviour {
     private Camera main_camera;
     public int speed = 5;
     private PlayerAnimation animation;
+    private float rotateSpeed = 5f;
 
     Vector3 previous;
     float playerVelocity;
 
     private Inventory inventory;
-    public Vector3 LookPoint;
+    public Transform LookPoint;
+    public int CameraMode = 0;
 
     // Use this for initialization
     void Start () {
         main_camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         inventory = GetComponent<Inventory>();
         animation = GetComponent<PlayerAnimation>();
-        LookPoint = Vector3.zero;
+        LookPoint = transform.FindChild("LookPoint");
 
     }
 	
@@ -55,29 +57,37 @@ public class PlayerMovement : MonoBehaviour {
 
     void Aiming()
     {
-        Vector3 point = new Vector3();
-      
-        Ray cameraRay = main_camera.ScreenPointToRay(Input.mousePosition);
-        LayerMask layer = (1 << 11) | (1 << 13);
-        RaycastHit hit;
-        if(Physics.Raycast(cameraRay, out hit, float.PositiveInfinity, layer))
+        if(CameraMode == 0)
         {
-            if(hit.collider.gameObject.transform.CompareTag("Enemy"))
+            Vector3 point = new Vector3();
+
+            Ray cameraRay = main_camera.ScreenPointToRay(Input.mousePosition);
+            LayerMask layer = (1 << 11) | (1 << 13);
+            RaycastHit hit;
+            if (Physics.Raycast(cameraRay, out hit, float.PositiveInfinity, layer))
             {
-                point = new Vector3(hit.collider.gameObject.transform.position.x, hit.collider.gameObject.transform.position.y, hit.collider.gameObject.transform.position.z);
-            }
-            else
-            {
-                Plane groundPlane = new Plane(Vector3.up, transform.position);
-                float rayLength;
-                if (groundPlane.Raycast(cameraRay, out rayLength))
+                if (hit.collider.gameObject.transform.CompareTag("Enemy"))
                 {
-                    point = cameraRay.GetPoint(rayLength); // Where the player looks                                       
+                    point = new Vector3(hit.collider.gameObject.transform.position.x, hit.collider.gameObject.transform.position.y, hit.collider.gameObject.transform.position.z);
+                }
+                else
+                {
+                    Plane groundPlane = new Plane(Vector3.up, transform.position);
+                    float rayLength;
+                    if (groundPlane.Raycast(cameraRay, out rayLength))
+                    {
+                        point = cameraRay.GetPoint(rayLength); // Where the player looks                                       
+                    }
                 }
             }
+            LookPoint.position = new Vector3(point.x, transform.position.y, point.z);
+            transform.LookAt(LookPoint); //look to directions on plane level (x,z)
         }
-        LookPoint = new Vector3(point.x, transform.position.y, point.z);
-        transform.LookAt(LookPoint); //look to directions on plane level (x,z)
+        else if(CameraMode == 1)
+        {
+            transform.Rotate(0, Input.GetAxis("Mouse X") * rotateSpeed * 1, 0);
+        }
+
     }
 
     void SpeedLimit()

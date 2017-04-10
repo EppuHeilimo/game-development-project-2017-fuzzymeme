@@ -30,7 +30,9 @@ public class Level : MonoBehaviour
     void Start ()
 	{
         minimapTexture = new RenderTexture(1024, 1024, 0, RenderTextureFormat.ARGB32);
-        fogOfWarTexture = new RenderTexture(512, 512, 0, RenderTextureFormat.ARGB32);
+        minimapTexture.antiAliasing = 2;
+        fogOfWarTexture = new RenderTexture(1024, 1024, 0, RenderTextureFormat.ARGB32);
+        fogOfWarTexture.antiAliasing = 2;
         //get all children and find entrypoints from them
         entrypoints = new List<Transform>();
 	    Transform ep = transform.Find("EntryPoints");

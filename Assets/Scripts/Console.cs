@@ -5,12 +5,16 @@ using Assets.Scripts.Interface;
 using Assets.Scripts.Weapon_Inventary;
 using UnityEngine;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 public class Console : MonoBehaviour
 {
 
     const int NormalHash = -2016234814;
     const int GodHash = 1175195924;
+    const int DropSomethingHash = -262007715;
+    const int HalfGodHash = -208539993;
+    const int LaterHash = 2071488744;
 
     private static InputField consoleInput;
     private RectTransform rectTransform;
@@ -42,12 +46,43 @@ public class Console : MonoBehaviour
         }else if (NormalHash.Equals(hash))
         {
             StartGodMode(false);
+        }else if (HalfGodHash.Equals(hash))
+        {
+            StartGodMode(false);
+            StartHalfGodMode();
+        }else if (DropSomethingHash.Equals(hash))
+        {
+            DropSomething();
         }
         consoleInput.text = "";
-
+        if (LaterHash.Equals(hash))
+        {
+            consoleInput.text = "I will do it... later...";
+        }
     }
 
-   
+    private void DropSomething()
+    {
+        Object[] loadAll = Resources.LoadAll("Dropables/");
+
+        int length = loadAll.Length;
+        int index = UnityEngine.Random.Range(0, length);
+        GameObject o = (GameObject) loadAll[index];
+
+        GameObject player = GameObject.Find("Player");
+
+        o.GetComponent<InventoryItem>().Drop(player.transform);
+    }
+
+    private void StartHalfGodMode()
+    {
+        GameObject player = GameObject.Find("Player");
+        Stats stats = player.GetComponent<Stats>();
+        
+            stats.LifeEnergy = 500;
+            stats.CurrentLifeEnergy = 250;
+        
+    }
     private void StartGodMode(bool flag)
     {
         GameObject player = GameObject.Find("Player");
@@ -81,6 +116,7 @@ public class Console : MonoBehaviour
             godsFist = (Weapon)godsFist1.CreateCopy(player);
             godsFist.InitWeaponHolder();
         }
+     
 
         InventoryItem inventoryItem;
         if (flag)

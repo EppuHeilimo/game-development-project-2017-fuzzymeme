@@ -39,8 +39,17 @@ public class Inventory : MonoBehaviour
         Index = 0;
         InventarySize = Items.Count;
         ChangeIndex(Index);
-        
+        StartCoroutine(DelayedOnbeingSelected());
+
     }
+
+
+    IEnumerator DelayedOnbeingSelected()
+    {
+        yield return new WaitForSeconds(0.05f);
+        Items[Index].OnBeingSelected();
+    }
+
     public int SelectedPickUpArroundIndex
     {
         get { return _selectedPickUpArroundIndex; }

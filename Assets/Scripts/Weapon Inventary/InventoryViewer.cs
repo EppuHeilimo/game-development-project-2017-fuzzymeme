@@ -227,10 +227,10 @@ namespace Assets.Scripts.Weapon_Inventary
             item = inventory.Items[2];
             if (lastInventoryItem2 != item)
             {
-                lastInventoryItem2 = item;
                 Icon3.sprite = item.InventarSprite;
                 Icon3.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 46.4f);
                 Icon3.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 61.4f);
+                lastInventoryItem2 = item;
 
             }
             item = inventory.Items[3];

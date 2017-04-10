@@ -56,6 +56,7 @@ namespace Assets.Scripts.Interface
             DropHelper.DropItem(GetType(),transform, item =>
             {
                 item.InventaryItemName = InventaryItemName;
+                item.InventarSprite = InventarSprite;
                 item.PickUpPrefab = PickUpPrefab;
                 OnCreateCopy(item);
             });

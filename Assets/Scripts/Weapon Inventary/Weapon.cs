@@ -35,6 +35,14 @@ namespace Assets.Scripts.Weapon_Inventary
 
         public override void Start()
         {
+            InitWeaponHolder();
+
+
+
+        }
+
+        public void InitWeaponHolder()
+        {
             Transform findDeepChild = transform.FindDeepChild("WeaponHolder");
             if (findDeepChild != null)
             {
@@ -46,8 +54,6 @@ namespace Assets.Scripts.Weapon_Inventary
                     _bulletSpawnPosition = attackSpawnPosition;
                 }
             }
-         
-            
         }
 
         public override int UseAbleAmount

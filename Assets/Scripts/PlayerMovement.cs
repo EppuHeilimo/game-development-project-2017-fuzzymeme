@@ -34,15 +34,15 @@ public class PlayerMovement : MonoBehaviour {
         SpeedLimit();  
         Aiming();//AIMING
 
-        if(Input.GetKeyDown(KeyCode.F))
+        if(Console.GetKeyDown(KeyCode.F))
         {
             inventory.TakeUp();
         }
-        if(Input.GetKeyDown(KeyCode.E))
+        if(Console.GetKeyDown(KeyCode.E))
         {
             inventory.Previous();
         }
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Console.GetKeyDown(KeyCode.Q))
         {
             inventory.Next();
         }
@@ -100,8 +100,8 @@ public class PlayerMovement : MonoBehaviour {
     void CharacterMovement()
     {
         Vector3 direction = new Vector3(0, 0, 0);
-        direction.z = Input.GetAxisRaw("Vertical");
-        direction.x = Input.GetAxisRaw("Horizontal");
+        direction.z = Console.GetAxisRaw("Vertical");
+        direction.x = Console.GetAxisRaw("Horizontal");
         //animation stuff
         animation.inputHorizontal = direction.x;
         animation.inputVertical = direction.z;

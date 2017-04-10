@@ -101,7 +101,7 @@ public class Inventory : MonoBehaviour
         ChangeIndex(newIndex);
     }
 
-    private void ChangeIndex(int newIndex)
+    public void ChangeIndex(int newIndex)
     {
         Index = newIndex;
         Items[Index].OnBeingSelected();

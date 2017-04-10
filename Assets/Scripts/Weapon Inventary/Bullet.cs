@@ -51,7 +51,11 @@ namespace Assets.Scripts.Weapon_Inventary
                 {
                     //do nothing
                 }
-                
+                else if (collision.gameObject.CompareTag("InventoryItem"))
+                {
+                    //do nothing
+                }
+
                 else
                 {
                     Collision(collision);

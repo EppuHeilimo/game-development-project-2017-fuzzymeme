@@ -111,7 +111,7 @@ public class DropHandler : MonoBehaviour {
 
         foreach (GameObject allWeapon in allWeapons)
         {
-            Weapon weapon = allWeapon.GetComponent<Weapon>();
+            InventoryItem weapon = allWeapon.GetComponent<InventoryItem>();
             inventoryItems.Add(weapon);
         }
 

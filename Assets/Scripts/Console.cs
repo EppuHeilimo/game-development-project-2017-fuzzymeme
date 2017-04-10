@@ -1,0 +1,185 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using Assets.Scripts.Interface;
+using Assets.Scripts.Weapon_Inventary;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class Console : MonoBehaviour
+{
+
+    const int NormalHash = -2016234814;
+    const int GodHash = 1175195924;
+
+    private static InputField consoleInput;
+    private RectTransform rectTransform;
+
+    private Weapon stick;
+    private Weapon godsFist;
+
+    private bool consoleVisible = false;
+    private float lastPressedButtonTime = 0;
+	// Use this for initialization
+	void Start ()
+	{
+	
+	    GameObject find = GameObject.Find("ConsoleInput");
+        consoleInput=find.GetComponent<InputField>();
+	    consoleInput.enabled = false;
+	    rectTransform = find.GetComponent<RectTransform>();
+	    rectTransform.localScale = new Vector3(0,0,0);
+        consoleInput.onEndEdit.AddListener(AnalyseCommand);
+	}
+
+    private void AnalyseCommand(string arg0)
+    {
+        int hash = arg0.GetHashCode();
+        
+        if (GodHash.Equals(hash))
+        {
+            StartGodMode(true);
+        }else if (NormalHash.Equals(hash))
+        {
+            StartGodMode(false);
+        }
+        consoleInput.text = "";
+
+    }
+
+   
+    private void StartGodMode(bool flag)
+    {
+        GameObject player = GameObject.Find("Player");
+        Stats stats = player.GetComponent<Stats>();
+        if (flag)
+        {
+            stats.LifeEnergy = 99999;
+            stats.CurrentLifeEnergy = 99999;
+        }
+        else
+        {
+            stats.LifeEnergy = 100;
+            stats.CurrentLifeEnergy = 100;
+        }
+        Weapon[] weapons = player.GetComponents<Weapon>();
+        foreach (Weapon weapon in weapons)
+        {
+            if (weapon.InventaryItemName.Equals("Stick"))
+            {
+                stick = weapon;
+            }else if (weapon.InventaryItemName.Equals("Gods Fist"))
+            {
+                this.godsFist = weapon;
+            }
+
+        }
+
+        if (godsFist == null)
+        {
+            var godsFist1 = Resources.Load<Weapon>("Dropables/10_Gods Fist");
+            godsFist = (Weapon)godsFist1.CreateCopy(player);
+            godsFist.InitWeaponHolder();
+        }
+
+        InventoryItem inventoryItem;
+        if (flag)
+        {
+            inventoryItem = godsFist;
+        }
+        else
+        {
+            inventoryItem = stick;
+        }
+
+
+        Inventory inventory = player.GetComponent<Inventory>();
+        inventory.Items.Remove(inventory.Items[0]);
+        inventory.Items.Insert(0, inventoryItem);
+        inventory.ChangeIndex(0);
+
+
+    }
+
+    // Update is called once per frame
+    void Update ()
+	{
+
+        bool keyUp = GetKeyDown(KeyCode.I);
+
+        if (keyUp)
+	    {
+	        float diff = Time.time   - lastPressedButtonTime;
+	        if (diff > 0.3)
+	        {
+	            if (consoleVisible)
+	            {
+	                consoleInput.enabled = false;
+	                consoleVisible = false;
+                    rectTransform.localScale=new Vector3(0,0,0);
+	            }
+	            else
+	            {
+                    consoleInput.enabled = true;
+                    consoleVisible = true;
+                    rectTransform.localScale = new Vector3(1,1,1);
+	                consoleInput.ActivateInputField();
+
+	            }
+            }
+	        lastPressedButtonTime = Time.time;
+
+	    }
+	}
+
+    public static bool GetKeyDown(KeyCode keyCode)
+    {
+        if (consoleInput.isFocused)
+        {
+            return false;
+        }
+        else
+        {
+            return Input.GetKeyDown(keyCode);
+
+        }
+    }
+
+    public static bool GetKeyUp(KeyCode keyCode)
+    {
+        if (consoleInput.isFocused)
+        {
+            return false;
+        }
+        else
+        {
+            return Input.GetKeyUp(keyCode);
+        }
+    }
+
+    public static bool GetKey(KeyCode keyCode)
+    {
+        if (consoleInput.isFocused)
+        {
+            return false;
+        }
+        else
+        {
+            return Input.GetKey(keyCode);
+        }
+    }
+
+    public static float GetAxisRaw(String axis) 
+    {
+        if (consoleInput.isFocused)
+        {
+            return 0.0f;
+        }
+        else
+        {
+            return Input.GetAxisRaw(axis);
+        }
+    }
+
+
+}

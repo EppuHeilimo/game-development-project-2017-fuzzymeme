@@ -42,9 +42,19 @@ public class HealingPotion : InventoryItem
 
     }
 
+    public override string ItemDescription
+    {
+        get
+        {
+
+            return base.InventaryItemName + "  Heals: "+HealingPoints;
+        }
+    }
+
     protected override void OnCreateCopy(InventoryItem addComponent)
     {
         HealingPotion healingPotion = (HealingPotion) addComponent;
+        healingPotion.HealingPoints = HealingPoints;
         healingPotion.used = used;
     }
 

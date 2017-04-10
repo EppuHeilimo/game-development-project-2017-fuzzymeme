@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Assets.Scripts.Weapon_Inventary;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Interface
 {
@@ -15,6 +16,7 @@ namespace Assets.Scripts.Interface
 
         public String InventaryItemName;
 
+        public Sprite InventarSprite;
 
         public virtual void Start()
         {
@@ -54,6 +56,7 @@ namespace Assets.Scripts.Interface
             DropHelper.DropItem(GetType(),transform, item =>
             {
                 item.InventaryItemName = InventaryItemName;
+                item.InventarSprite = InventarSprite;
                 item.PickUpPrefab = PickUpPrefab;
                 OnCreateCopy(item);
             });
@@ -78,6 +81,7 @@ namespace Assets.Scripts.Interface
             Component addComponent = newGameObject.AddComponent(type);
             InventoryItem inventaryItem = addComponent as InventoryItem;
             inventaryItem.PickUpPrefab = PickUpPrefab;
+            inventaryItem.InventarSprite = InventarSprite;
             inventaryItem.InventaryItemName = InventaryItemName;
             OnCreateCopy(inventaryItem);
             return inventaryItem;

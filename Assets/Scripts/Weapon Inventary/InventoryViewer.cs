@@ -21,6 +21,14 @@ namespace Assets.Scripts.Weapon_Inventary
 
         private Image item3Image;
         private Image item4Image;
+
+        private Image Icon1;
+        private Image Icon2;
+        private Image Icon3;
+        private Image Icon4;
+
+
+
         private InventoryItem lastInventoryItem = null;
         private Sprite notSelectedSprite;
         private Sprite SelectedSprite;
@@ -93,7 +101,12 @@ namespace Assets.Scripts.Weapon_Inventary
             item3Image = GameObject.Find("Inventory/LeftSide/Item3").GetComponent<Image>();
             item4Image = GameObject.Find("Inventory/LeftSide/Item4").GetComponent<Image>();
 
-          
+            Icon1 = GameObject.Find("Inventory/LeftSide/Item1/Image").GetComponent<Image>();
+            Icon2 = GameObject.Find("Inventory/LeftSide/Item2/Image").GetComponent<Image>();
+            Icon3 = GameObject.Find("Inventory/LeftSide/Item3/Image").GetComponent<Image>();
+            Icon4 = GameObject.Find("Inventory/LeftSide/Item4/Image").GetComponent<Image>();
+
+
             item1Text = GameObject.Find("Inventory/LeftSide/Item1/Text").GetComponent<Text>();
            
             item2Text = GameObject.Find("Inventory/LeftSide/Item2/Text").GetComponent<Text>();
@@ -114,7 +127,7 @@ namespace Assets.Scripts.Weapon_Inventary
             refillImage = GameObject.Find("Inventory/LeftSide/Refill").GetComponent<Image>();
             height = refillImage.rectTransform.rect.height;
 
-            DropItemsText = GameObject.Find("DropItemsAround").GetComponent<Text>();
+            DropItemsText = GameObject.Find("PickupAbleItemsBar/DropItemsAround").GetComponent<Text>();
         }
 
 
@@ -125,6 +138,7 @@ namespace Assets.Scripts.Weapon_Inventary
             UpdateReloadBar();
             UpdateUseAmount();
             UpdateSelectableItems();
+            UpdateInventoryIcon();
             if (pickUpText != null)
             {
                 bool notNullInventary = pickUpText != null;
@@ -179,6 +193,64 @@ namespace Assets.Scripts.Weapon_Inventary
             }
             float heightint =(float)( height* percentage);
             refillImage.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, heightint);
+        }
+
+        private InventoryItem lastInventoryItem0 = null;
+        private InventoryItem lastInventoryItem1 = null;
+        private InventoryItem lastInventoryItem2 = null;
+        private InventoryItem lastInventoryItem3 = null;
+
+
+        private void UpdateInventoryIcon()
+        {
+            InventoryItem item = inventory.Items[0];
+            if (lastInventoryItem0 != item)
+            {
+                lastInventoryItem0 = item;
+                ChangeIcon(item, Icon1);
+            }
+
+
+             item = inventory.Items[1];
+            if (lastInventoryItem1 != item)
+            {
+                lastInventoryItem1 = item;
+                ChangeIcon(item, Icon2);
+
+             
+
+            }
+            item = inventory.Items[2];
+            if (lastInventoryItem2 != item)
+            {
+                ChangeIcon(item, Icon3);
+                lastInventoryItem2 = item;
+
+            }
+            item = inventory.Items[3];
+            if (lastInventoryItem3 != item)
+            {
+                lastInventoryItem3 = item;
+                ChangeIcon(item, Icon4);
+
+            }
+
+
+        }
+
+        private void ChangeIcon(InventoryItem item,Image icon)
+        {
+            if (item == null)
+            {
+                icon.sprite = null;
+            }
+            else
+            {
+                icon.sprite = item.InventarSprite;
+                icon.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 46.4f);
+                icon.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 61.4f);
+            }
+            
         }
 
         private void UpdateUseAmount()
@@ -307,7 +379,7 @@ namespace Assets.Scripts.Weapon_Inventary
                     throw new RuntimeException("Unsupported index");
                 }
 
-                selectedWeaponText.text = item.InventaryItemName + " | A:" + " | " + " | D:";
+                selectedWeaponText.text = item.ItemDescription;
 
                 lastInventoryItem = item;
             }

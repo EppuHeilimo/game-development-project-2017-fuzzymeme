@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Console : MonoBehaviour
 {
-    private InputField consoleInput;
+    private static InputField consoleInput;
     private RectTransform rectTransform;
 
     private bool consoleVisible = false;
@@ -24,7 +24,8 @@ public class Console : MonoBehaviour
     // Update is called once per frame
 	void Update ()
 	{
-	    bool keyUp = Input.GetKeyDown(KeyCode.N);
+
+        bool keyUp = Input.GetKeyDown(KeyCode.Backspace);
 
         if (keyUp)
 	    {
@@ -49,4 +50,43 @@ public class Console : MonoBehaviour
 
 	    }
 	}
+
+    public static bool GetKeyDown(KeyCode keyCode)
+    {
+        if (consoleInput.isFocused)
+        {
+            return false;
+        }
+        else
+        {
+            return Input.GetKeyDown(keyCode);
+
+        }
+    }
+
+    public static bool GetKeyUp(KeyCode keyCode)
+    {
+        if (consoleInput.isFocused)
+        {
+            return false;
+        }
+        else
+        {
+            return Input.GetKeyUp(keyCode);
+        }
+    }
+
+    public static bool GetKey(KeyCode keyCode)
+    {
+        if (consoleInput.isFocused)
+        {
+            return false;
+        }
+        else
+        {
+            return Input.GetKey(keyCode);
+        }
+    }
+
+
 }

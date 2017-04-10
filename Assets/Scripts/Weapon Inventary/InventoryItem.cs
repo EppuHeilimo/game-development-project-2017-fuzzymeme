@@ -43,12 +43,13 @@ namespace Assets.Scripts.Interface
 
         public abstract void Use();
 
-
-        public virtual void Drop()
+        public void Drop()
         {
+            Drop(transform);
+        }
 
-           
-
+        public virtual void Drop(Transform transform)
+        {
 
             DropHelper.DropItem(GetType(),transform, item =>
             {

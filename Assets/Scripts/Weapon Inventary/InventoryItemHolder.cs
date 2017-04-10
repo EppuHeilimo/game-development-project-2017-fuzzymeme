@@ -48,15 +48,25 @@ namespace Assets.Scripts
 
         public void SetInventoryItem(InventoryItem inventoryItem )
         {
-
-            if (gameObject.GetComponent<MeshFilter>() == null)
+            GameObject look;
+            Transform find = gameObject.transform.Find("Look");
+            if (find == null)
             {
-                gameObject.AddComponent<MeshFilter>();
+                look = new GameObject("Look");
+                look.transform.parent = transform;
+            }
+            else
+            {
+                look = find.gameObject;
+            }
+            if (look.GetComponent<MeshFilter>() == null)
+            {
+                look.AddComponent<MeshFilter>();
 
             }
-            if (gameObject.GetComponent<MeshRenderer>() == null)
+            if (look.GetComponent<MeshRenderer>() == null)
             {
-                gameObject.AddComponent<MeshRenderer>();
+                look.AddComponent<MeshRenderer>();
             }
 
             this.inventaryItem = inventoryItem;
@@ -68,12 +78,15 @@ namespace Assets.Scripts
 
 
                     Mesh sharedMesh = pickUpPrefab.GetComponent<MeshFilter>().sharedMesh;
-                    gameObject.GetComponent<MeshFilter>().sharedMesh = sharedMesh;
 
-                    gameObject.GetComponent<MeshRenderer>().material =
+                look.GetComponent<MeshFilter>().sharedMesh = sharedMesh;
+
+                look.GetComponent<MeshRenderer>().material =
                         pickUpPrefab.GetComponent<MeshRenderer>().sharedMaterial;
-                    transform.localScale = pickUpPrefab.transform.localScale;
-                    transform.rotation = pickUpPrefab.transform.rotation;
+
+                look.transform.localPosition = new Vector3(0f,1,0f);
+                look.transform.localScale = pickUpPrefab.transform.localScale;
+                look.transform.rotation = pickUpPrefab.transform.rotation;
 
             }
         }

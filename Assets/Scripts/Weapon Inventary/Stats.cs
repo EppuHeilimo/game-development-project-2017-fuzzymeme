@@ -17,7 +17,7 @@ namespace Assets.Scripts.Weapon_Inventary
 
         public event EventHandler ZeroLifePoints;
         private ParticleSystem bloodParticles;
-
+        private bool notifiedZeroLifePoints = false;
         public void Start()
         {
 
@@ -34,9 +34,10 @@ namespace Assets.Scripts.Weapon_Inventary
         }
         private void Notify()
         {
-            if(ZeroLifePoints != null)
+            if(ZeroLifePoints != null && !notifiedZeroLifePoints)
             {
                 ZeroLifePoints(this,EventArgs.Empty);
+                notifiedZeroLifePoints = true;
             }
 
         }
@@ -74,6 +75,16 @@ namespace Assets.Scripts.Weapon_Inventary
             if (Text != null)
                 Text.text = CreatureName + ":  " + CurrentLifeEnergy + " / " + LifeEnergy;
 
+        }
+
+        public void Heal(double healingPoints)
+        {
+            double newCurrentLifeEnergy = CurrentLifeEnergy+healingPoints;
+            if (newCurrentLifeEnergy > LifeEnergy)
+            {
+                newCurrentLifeEnergy = LifeEnergy;
+            }
+            CurrentLifeEnergy = newCurrentLifeEnergy;
         }
     }
 }

@@ -32,8 +32,8 @@ namespace Assets.Scripts.Weapon_Inventary
             {
                 double percentage = stats.CurrentLifeEnergy/stats.LifeEnergy;
 
-                width = (float)(width * percentage);
-                image.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
+                float currentWidth = (float)(width * percentage);
+                image.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, currentWidth);
 
                 lastValue = stats.CurrentLifeEnergy;
             }

@@ -35,13 +35,18 @@ namespace Assets.Scripts.Weapon_Inventary
 
         public override void Start()
         {
-            weaponHolder = transform.FindDeepChild("WeaponHolder").gameObject;
-            
-            if (_bulletSpawnPosition == null)
+            Transform findDeepChild = transform.FindDeepChild("WeaponHolder");
+            if (findDeepChild != null)
             {
-                attackSpawnPosition = transform.FindDeepChild("AttackSpawnPoint");
-                _bulletSpawnPosition = attackSpawnPosition;
+                weaponHolder = findDeepChild.gameObject;
+
+                if (_bulletSpawnPosition == null)
+                {
+                    attackSpawnPosition = transform.FindDeepChild("AttackSpawnPoint");
+                    _bulletSpawnPosition = attackSpawnPosition;
+                }
             }
+         
             
         }
 

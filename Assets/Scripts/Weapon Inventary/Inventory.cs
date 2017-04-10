@@ -15,7 +15,13 @@ public class Inventory : MonoBehaviour
     public int Index { get; set; } 
     private int InventarySize = 4;
     private List<GameObject> pickUpsAround = new List<GameObject>();
-    public InventoryItem SelectedPickUpAround { get; set; }
+
+    public InventoryItem SelectedPickUpAround
+    {
+        get { return _selectedPickUpAround; }
+        set { _selectedPickUpAround = value; }
+    }
+
     public List<GameObject> PickUpsAround { get { return pickUpsAround; } }
 
 
@@ -25,6 +31,7 @@ public class Inventory : MonoBehaviour
     private float _lastTakeUpTime = 0;
 
     private float changeTimeThreshold = 0.2f;
+    private InventoryItem _selectedPickUpAround;
 
 
     public void Start()
@@ -241,6 +248,19 @@ public class Inventory : MonoBehaviour
         Boolean contains = gameObject.CompareTag(Constants.InventoryItem);
         if (contains)
         {
+            Vector3 pickupPosition = gameObject.transform.position;
+            var position = transform.position;
+            double xDiff = pickupPosition.x - position.x;
+            double yDiff = pickupPosition.y - position.y;
+            double zDiff = pickupPosition.z - position.z;
+
+            double distance = Math.Sqrt(xDiff*xDiff+yDiff*yDiff+zDiff*zDiff);
+
+            if (distance > 3)
+            {
+                return;
+            }
+
             InventoryItem inventaryItem = other.GetComponent<InventoryItemHolder>().InventoryItem;
             if (!PickUpsAround.Contains(gameObject))
             {
@@ -259,15 +279,18 @@ public class Inventory : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag(Constants.InventoryItem))
+
+        var gameObject1 = other.gameObject;
+        Boolean isInventoryItem = gameObject1.CompareTag(Constants.InventoryItem);
+        if (isInventoryItem)
         {
-            var gameObject = other.gameObject;
+            var otherGameObject = other.gameObject;
             InventoryItem inventaryItem = other.gameObject.GetComponent<InventoryItem>();
-            bool contains = PickUpsAround.Contains(gameObject);
+            bool contains = PickUpsAround.Contains(otherGameObject);
             if (contains)
             {
-                int indexOfNotAnymoreAvailable = PickUpsAround.IndexOf(gameObject);
-                PickUpsAround.Remove(gameObject);
+                int indexOfNotAnymoreAvailable = PickUpsAround.IndexOf(otherGameObject);
+                PickUpsAround.Remove(otherGameObject);
 
                 if (SelectedPickUpAround == inventaryItem)
                 {

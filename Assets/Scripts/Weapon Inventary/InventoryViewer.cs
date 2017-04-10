@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Assets.Scripts.Interface;
 using Boo.Lang.Runtime;
 using UnityEngine;
@@ -26,6 +27,7 @@ namespace Assets.Scripts.Weapon_Inventary
         private Text selectedWeaponText;
         private Image refillImage;
         private float height;
+        private Text DropItemsText;
 
         private Text item1Text;
         private Text item2Text;
@@ -111,6 +113,8 @@ namespace Assets.Scripts.Weapon_Inventary
 
             refillImage = GameObject.Find("Inventory/LeftSide/Refill").GetComponent<Image>();
             height = refillImage.rectTransform.rect.height;
+
+            DropItemsText = GameObject.Find("DropItemsAround").GetComponent<Text>();
         }
 
 
@@ -120,7 +124,7 @@ namespace Assets.Scripts.Weapon_Inventary
             UpdateSelectedItem();
             UpdateReloadBar();
             UpdateUseAmount();
-
+            UpdateSelectableItems();
             if (pickUpText != null)
             {
                 bool notNullInventary = pickUpText != null;
@@ -347,5 +351,23 @@ namespace Assets.Scripts.Weapon_Inventary
             return text;
         }
 
+        protected void UpdateSelectableItems()
+        {
+            List<GameObject> pickUpsAround = inventory.PickUpsAround;
+            if (pickUpsAround.Count == 0)
+            {
+                DropItemsText.text = "";
+            }
+            else
+            {
+                int indexer = inventory.SelectedPickUpArroundIndex+1;
+                string name = inventory.SelectedPickUpAround.InventaryItemName;
+                String str = name + "  [" + indexer + "|" + pickUpsAround.Count + "]";
+                DropItemsText.text = str;
+
+            }
+
+
+        }
     }
 }

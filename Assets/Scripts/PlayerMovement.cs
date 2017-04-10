@@ -57,35 +57,32 @@ public class PlayerMovement : MonoBehaviour {
 
     void Aiming()
     {
-        if(CameraMode == 0)
-        {
-            Vector3 point = new Vector3();
 
-            Ray cameraRay = main_camera.ScreenPointToRay(Input.mousePosition);
-            LayerMask layer = (1 << 11) | (1 << 13);
-            RaycastHit hit;
-            if (Physics.Raycast(cameraRay, out hit, float.PositiveInfinity, layer))
+        Vector3 point = new Vector3();
+
+        Ray cameraRay = main_camera.ScreenPointToRay(Input.mousePosition);
+        LayerMask layer = (1 << 11) | (1 << 13);
+        RaycastHit hit;
+        if (Physics.Raycast(cameraRay, out hit, float.PositiveInfinity, layer))
+        {
+            if (hit.collider.gameObject.transform.CompareTag("Enemy"))
             {
-                if (hit.collider.gameObject.transform.CompareTag("Enemy"))
+                point = new Vector3(hit.collider.gameObject.transform.position.x, hit.collider.gameObject.transform.position.y, hit.collider.gameObject.transform.position.z);
+            }
+            else
+            {
+                Plane groundPlane = new Plane(Vector3.up, transform.position);
+                float rayLength;
+                if (groundPlane.Raycast(cameraRay, out rayLength))
                 {
-                    point = new Vector3(hit.collider.gameObject.transform.position.x, hit.collider.gameObject.transform.position.y, hit.collider.gameObject.transform.position.z);
-                }
-                else
-                {
-                    Plane groundPlane = new Plane(Vector3.up, transform.position);
-                    float rayLength;
-                    if (groundPlane.Raycast(cameraRay, out rayLength))
-                    {
-                        point = cameraRay.GetPoint(rayLength); // Where the player looks                                       
-                    }
+                    point = cameraRay.GetPoint(rayLength); // Where the player looks                                       
                 }
             }
-            LookPoint.position = new Vector3(point.x, transform.position.y, point.z);
-            transform.LookAt(LookPoint); //look to directions on plane level (x,z)
         }
-        else if(CameraMode == 1)
+        LookPoint.localPosition = new Vector3(point.x, transform.position.y, point.z);
+        if (CameraMode == 0)
         {
-            transform.Rotate(0, Input.GetAxis("Mouse X") * rotateSpeed * 1, 0);
+            transform.LookAt(LookPoint); //look to directions on plane level (x,z)
         }
 
     }
@@ -99,18 +96,18 @@ public class PlayerMovement : MonoBehaviour {
 
     void CharacterMovement()
     {
-        Vector3 direction = new Vector3(0, 0, 0);
-        direction.z = Input.GetAxisRaw("Vertical");
-        direction.x = Input.GetAxisRaw("Horizontal");
-        //animation stuff
-        animation.inputHorizontal = direction.x;
-        animation.inputVertical = direction.z;
 
-        direction.Normalize(); // normalize for the diretion -1 - 1.
-        
-        transform.Translate(direction.x * speed * Time.deltaTime, 0, direction.z * speed * Time.deltaTime, Space.World); // our WASD controls is related to the WORLD, not the players axis.
-    }
+            Vector3 direction = new Vector3(0, 0, 0);
+            direction.z = Input.GetAxisRaw("Vertical");
+            direction.x = Input.GetAxisRaw("Horizontal");
+            //animation stuff
+            animation.inputHorizontal = direction.x;
+            animation.inputVertical = direction.z;
+
+            direction.Normalize(); // normalize for the diretion -1 - 1.
+
+            transform.Translate(direction.x * speed * Time.deltaTime, 0, direction.z * speed * Time.deltaTime, Space.World); // our WASD controls is related to the WORLD, not the players axis.
 
 
-        
+    }   
 }

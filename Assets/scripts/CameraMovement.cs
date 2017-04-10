@@ -47,8 +47,13 @@ public class CameraMovement : MonoBehaviour
             }
             else if(cameraMode == 1)
             {
-                transform.position = LockedTo.position;
-                transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, playerTransform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+                float horizontal = Input.GetAxis("Mouse X") * rotateSpeed;
+                playerTransform.Rotate(0, horizontal, 0);
+                float desiredAngle = playerTransform.eulerAngles.y;
+                Quaternion rotation = Quaternion.Euler(0, desiredAngle, 0);
+                transform.position = LockedTo.position - (rotation * offset);
+
+                transform.LookAt(playerTransform);
             }
         } 
 	    else if (translating)

@@ -21,6 +21,14 @@ namespace Assets.Scripts.Weapon_Inventary
 
         private Image item3Image;
         private Image item4Image;
+
+        private Image Icon1;
+        private Image Icon2;
+        private Image Icon3;
+        private Image Icon4;
+
+
+
         private InventoryItem lastInventoryItem = null;
         private Sprite notSelectedSprite;
         private Sprite SelectedSprite;
@@ -93,7 +101,12 @@ namespace Assets.Scripts.Weapon_Inventary
             item3Image = GameObject.Find("Inventory/LeftSide/Item3").GetComponent<Image>();
             item4Image = GameObject.Find("Inventory/LeftSide/Item4").GetComponent<Image>();
 
-          
+            Icon1 = GameObject.Find("Inventory/LeftSide/Item1/Image").GetComponent<Image>();
+            Icon2 = GameObject.Find("Inventory/LeftSide/Item2/Image").GetComponent<Image>();
+            Icon3 = GameObject.Find("Inventory/LeftSide/Item3/Image").GetComponent<Image>();
+            Icon4 = GameObject.Find("Inventory/LeftSide/Item4/Image").GetComponent<Image>();
+
+
             item1Text = GameObject.Find("Inventory/LeftSide/Item1/Text").GetComponent<Text>();
            
             item2Text = GameObject.Find("Inventory/LeftSide/Item2/Text").GetComponent<Text>();
@@ -125,6 +138,7 @@ namespace Assets.Scripts.Weapon_Inventary
             UpdateReloadBar();
             UpdateUseAmount();
             UpdateSelectableItems();
+            UpdateInventoryIcon();
             if (pickUpText != null)
             {
                 bool notNullInventary = pickUpText != null;
@@ -179,6 +193,57 @@ namespace Assets.Scripts.Weapon_Inventary
             }
             float heightint =(float)( height* percentage);
             refillImage.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, heightint);
+        }
+
+        private InventoryItem lastInventoryItem0 = null;
+        private InventoryItem lastInventoryItem1 = null;
+        private InventoryItem lastInventoryItem2 = null;
+        private InventoryItem lastInventoryItem3 = null;
+
+
+        private void UpdateInventoryIcon()
+        {
+            InventoryItem item = inventory.Items[0];
+            if (lastInventoryItem0 != item)
+            {
+                lastInventoryItem0 = item;
+                Icon1.sprite = item.InventarSprite;
+                Icon1.SetNativeSize();
+                Icon1.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 46.4f);
+                Icon1.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 61.4f);
+            }
+
+
+             item = inventory.Items[1];
+            if (lastInventoryItem1 != item)
+            {
+                lastInventoryItem1 = item;
+                Icon2.sprite = item.InventarSprite;
+                Icon2.SetNativeSize();
+                Icon2.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 46.4f);
+                Icon2.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 61.4f);
+
+            }
+            item = inventory.Items[2];
+            if (lastInventoryItem2 != item)
+            {
+                lastInventoryItem2 = item;
+                Icon3.sprite = item.InventarSprite;
+                Icon3.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 46.4f);
+                Icon3.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 61.4f);
+
+            }
+            item = inventory.Items[3];
+            if (lastInventoryItem3 != item)
+            {
+                lastInventoryItem3 = item;
+                Icon4.sprite = item.InventarSprite;
+                Icon4.SetNativeSize();
+                Icon4.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 46.4f);
+                Icon4.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 61.4f);
+            }
+
+
         }
 
         private void UpdateUseAmount()

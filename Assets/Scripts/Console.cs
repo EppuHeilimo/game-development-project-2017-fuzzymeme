@@ -61,7 +61,7 @@ public class Console : MonoBehaviour
             consoleInput.text = "I will do it... later...somewhen...who knows...";
         }else if (NotAvailableHash.Equals(hash))
         {
-            consoleInput.text = "That is not available. maybe epu can help.";
+            consoleInput.text = "That is not available. maybe eppu can help.";
 
         }
     }

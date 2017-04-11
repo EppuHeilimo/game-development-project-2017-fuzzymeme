@@ -16,6 +16,7 @@ public class Console : MonoBehaviour
     const int HalfGodHash = -208539993;
     const int LaterHash = 2071488744;
     const int NotAvailableHash = -210791430;
+    const int ShowMeTheBossHash = 649304737;
 
     private static InputField consoleInput;
     private RectTransform rectTransform;

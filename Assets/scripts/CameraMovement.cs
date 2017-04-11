@@ -80,11 +80,11 @@ public class CameraMovement : MonoBehaviour
                 LockedTo = thirdPersonPosition;
             minimap.SetArea(GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().GetCurrentArea().transform);
         }
-        if(Input.GetKeyDown(KeyCode.P))
+        if(Console.GetKeyDown(KeyCode.P))
         {
             ToggleCameraMode();
         }
-	    if (Input.GetKeyDown(KeyCode.LeftAlt))
+	    if (Console.GetKeyDown(KeyCode.LeftAlt))
 	    {
             if(Cursor.lockState == CursorLockMode.Locked)
                 Cursor.lockState = CursorLockMode.None;

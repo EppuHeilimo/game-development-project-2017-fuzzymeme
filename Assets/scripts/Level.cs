@@ -103,21 +103,25 @@ public class Level : MonoBehaviour
 
                 Dictionary<EntryPoint, Level> usedareas = new Dictionary<EntryPoint, Level>();
                 //use the rest of the available rooms if there's any
-                for (int i = 0; i < availableAreas.Count; i++)
+                if(entrypoints.Count != 0)
                 {
+                    for (int i = 0; i < availableAreas.Count; i++)
+                    {
                         Level area2 = availableAreas[Random.Range(0, availableAreas.Count)].GetComponent<Level>();
                         rnd = Random.Range(0, entrypoints.Count);
                         entrypoints[rnd].GetComponent<EntryPoint>().Init(true);
                         usedareas.Add(entrypoints[rnd].GetComponent<EntryPoint>(), area2);
                         availableAreas.Remove(area2.gameObject);
-                        entrypoints.RemoveAt(rnd);                        
-                }
-                int count = 0;
-                foreach (KeyValuePair<EntryPoint, Level> pair in usedareas)
-                {
-                    // make last rooms deadends
-                    pair.Key.otherSidePoint = pair.Value.init(availableAreas, pair.Key, true);
-                    count++;
+                        entrypoints.RemoveAt(rnd);
+                    }
+                   
+                    int count = 0;
+                    foreach (KeyValuePair<EntryPoint, Level> pair in usedareas)
+                    {
+                        // make last rooms deadends
+                        pair.Key.otherSidePoint = pair.Value.init(availableAreas, pair.Key, true);
+                        count++;
+                    }
                 }
             }
             else

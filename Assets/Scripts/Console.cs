@@ -6,6 +6,8 @@ using Assets.Scripts.Weapon_Inventary;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
+using Assets.Script;
+using UnityEngine.AI;
 
 public class Console : MonoBehaviour
 {
@@ -17,9 +19,12 @@ public class Console : MonoBehaviour
     const int LaterHash = 2071488744;
     const int NotAvailableHash = -210791430;
     const int ShowMeTheBossHash = 649304737;
-
+    const int OpenHash = -371437091;
     private static InputField consoleInput;
     private RectTransform rectTransform;
+
+
+
 
     private Weapon stick;
     private Weapon godsFist;
@@ -41,7 +46,7 @@ public class Console : MonoBehaviour
     private void AnalyseCommand(string arg0)
     {
         int hash = arg0.GetHashCode();
-        
+
         if (GodHash.Equals(hash))
         {
             StartGodMode(true);
@@ -65,6 +70,19 @@ public class Console : MonoBehaviour
             consoleInput.text = "That is not available. maybe eppu can help.";
 
         }
+        if(OpenHash.Equals(hash))
+        {
+            GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().OpenCurrentAreasEntries();
+        }
+        if(ShowMeTheBossHash.Equals(hash))
+        {
+            TeleportToBossRoom();
+        }
+    }
+
+    private void TeleportToBossRoom()
+    {
+        GameObject.FindGameObjectWithTag("Player").GetComponent<NavMeshAgent>().Warp(GameObject.FindGameObjectWithTag("BossArea").transform.FindDeepChild("Entry 1").GetComponent<EntryPoint>().playerTeleportPoint.position);
     }
 
     private void DropSomething()

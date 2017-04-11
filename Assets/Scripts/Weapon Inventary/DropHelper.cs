@@ -32,5 +32,11 @@ namespace Assets.Scripts.Weapon_Inventary
             fillItemAction(item);
             itemHolder.SetInventoryItem(item);
         }
+
+
+      
+
+
     }
+
 }

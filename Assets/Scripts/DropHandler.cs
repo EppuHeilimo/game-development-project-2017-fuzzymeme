@@ -88,7 +88,9 @@ public class DropHandler : MonoBehaviour {
 
     private void OnDestroy()
     {
+        if(zeroPointnotifier != null)
         zeroPointnotifier.ZeroLifePoints -= OnZeroLifePoints;
+
     }
 
 

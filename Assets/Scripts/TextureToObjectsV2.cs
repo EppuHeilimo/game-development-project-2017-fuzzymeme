@@ -247,7 +247,7 @@ public class TextureToObjectsV2 : MonoBehaviour
             for (int i = 0; i < width1; i++)
             {
 
-                Color pixel = Texture.GetPixel(i, z);
+                Color pixel = Texture.GetPixel(i,z);
 
                 RGBColor rgbColor = new RGBColor();
                 rgbColor.r = (byte)(255 * pixel.r);
@@ -602,7 +602,7 @@ public class TextureToObjectsV2 : MonoBehaviour
         int imageX = (int)Math.Floor(coordinate.X / xScale);
         int imageZ = (int)Math.Floor(coordinate.Z / zScale);
         RGBColor rgbColor = rawTextureColor[imageZ, imageX];
-        bool blackPixel = rgbColor.r == 0 && rgbColor.b == 0 && rgbColor.g == 0;
+        bool blackPixel = rgbColor.r < 10 && rgbColor.b < 10 && rgbColor.g < 10;
         if (imageZ == 4 && imageX == 30)
         {
             int b = 4;

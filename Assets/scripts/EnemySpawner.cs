@@ -63,5 +63,6 @@ public class EnemySpawner : MonoBehaviour
             }  
         }
         transform.root.GetComponent<Level>().SetEnemyCount(count);
+        Debug.Log(count);
     }
 }

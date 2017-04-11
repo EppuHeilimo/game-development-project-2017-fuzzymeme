@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Assets.Script;
 using Assets.Scripts;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class GameManager : MonoBehaviour
     private EnemySpawner areasSpawner;
     public List<GameObject> weapons;
     public int progression = 0;
+    public int levelsToBoss = 0;
 
     
 	// Use this for initialization
@@ -53,6 +55,7 @@ public class GameManager : MonoBehaviour
         {
             currentArea.Completed = true;
             progression++;
+            GameObject.FindGameObjectWithTag("ProgressionText").GetComponent<Text>().text = "Room: " + progression + "/" + levelsToBoss;
         }
         EntryPoint[] entries = currentArea.GetComponentsInChildren<EntryPoint>();
         foreach (EntryPoint t in entries)

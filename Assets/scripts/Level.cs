@@ -14,7 +14,8 @@ public class Level : MonoBehaviour
     public RenderTexture fogOfWarTexture;
     public bool Completed = false;
     private int enemyCount = 0;
-
+    public bool rightway = false;
+    GameManager gameManager;
 
     //public void Awake()
     //{
@@ -41,6 +42,7 @@ public class Level : MonoBehaviour
                 entrypoints.Add(t);
         }
         roomCount = Random.Range(2, entrypoints.Count + 1);
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
 
     public void SetEnemyCount(int count)
@@ -91,6 +93,8 @@ public class Level : MonoBehaviour
         bool last = availableAreas.Count <= roomCount;
         if (!deadend)
         {
+            rightway = true;
+            gameManager.levelsToBoss++;
             if (last)
             {
                 //find bossarea and assign random entrypoint for bossroom

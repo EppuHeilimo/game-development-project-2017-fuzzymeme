@@ -23,7 +23,6 @@ public class Level : MonoBehaviour
     //    {
     //        tag = "Area";
     //    }
-
     //}
 
     // Use this for initialization

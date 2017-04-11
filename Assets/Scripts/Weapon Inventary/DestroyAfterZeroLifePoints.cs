@@ -40,7 +40,7 @@ namespace Assets.Scripts
                 //Destroy(component);
                 //BoxCollider boxCollider = gameObject.GetComponent<BoxCollider>();
                 //Destroy(boxCollider);
-              
+
                 //foreach (Transform o in transform)
                 //{
 
@@ -49,7 +49,7 @@ namespace Assets.Scripts
                 //        Destroy(o);
                 //    }   
                 //}
-
+                GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().GetCurrentArea().enemyCount--;
                 Destroy(gameObject);
             }
         }

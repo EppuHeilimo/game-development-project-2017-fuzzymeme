@@ -54,8 +54,11 @@ public class GameManager : MonoBehaviour
         if (!currentArea.Completed)
         {
             currentArea.Completed = true;
-            progression++;
-            GameObject.FindGameObjectWithTag("ProgressionText").GetComponent<Text>().text = "Room: " + progression + "/" + levelsToBoss;
+            if(currentArea.rightway)
+            {
+                progression++;
+                GameObject.FindGameObjectWithTag("ProgressionText").GetComponent<Text>().text = "Room: " + progression + "/" + levelsToBoss;
+            }
         }
         EntryPoint[] entries = currentArea.GetComponentsInChildren<EntryPoint>();
         foreach (EntryPoint t in entries)

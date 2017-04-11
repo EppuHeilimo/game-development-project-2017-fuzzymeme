@@ -13,9 +13,10 @@ public class Level : MonoBehaviour
     public RenderTexture minimapTexture;
     public RenderTexture fogOfWarTexture;
     public bool Completed = false;
-    private int enemyCount = 0;
+    public int enemyCount = 0;
     public bool rightway = false;
     GameManager gameManager;
+    public bool initiated = false;
 
     //public void Awake()
     //{
@@ -45,15 +46,11 @@ public class Level : MonoBehaviour
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
 
-    public void SetEnemyCount(int count)
-    {
-        enemyCount = count;
-    }
 	
 	// Update is called once per frame
 	void Update () {
 
-	    if (enemyCount <= 0 && !transform.root.CompareTag("BossArea"))
+	    if (initiated && enemyCount <= 0 && !transform.root.CompareTag("BossArea"))
 	    {
 	        GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().OpenCurrentAreasEntries();
 	    }

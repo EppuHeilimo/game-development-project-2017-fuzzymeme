@@ -62,7 +62,8 @@ public class EnemySpawner : MonoBehaviour
                 count++;
             }  
         }
-        transform.root.GetComponent<Level>().SetEnemyCount(count);
+        transform.root.GetComponent<Level>().initiated = true;
+        transform.root.GetComponent<Level>().enemyCount = count;
         Debug.Log(count);
     }
 }

@@ -32,6 +32,9 @@ namespace Assets.Scripts.Weapon_Inventary
             }
  
         }
+
+      
+
         private void Notify()
         {
             if(ZeroLifePoints != null && !notifiedZeroLifePoints)

@@ -10,9 +10,10 @@ public class PlayerMovement : MonoBehaviour {
     private Camera main_camera;
     public int speed = 5;
     private PlayerAnimation animation;
-    private float rotateSpeed = 3f;
-    
-    
+    private float xrotateSpeed = 30f;
+    private float yrotateSpeed = 20f;
+
+    private GameObject crosshair;
 
     Vector3 previous;
     float playerVelocity;
@@ -20,6 +21,10 @@ public class PlayerMovement : MonoBehaviour {
     private Inventory inventory;
     public Transform LookPoint;
     public int CameraMode = 0;
+    public float yLookPoint;
+    public float maxY = 7f;
+    public float minY = 5f;
+    private float corsshairY = 0f;
 
     // Use this for initialization
     void Start () {
@@ -27,7 +32,7 @@ public class PlayerMovement : MonoBehaviour {
         inventory = GetComponent<Inventory>();
         animation = GetComponent<PlayerAnimation>();
         LookPoint = transform.FindChild("LookPoint");
-        
+        crosshair = main_camera.GetComponent<CameraMovement>().GetCrosshair();
     }
 	
 	// Update is called once per frame
@@ -86,10 +91,36 @@ public class PlayerMovement : MonoBehaviour {
             transform.LookAt(LookPoint); //look to directions on plane level (x,z)
         else if (CameraMode == 1)
         {
-            float mousex = Input.GetAxis("Mouse X") * rotateSpeed;
+            float mousex = Input.GetAxis("Mouse X") * xrotateSpeed * Time.deltaTime;
+            float mousey = Input.GetAxis("Mouse Y") * yrotateSpeed * Time.deltaTime;
+            yLookPoint += mousey;
             transform.Rotate(0, mousex, 0);
-        }
 
+            if (yLookPoint >= maxY )
+            {
+                crosshair.transform.Translate(0, mousey * yrotateSpeed / 2, 0);  
+            }
+            else if (yLookPoint <= minY)
+            {
+                crosshair.transform.Translate(0, mousey*yrotateSpeed / 2, 0);
+            }
+        }
+    }
+
+    public float GetLookYPoint()
+    {
+        if (yLookPoint >= maxY)
+        {
+            return maxY;
+        }
+        else if (yLookPoint <= minY)
+        {
+            return minY;
+        }
+        else
+        {
+            return yLookPoint;
+        }
     }
 
     void SpeedLimit()

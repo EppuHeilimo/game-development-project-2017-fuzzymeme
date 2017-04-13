@@ -25,10 +25,14 @@ public class CameraMovement : MonoBehaviour
     private float orthoSizeDefault;
     private int cameraMode = 0;
     private GameObject crosshair;
+    private float maxYDistance = 20f;
+    private float minYDistance = 5f;
+    private PlayerMovement player;
     // Use this for initialization
     void Start ()
 	{
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        player = playerTransform.GetComponent<PlayerMovement>();
         thirdPersonPosition = playerTransform.FindChild("ThirdPersonCameraPosition");
         LookPoint = playerTransform.FindChild("LookPoint");
         offset = playerTransform.position - thirdPersonPosition.position;
@@ -39,6 +43,13 @@ public class CameraMovement : MonoBehaviour
         crosshair = GameObject.FindGameObjectWithTag("Crosshair");
         crosshair.SetActive(false);
 	}
+
+    public GameObject GetCrosshair()
+    {
+        if(crosshair == null)
+            crosshair = GameObject.FindGameObjectWithTag("Crosshair");
+        return crosshair;
+    }
 	
 	// Update is called once per frame
 	void LateUpdate ()
@@ -52,13 +63,10 @@ public class CameraMovement : MonoBehaviour
             else if(cameraMode == 1)
             {
                 transform.position = LockedTo.position;
-
                 float desiredAngle = playerTransform.transform.eulerAngles.y;
                 Quaternion rotation = Quaternion.Euler(0, desiredAngle, 0);
                 transform.position = playerTransform.transform.position - (rotation * offset);
-
-                transform.LookAt(playerTransform.transform.position + playerTransform.forward * 10);
-
+                transform.LookAt(playerTransform.transform.position + playerTransform.forward * player.GetLookYPoint());
             }
         } 
 	    else if (translating)

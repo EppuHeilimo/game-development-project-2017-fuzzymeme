@@ -49,6 +49,11 @@ public class GameManager : MonoBehaviour
         return currentArea;
     }
 
+    public void UpdateProgressionText()
+    {
+        GameObject.FindGameObjectWithTag("ProgressionText").GetComponent<Text>().text = "Room: " + progression + "/" + levelsToBoss;
+    }
+
     public void OpenCurrentAreasEntries()
     {
         if (!currentArea.Completed)
@@ -57,7 +62,7 @@ public class GameManager : MonoBehaviour
             if(currentArea.rightway)
             {
                 progression++;
-                GameObject.FindGameObjectWithTag("ProgressionText").GetComponent<Text>().text = "Room: " + progression + "/" + levelsToBoss;
+                UpdateProgressionText();
             }
         }
         EntryPoint[] entries = currentArea.GetComponentsInChildren<EntryPoint>();

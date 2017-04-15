@@ -37,8 +37,18 @@ namespace Assets.Scripts.Weapon_Inventary
         {
             InitWeaponHolder();
 
+            GenericObjectPool genericObjectPool = GenericObjectPool.Current;
+            genericObjectPool.Init(BulletPrefab.GetHashCode(), behaviour =>
+            {
 
+                GameObject bullet = (GameObject)Instantiate(
+           BulletPrefab);
 
+                IPoolAble poolAble = bullet.GetComponent<IPoolAble>();
+                poolAble.Init(BulletPrefab.GetHashCode());
+                return poolAble;
+                
+            },10,50);
         }
 
         public void InitWeaponHolder()
@@ -115,18 +125,28 @@ namespace Assets.Scripts.Weapon_Inventary
 
             Quaternion rotation = BulletSpawnPosition.root.rotation;
 
-            var bullet = (GameObject)Instantiate(
-            BulletPrefab,
-            BulletSpawnPosition.position,
-            rotation);
-            Bullet component = bullet.GetComponent<Bullet>();
+            IPoolAble poolAble = GenericObjectPool.Current.Get(BulletPrefab.GetHashCode());
+
+            Bullet bullet1 = poolAble as Bullet;
+            GameObject bulletGameObject = bullet1.gameObject;
+
+            bulletGameObject.transform.parent = null;
+            bulletGameObject.transform.position = BulletSpawnPosition.position;
+            bulletGameObject.transform.rotation = rotation;
+            //var bullet = (GameObject)Instantiate(
+            //BulletPrefab,
+            //BulletSpawnPosition.position,
+            //rotation);
+            //int code = bullet.GetHashCode();
             if (Ammunition != -1)
             {
                 Ammunition--;
             }
           
             _lastShootTime = Time.time;
-            component.shooter = gameObject;
+            bullet1.shooter = gameObject;
+            bullet1.SetActive();
+
 
         }
 

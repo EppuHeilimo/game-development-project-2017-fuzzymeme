@@ -25,13 +25,14 @@ namespace Assets.Scripts.Weapon_Inventary
             IsInActive = false;
             gameObject.SetActive(true);
             StartCoroutine(DestroyTimer());
+            InitTimer = Time.time;
+
 
         }
 
 
         void Start()
         {
-            InitTimer = Time.time;
             lifeTime = Distance / Speed;
             gameObject.tag = "Bullet";
         }

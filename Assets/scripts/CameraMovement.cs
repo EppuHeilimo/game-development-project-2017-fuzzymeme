@@ -71,37 +71,40 @@ public class CameraMovement : MonoBehaviour
         } 
 	    else if (translating)
 	    {
-	        MoveTowardsTransform(translationSpeed*Time.deltaTime);
+	        MoveTowardsTransform(translationSpeed * Time.deltaTime);
 	        if (Vector3.Distance(transform.position, LockedTo.position) < 0.3f)
 	        {
 	            translating = false;
+	            player.locked = false;
 	        }
 	    }
 	    else if (playerTeleported)
 	    {
+	        player.locked = true;
 	        TeleportToTransform(targetEntryPoint.cameraTarget);
 	        translating = true;
 	        playerTeleported = false;
-            if (cameraMode == 0)
+	        if (cameraMode == 0)
+	        {
                 LockedTo = playerTransform;
+            }   
             else if (cameraMode == 1)
+            {
                 LockedTo = thirdPersonPosition;
+                playerTransform.LookAt(targetEntryPoint.transform);
+                float desiredAngle = playerTransform.transform.eulerAngles.y;
+                Quaternion rotation = Quaternion.Euler(0, desiredAngle, 0);
+                transform.position = playerTransform.transform.position - (rotation * offset);
+                transform.LookAt(playerTransform.transform.position);
+            }
+                
+            GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().SetCurrentArea(targetEntryPoint.parentTerrain.GetComponent<Level>());
             minimap.SetArea(GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().GetCurrentArea().transform);
         }
         if(Input.GetKeyDown(KeyCode.P))
         {
             ToggleCameraMode();
         }
-	    if (Input.GetKeyDown(KeyCode.LeftAlt))
-	    {
-            if(Cursor.lockState == CursorLockMode.Locked)
-                Cursor.lockState = CursorLockMode.None;
-            if (Cursor.lockState == CursorLockMode.None)
-                Cursor.lockState = CursorLockMode.Locked;
-        }
-
-
-
     }
 
     private void ToggleCameraMode()
@@ -130,6 +133,11 @@ public class CameraMovement : MonoBehaviour
         targetEntryPoint = targetEntrypoint;
         translating = true;
         playerTeleported = true;
+        playerTransform.LookAt(t1);
+        float desiredAngle = playerTransform.transform.eulerAngles.y;
+        Quaternion rotation = Quaternion.Euler(0, desiredAngle, 0);
+        transform.position = playerTransform.transform.position - (rotation * offset);
+        transform.LookAt(playerTransform.transform.position);
     }
 
     void MoveTowardsTransform(float step)

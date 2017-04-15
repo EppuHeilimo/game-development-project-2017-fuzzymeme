@@ -83,6 +83,7 @@ public class Console : MonoBehaviour
     private void TeleportToBossRoom()
     {
         GameObject.FindGameObjectWithTag("Player").GetComponent<NavMeshAgent>().Warp(GameObject.FindGameObjectWithTag("BossArea").transform.FindDeepChild("Entry 1").GetComponent<EntryPoint>().playerTeleportPoint.position);
+        
     }
 
     private void DropSomething()

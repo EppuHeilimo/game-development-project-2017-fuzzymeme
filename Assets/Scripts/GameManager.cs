@@ -42,6 +42,13 @@ public class GameManager : MonoBehaviour
                 CloseCurrentAreasEntries();
             }
         }
+        if (currentArea.transform.CompareTag("BossArea"))
+        {
+            if (!currentArea.Completed)
+            {
+                currentArea.GetComponent<BossArea>().SpawnBoss();
+            } 
+        }
     }
 
     public Level GetCurrentArea()

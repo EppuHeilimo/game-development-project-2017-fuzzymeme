@@ -27,7 +27,7 @@ public class EntryPoint : MonoBehaviour
     //ignore up axis, y = z
     private Vector2 center;
     public Compass compassDirection;
-    private Terrain parentTerrain;
+    public Terrain parentTerrain;
     public Transform playerTeleportPoint;
     // Use this for initialization
     void Start ()
@@ -113,7 +113,7 @@ public class EntryPoint : MonoBehaviour
         {
             player.GetComponent<NavMeshAgent>().Warp(otherSidePoint.playerTeleportPoint.position);
             mainCamera.GetComponent<CameraMovement>().ToEntryPoint(cameraTarget, otherSidePoint);
-            GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().SetCurrentArea(otherSidePoint.parentTerrain.GetComponent<Level>());
+            
         }
     }
 

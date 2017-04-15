@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour {
     public float maxY = 7f;
     public float minY = 5f;
     private float corsshairY = 0f;
+    public bool locked = false;
 
     // Use this for initialization
     void Start () {
@@ -38,29 +39,36 @@ public class PlayerMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        SpeedLimit();  
-        Aiming();//AIMING
+	    if (!locked)
+	    {
+            SpeedLimit();
+            Aiming();//AIMING
 
-        if(Console.GetKeyDown(KeyCode.F))
-        {
-            inventory.TakeUp();
+            if (Console.GetKeyDown(KeyCode.F))
+            {
+                inventory.TakeUp();
+            }
+            if (Console.GetKeyDown(KeyCode.E))
+            {
+                inventory.Previous();
+            }
+            if (Console.GetKeyDown(KeyCode.Q))
+            {
+                inventory.Next();
+            }
+	        if (CameraMode == 1)
+	        {
+                if (Input.GetKeyDown(KeyCode.LeftAlt))
+                {
+                    if (Cursor.lockState == CursorLockMode.Locked)
+                        Cursor.lockState = CursorLockMode.None;
+                    if (Cursor.lockState == CursorLockMode.None)
+                        Cursor.lockState = CursorLockMode.Locked;
+                }
+            }
+            CharacterMovement();
         }
-        if(Console.GetKeyDown(KeyCode.E))
-        {
-            inventory.Previous();
-        }
-        if (Console.GetKeyDown(KeyCode.Q))
-        {
-            inventory.Next();
-        }
-
-
-        CharacterMovement();
-
     }
-    
-    
-
 
     void Aiming()
     {

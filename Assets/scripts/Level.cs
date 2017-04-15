@@ -56,6 +56,7 @@ public class Level : MonoBehaviour
 	    }
 	}
 
+
     //inits the room and returns the entrypoint used to enter the room (RECURSIVE)
     public EntryPoint init(List<GameObject> availableAreas, EntryPoint prevArea, bool deadend)
     {

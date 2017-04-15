@@ -101,7 +101,7 @@ public class CameraMovement : MonoBehaviour
             GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().SetCurrentArea(targetEntryPoint.parentTerrain.GetComponent<Level>());
             minimap.SetArea(GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().GetCurrentArea().transform);
         }
-        if(Input.GetKeyDown(KeyCode.P))
+        if(Console.GetKeyDown(KeyCode.P))
         {
             ToggleCameraMode();
         }

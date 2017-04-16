@@ -29,7 +29,7 @@ public class EnemySpawner : MonoBehaviour
     {
         for (int i = enemies.Count; i < 0; i--)
         {
-            enemies[i].GetComponent<Stats>().CurrentLifeEnergy = 0;
+            enemies[i].GetComponent<Stats>().CurrentLifeEnergy = -1;
             enemies.RemoveAt(i);
         }
     }

@@ -21,13 +21,16 @@ public class Console : MonoBehaviour
     const int NotAvailableHash = -210791430;
     const int ShowMeTheBossHash = 649304737;
     const int OpenHash = -371437091;
+    const int FpsCounter = 101609;
+
+
     private static InputField consoleInput;
     private RectTransform rectTransform;
 
     private Text messageBoxText;
     private GameObject messageBoxBorder;
 
-
+    private GameObject fpsCounter;
 
     private Weapon stick;
     private Weapon godsFist;
@@ -51,12 +54,15 @@ public class Console : MonoBehaviour
 	    messageBoxText = messageBox.GetComponent<Text>();
 	    messageBoxBorder = messageBox.transform.parent.gameObject;
 	    messageBoxBorder.SetActive(false);
+        fpsCounter = GameObject.FindGameObjectWithTag("FPS");
+        fpsCounter.SetActive(false);
 
     }
 
     private void AnalyseCommand(string arg0)
     {
         int hash = arg0.GetHashCode();
+        
 
         if (GodHash.Equals(hash))
         {
@@ -91,6 +97,10 @@ public class Console : MonoBehaviour
         if(ShowMeTheBossHash.Equals(hash))
         {
             TeleportToBossRoom();
+        }
+        if (FpsCounter.Equals(hash))
+        {
+            fpsCounter.SetActive(true);
         }
         consoleInput.enabled = false;
         consoleVisible = false;

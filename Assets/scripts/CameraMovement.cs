@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Assets.Script;
 using Assets.Scripts;
 using UnityEngine;
 
@@ -28,6 +29,8 @@ public class CameraMovement : MonoBehaviour
     private float maxYDistance = 20f;
     private float minYDistance = 5f;
     private PlayerMovement player;
+    private GameObject apertureMask1;
+    private GameObject apertureMask2;
     // Use this for initialization
     void Start ()
 	{
@@ -38,11 +41,14 @@ public class CameraMovement : MonoBehaviour
         offset = playerTransform.position - thirdPersonPosition.position;
         LockedTo = playerTransform;
 	    transform.position = LockedTo.position;
-        minimap = GameObject.FindGameObjectWithTag("MinimapCamera").GetComponent<Minimap>();
+        
         orthoSizeDefault = Camera.main.orthographicSize;
         crosshair = GameObject.FindGameObjectWithTag("Crosshair");
         crosshair.SetActive(false);
-	}
+        apertureMask1 = playerTransform.FindDeepChild("ApertureMask").gameObject;
+        apertureMask2 = playerTransform.FindDeepChild("ApertureMask2").gameObject;
+        apertureMask2.SetActive(false);
+    }
 
     public GameObject GetCrosshair()
     {
@@ -71,13 +77,31 @@ public class CameraMovement : MonoBehaviour
         } 
 	    else if (translating)
 	    {
+
 	        MoveTowardsTransform(translationSpeed * Time.deltaTime);
-	        if (Vector3.Distance(transform.position, LockedTo.position) < 0.3f)
+	        if (cameraMode == 0)
 	        {
-	            translating = false;
-	            player.locked = false;
-	        }
-	    }
+                if (Vector3.Distance(transform.position, LockedTo.position) < 0.3f)
+                {
+                    translating = false;
+                    player.locked = false;
+                }
+            }
+            else if (cameraMode == 1)
+            {
+                if (Vector3.Distance(transform.position, LockedTo.position) < 1f)
+                {
+                    translating = false;
+                    player.locked = false;
+                    playerTransform.LookAt(targetEntryPoint.transform);
+                    float desiredAngle = playerTransform.transform.eulerAngles.y;
+                    Quaternion rotation = Quaternion.Euler(0, desiredAngle, 0);
+                    transform.position = playerTransform.transform.position - (rotation * offset);
+                    transform.LookAt(playerTransform.transform.position);
+                }
+            }
+
+        }
 	    else if (playerTeleported)
 	    {
 	        player.locked = true;
@@ -91,15 +115,11 @@ public class CameraMovement : MonoBehaviour
             else if (cameraMode == 1)
             {
                 LockedTo = thirdPersonPosition;
-                playerTransform.LookAt(targetEntryPoint.transform);
-                float desiredAngle = playerTransform.transform.eulerAngles.y;
-                Quaternion rotation = Quaternion.Euler(0, desiredAngle, 0);
-                transform.position = playerTransform.transform.position - (rotation * offset);
-                transform.LookAt(playerTransform.transform.position);
+
             }
                 
             GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().SetCurrentArea(targetEntryPoint.parentTerrain.GetComponent<Level>());
-            minimap.SetArea(GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().GetCurrentArea().transform);
+            
         }
         if(Console.GetKeyDown(KeyCode.P))
         {
@@ -115,6 +135,8 @@ public class CameraMovement : MonoBehaviour
             cameraMode = 1;
             Cursor.lockState = CursorLockMode.Locked;
             crosshair.SetActive(true);
+            apertureMask2.SetActive(true);
+            apertureMask1.SetActive(false);
 
         }
         else if(cameraMode == 1)
@@ -122,6 +144,8 @@ public class CameraMovement : MonoBehaviour
             LockedTo = playerTransform;
             cameraMode = 0;
             crosshair.SetActive(false);
+            apertureMask2.SetActive(true);
+            apertureMask1.SetActive(false);
 
         }
         playerTransform.GetComponent<PlayerMovement>().CameraMode = cameraMode;
@@ -133,11 +157,16 @@ public class CameraMovement : MonoBehaviour
         targetEntryPoint = targetEntrypoint;
         translating = true;
         playerTeleported = true;
-        playerTransform.LookAt(t1);
-        float desiredAngle = playerTransform.transform.eulerAngles.y;
-        Quaternion rotation = Quaternion.Euler(0, desiredAngle, 0);
-        transform.position = playerTransform.transform.position - (rotation * offset);
-        transform.LookAt(playerTransform.transform.position);
+
+        if (cameraMode == 1)
+        {
+            playerTransform.LookAt(t1);
+            float desiredAngle = playerTransform.transform.eulerAngles.y;
+            Quaternion rotation = Quaternion.Euler(0, desiredAngle, 0);
+            transform.position = playerTransform.transform.position - (rotation * offset);
+            transform.LookAt(playerTransform.transform.position);
+        }
+
     }
 
     void MoveTowardsTransform(float step)

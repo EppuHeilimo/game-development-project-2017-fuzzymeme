@@ -72,7 +72,8 @@ public class Console : MonoBehaviour
         }
         if(OpenHash.Equals(hash))
         {
-            GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().OpenCurrentAreasEntries();
+            CompleteLevel();
+            
         }
         if(ShowMeTheBossHash.Equals(hash))
         {
@@ -80,9 +81,17 @@ public class Console : MonoBehaviour
         }
     }
 
+    private void CompleteLevel()
+    {
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().OpenCurrentAreasEntries();
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().GetCurrentArea().EnemySpawner.KillAllEnemies();
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().RevealCurrentMiniMap();
+    }
+
     private void TeleportToBossRoom()
     {
         GameObject.FindGameObjectWithTag("Player").GetComponent<NavMeshAgent>().Warp(GameObject.FindGameObjectWithTag("BossArea").transform.FindDeepChild("Entry 1").GetComponent<EntryPoint>().playerTeleportPoint.position);
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().SetCurrentArea(GameObject.FindGameObjectWithTag("BossArea").GetComponent<Level>());
         
     }
 

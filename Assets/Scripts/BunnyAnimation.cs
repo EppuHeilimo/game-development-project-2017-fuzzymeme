@@ -28,7 +28,7 @@ public class BunnyAnimation : MonoBehaviour
 	void Start ()
 	{
         animator = transform.FindChild("bunny").GetComponent<Animator>();
-	    ai = transform.root.GetComponent<BunnyAI>();
+	    
 	}
 	
 	// Update is called once per frame
@@ -60,13 +60,17 @@ public class BunnyAnimation : MonoBehaviour
         if (Jump)
 	    {
             animator.SetBool("Jump", true);
-	        Jump = false;
 	    }
+        else
+        {
+            animator.SetBool("Jump", false);
+        }
         
     }
 
-    public void Init(float speed)
+    public void Init(float speed,BunnyAI AI)
     {
         runSpeed = speed/2.5f;
+        ai = AI;
     }
 }

@@ -15,8 +15,9 @@ public class BunnyAI : AI {
     void Start()
     {
         anim = GetComponent<BunnyAnimation>();
-        anim.Init(Speed);
+        anim.Init(Speed, this);
         Init();
+        idleTime = Random.Range(idleTimeMin, idleTimeMax);
     }
 
     // Update is called once per frame
@@ -47,6 +48,7 @@ public class BunnyAI : AI {
             else
             {
                 agent.SetDestination(player.position);
+                agent.speed = 3.5f;
             }
         }
         else if (playerDistance > shootdistance)
@@ -67,12 +69,15 @@ public class BunnyAI : AI {
         if (idleTimer > idleTime)
         {
             idleTimer = 0;
-            agent.SetDestination(RndPointInArea(5f, NavMesh.AllAreas));
+            agent.SetDestination(RndPointInArea(5f, transform.position));
             Jump = true;
+            idleTime = Random.Range(idleTimeMin, idleTimeMax);
+            agent.speed = 5f;
         }
-        if (agent.remainingDistance < 2f)
+        else if (agent.pathStatus == NavMeshPathStatus.PathComplete || agent.remainingDistance < 1f)
         {
             Jump = false;
+            agent.speed = 3.5f;
         }
     }
 
@@ -81,12 +86,23 @@ public class BunnyAI : AI {
         if (shootdistance > playerDistance &&  RotateTowards(player, RotationSpeed))
         {
             weapon.Use();
-            standingState = BunnyAnimation.StandingState.Idle;
+            //standingState = BunnyAnimation.StandingState.Idle;
+            CirclePlayer();
         }
         else
         {
             state = AIState.Seek;
+            agent.updateRotation = true;
         }
+
+    }
+
+    private void CirclePlayer()
+    {
+        agent.updateRotation = false;
+        if (agent.remainingDistance < 0.3f || !agent.hasPath)
+            agent.SetDestination(RndPointInCircle(shootdistance, player.position));
+
 
     }
 }

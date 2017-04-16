@@ -11,6 +11,7 @@ public class TeddyAI : AI {
         anim = GetComponent<TeddyAnimation>();
         anim.Init(Speed);
         Init();
+        idleTime = Random.Range(idleTimeMin, idleTimeMax);
     }
 
 
@@ -63,8 +64,9 @@ public class TeddyAI : AI {
         idleTimer += Time.deltaTime;
         if (idleTimer > idleTime)
         {
+            idleTime = Random.Range(idleTimeMin, idleTimeMax);
             idleTimer = 0;
-            agent.SetDestination(RndPointInArea(5f, NavMesh.AllAreas));
+            agent.SetDestination(RndPointInArea(5f, transform.position));
         }
     }
 
@@ -73,10 +75,21 @@ public class TeddyAI : AI {
         if (shootdistance > playerDistance && RotateTowards(player, RotationSpeed))
         {
             weapon.Use();
+            CirclePlayer();
         }
         else
         {
             state = AIState.Seek;
+            agent.updateRotation = true;
         }
+    }
+
+    private void CirclePlayer()
+    {
+        agent.updateRotation = false;
+        if (agent.remainingDistance < 1f || !agent.hasPath)
+            agent.SetDestination(RndPointInCircle(shootdistance, player.position));
+
+
     }
 }

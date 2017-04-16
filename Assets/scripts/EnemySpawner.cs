@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Assets.Script;
+using Assets.Scripts.Weapon_Inventary;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
@@ -8,18 +9,29 @@ public class EnemySpawner : MonoBehaviour
 
     public GameObject[] EnemyPrefabs;
     public List<Transform> spawnPoints;
+    public List<GameObject> enemies;
 
 	// Use this for initialization
 	void Start ()
 	{
 
 	    Init();
-	}
+        enemies = new List<GameObject>();
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+    public void KillAllEnemies()
+    {
+        foreach (GameObject go in enemies)
+        {
+            go.GetComponent<Stats>().CurrentLifeEnergy = 0;
+        }
+    }
 
     void Init()
     {
@@ -59,6 +71,7 @@ public class EnemySpawner : MonoBehaviour
                     go.transform.localScale = new Vector3(rand, rand, rand);
                 }
                 minimapObj.parent = go.transform;
+                enemies.Add(go);
                 count++;
             }  
         }

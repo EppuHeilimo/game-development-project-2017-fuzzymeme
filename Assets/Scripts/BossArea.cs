@@ -7,6 +7,7 @@ public class BossArea : MonoBehaviour
 
     public GameObject BossPrefab;
     public Transform bossSpawnPoint;
+    private GameObject boss;
 
 	// Use this for initialization
 	void Start () {
@@ -20,6 +21,6 @@ public class BossArea : MonoBehaviour
 
     public void SpawnBoss()
     {
-        Instantiate(BossPrefab, bossSpawnPoint);
+        boss = Instantiate(BossPrefab, bossSpawnPoint.position, Quaternion.identity);
     }
 }

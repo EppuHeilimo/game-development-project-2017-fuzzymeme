@@ -111,8 +111,9 @@ public class EntryPoint : MonoBehaviour
     {
         if (other.CompareTag("Player") && otherSidePoint != null && !locked)
         {
-            player.GetComponent<NavMeshAgent>().Warp(otherSidePoint.playerTeleportPoint.position);
             mainCamera.GetComponent<CameraMovement>().ToEntryPoint(cameraTarget, otherSidePoint);
+            player.GetComponent<NavMeshAgent>().Warp(otherSidePoint.playerTeleportPoint.position);
+
             
         }
     }

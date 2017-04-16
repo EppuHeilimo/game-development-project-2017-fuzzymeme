@@ -13,17 +13,19 @@ public class GameManager : MonoBehaviour
     public List<GameObject> weapons;
     public int progression = 0;
     public int levelsToBoss = 0;
+    private Minimap minimap;
 
-    
-	// Use this for initialization
-	void Start () {
+
+    // Use this for initialization
+    void Start () {
         Object[] loadedweapons = Resources.LoadAll("/Assets/Weapons");
 	    
         foreach (Object weapon in loadedweapons)
         {
             weapons.Add((GameObject)weapon);
         }
-	}
+        minimap = GameObject.FindGameObjectWithTag("MinimapCamera").GetComponent<Minimap>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -49,6 +51,8 @@ public class GameManager : MonoBehaviour
                 currentArea.GetComponent<BossArea>().SpawnBoss();
             } 
         }
+        minimap.SetArea(currentArea.transform);
+        FogCurrentMiniMap();
     }
 
     public Level GetCurrentArea()
@@ -59,6 +63,15 @@ public class GameManager : MonoBehaviour
     public void UpdateProgressionText()
     {
         GameObject.FindGameObjectWithTag("ProgressionText").GetComponent<Text>().text = "Room: " + progression + "/" + levelsToBoss;
+    }
+
+    public void RevealCurrentMiniMap()
+    {
+        minimap.transform.FindDeepChild("FogOfWarPlane").GetComponent<Renderer>().material.SetColor("_Color", new Color(0,0,0,0));
+    }
+    public void FogCurrentMiniMap()
+    {
+        minimap.transform.FindDeepChild("FogOfWarPlane").GetComponent<Renderer>().material.SetColor("_Color", new Color(0.2f, 0.2f, 0.2f, 1));
     }
 
     public void OpenCurrentAreasEntries()

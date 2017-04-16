@@ -14,10 +14,12 @@ public class GameManager : MonoBehaviour
     public int progression = 0;
     public int levelsToBoss = 0;
     private Minimap minimap;
+    public int DropLevel = 1;
 
 
     // Use this for initialization
-    void Start () {
+	void Start ()
+	{
         Object[] loadedweapons = Resources.LoadAll("/Assets/Weapons");
 	    
         foreach (Object weapon in loadedweapons)

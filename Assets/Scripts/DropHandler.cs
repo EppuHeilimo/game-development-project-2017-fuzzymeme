@@ -16,10 +16,15 @@ public class DropHandler : MonoBehaviour {
     private List<GameObject> WeaponPrefabs; // List of all the weapon prefabs 
     private List<GameObject> BulletPrefabs; // List of all the bullet prefabs
     
-    public double DropChange = 1;
+
+    private static Dictionary<Int32,List<InventoryItem>> weapons = new Dictionary<int, List<InventoryItem>>();
+    private static Dictionary<Int32,List<InventoryItem>> medicine = new Dictionary<int, List<InventoryItem>>();
+
+    public double DropChange = 0.7;
+    public double MedicineChange = 0.3;
     private static bool prefabsImported = false;
-    private static List<InventoryItem> inventoryItems = new List<InventoryItem>();
     IZeroLifePointNotify zeroPointnotifier;
+    private GameManager gameManager;
 
 
     public void OnZeroLifePoints(object sender, EventArgs e)
@@ -29,44 +34,30 @@ public class DropHandler : MonoBehaviour {
        double randomValue = UnityEngine.Random.value;
        if(randomValue <= DropChange)
        {
-           //int ProbabilitySum=0;
-            //foreach(WeaponDefinition definition in definitions)
-            //{
-            //    ProbabilitySum += definition.ProbabilitySize;
-            //}
 
-            // randomValue = UnityEngine.Random.value;
-            //int number = (int)Math.Round( ProbabilitySum* randomValue);
+          int dropLevel= gameManager.DropLevel;
 
-            //WeaponDefinition chosenDefinition=null;
-            //foreach (WeaponDefinition definition in definitions)
-            //{
-            //  number =  number - definition.ProbabilitySize;
-            //    if(number < 0)
-            //    {
-            //        chosenDefinition = definition;
-            //        break;
-            //    }
-            //}
-            //drop
-           var count = inventoryItems.Count;
+             randomValue = UnityEngine.Random.value;
+           List<InventoryItem> items;
+           if (randomValue <= MedicineChange)
+           {
+              items = medicine[dropLevel];
+           }
+           else
+           {
+                items = weapons[dropLevel];
+
+            }
+
+
+       
+            var count = items.Count;
 
            int randomIndex = UnityEngine.Random.Range(0,count);
-           InventoryItem inventoryItem = inventoryItems[randomIndex];
+           InventoryItem inventoryItem = items[randomIndex];
 
            inventoryItem.Drop(transform);
-           //DropHelper.DropItem<Weapon>(transform, (weapon) => {
-
-           //     weapon.InventaryItemName = chosenDefinition.InventaryItemName;
-           //     weapon.Ammunition = chosenDefinition.Ammunition;
-           //     weapon.PickUpPrefab = chosenDefinition.PickUpPrefab;
-           //     weapon.ReloadTime = chosenDefinition.ReloadTime;
-           //     weapon.BulletPrefab = chosenDefinition.BulletPrefab;
-           //     weapon.holdingType = chosenDefinition.HoldingType;
-
-
-
-           // });
+        
        }
     }
 
@@ -76,9 +67,7 @@ public class DropHandler : MonoBehaviour {
 **/
     private void Start()
     {
-    
-
-
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         getPrefabs();
         //createWeaponDefinitions();
         zeroPointnotifier = GetComponent<IZeroLifePointNotify>();
@@ -113,8 +102,32 @@ public class DropHandler : MonoBehaviour {
 
         foreach (GameObject allWeapon in allWeapons)
         {
+            string name = allWeapon.name;
+            int indexOf = name.IndexOf("_");
+            string number = name.Substring(0, indexOf);
+            int numberInt = Int32.Parse(number);
+
             InventoryItem weapon = allWeapon.GetComponent<InventoryItem>();
-            inventoryItems.Add(weapon);
+
+            if (name.Contains("Medicine"))
+            {
+                if (!medicine.ContainsKey(numberInt))
+                {
+                    medicine.Add(numberInt,new List<InventoryItem>());
+                }
+                medicine[numberInt].Add(weapon);
+
+            }
+            else
+            {
+
+                if (!weapons.ContainsKey(numberInt))
+                {
+                    weapons.Add(numberInt, new List<InventoryItem>());
+                }
+                weapons[numberInt].Add(weapon);
+            }
+        
         }
 
 

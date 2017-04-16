@@ -1,21 +1,39 @@
 ﻿using UnityEngine;
 using System.Collections;
- 
-public class CameraFacingBillboard : MonoBehaviour
+using Assets.Scripts.Weapon_Inventary;
+
+public class StatsLifebar : MonoBehaviour
 {
-    public Camera m_Camera;
+    private Camera m_Camera;
+    private Stats stats;
+    private Transform energyBar;
 
 
     void Start()
     {
         m_Camera = GameObject.Find("Main Camera").GetComponent<Camera>();
+        stats = transform.parent.GetComponent<Stats>();
+        Transform find = transform.Find("border");
+        energyBar = find.Find("lifeenergyy");
     }
+
+    private float lastPercentage;
 
     void Update()
     {
-        transform.LookAt(transform.position + m_Camera.transform.rotation * Vector3.forward,
-            m_Camera.transform.rotation * Vector3.up);
+        transform.rotation = m_Camera.transform.rotation;
+
+
+        double lifeEnergy = stats.LifeEnergy;
+        double currentLifeEnergy = stats.CurrentLifeEnergy;
+        float percentage = (float) (currentLifeEnergy / lifeEnergy);
+        if (percentage != lastPercentage)
+        {
+            lastPercentage = percentage;
+            energyBar.localScale = new Vector3(percentage,1,1);
+        }
     }
+
     //void Update()
     //{
     //    //transform.LookAt(transform.position + m_Camera.transform.rotation * Vector3.forward,

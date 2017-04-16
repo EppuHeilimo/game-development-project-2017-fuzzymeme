@@ -27,9 +27,10 @@ public class EnemySpawner : MonoBehaviour
 
     public void KillAllEnemies()
     {
-        foreach (GameObject go in enemies)
+        for (int i = enemies.Count; i < 0; i--)
         {
-            go.GetComponent<Stats>().CurrentLifeEnergy = 0;
+            enemies[i].GetComponent<Stats>().CurrentLifeEnergy = 0;
+            enemies.RemoveAt(i);
         }
     }
 

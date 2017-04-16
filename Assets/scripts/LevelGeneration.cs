@@ -50,5 +50,6 @@ public class LevelGeneration : MonoBehaviour
         GameObject.FindGameObjectWithTag("Player").GetComponent<NavMeshAgent>().Warp(startingEntryPoint.playerTeleportPoint.position);
 
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().UpdateProgressionText();
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().Init();
     }
 }

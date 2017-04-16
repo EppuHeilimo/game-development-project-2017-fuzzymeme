@@ -15,23 +15,45 @@ public class GameManager : MonoBehaviour
     public int levelsToBoss = 0;
     private Minimap minimap;
     public int DropLevel = 1;
+    private bool lightColorChanging = false;
+    private Light Sun;
+    //where g and b colors will be at boss
+    private float targetSunColor = 128f;
+    private float colorOffsetPerLevel;
+    private float lightChangeSpeed = 3f;
 
 
     // Use this for initialization
-	void Start ()
+    void Start ()
 	{
+	    Sun = GameObject.FindGameObjectWithTag("Sun").GetComponent<Light>();
         Object[] loadedweapons = Resources.LoadAll("/Assets/Weapons");
 	    
         foreach (Object weapon in loadedweapons)
         {
             weapons.Add((GameObject)weapon);
         }
+
         minimap = GameObject.FindGameObjectWithTag("MinimapCamera").GetComponent<Minimap>();
+    }
+
+    public void Init()
+    {
+        colorOffsetPerLevel = targetSunColor/levelsToBoss;
     }
 	
 	// Update is called once per frame
 	void Update () {
-		
+	    if (lightColorChanging)
+	    {
+	        float off = Time.deltaTime*lightChangeSpeed;
+            Color currColor = Sun.color;
+	        Sun.color = new Color(currColor.r, currColor.g - off, currColor.b - off);
+	        if (Sun.color.g <= colorOffsetPerLevel * progression)
+	        {
+	            lightColorChanging = false;
+	        }
+	    }	
 	}
 
     public void SetCurrentArea(Level area)
@@ -84,7 +106,9 @@ public class GameManager : MonoBehaviour
             if(currentArea.rightway)
             {
                 progression++;
+                lightColorChanging = true;
                 UpdateProgressionText();
+
             }
         }
         EntryPoint[] entries = currentArea.GetComponentsInChildren<EntryPoint>();

@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public List<GameObject> weapons;
     public int progression = 0;
     public int levelsToBoss = 0;
-    public int DropLevel=0.7;
+    public int DropLevel=1;
 
 
     // Use this for initialization

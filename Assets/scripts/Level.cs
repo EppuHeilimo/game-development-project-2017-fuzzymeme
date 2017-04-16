@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using UnityEngine;
 using UnityEngine.AI;
+using Console = System.Console;
 using Random = UnityEngine.Random;
 
 public class Level : MonoBehaviour
@@ -53,6 +54,8 @@ public class Level : MonoBehaviour
 	    if (initiated && enemyCount <= 0 && !transform.root.CompareTag("BossArea"))
 	    {
 	        GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().OpenCurrentAreasEntries();
+	        global::Console.ShowMessage("Level Completed", 5);
+
 	    }
 	}
 

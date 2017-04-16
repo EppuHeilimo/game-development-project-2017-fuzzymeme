@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using Object = UnityEngine.Object;
 using Assets.Script;
 using UnityEngine.AI;
+using UnityEngine.Assertions.Comparers;
 
 public class Console : MonoBehaviour
 {
@@ -23,6 +24,8 @@ public class Console : MonoBehaviour
     private static InputField consoleInput;
     private RectTransform rectTransform;
 
+    private Text messageBoxText;
+    private GameObject messageBoxBorder;
 
 
 
@@ -32,16 +35,24 @@ public class Console : MonoBehaviour
     private bool consoleVisible = false;
     private float lastPressedButtonTime = 0;
 	// Use this for initialization
+
+    private static Console instance = null;
 	void Start ()
 	{
-
-	    GameObject find = GameObject.Find("ConsoleInput");
+	    instance = this;
+        GameObject find = GameObject.Find("ConsoleInput");
         consoleInput=find.GetComponent<InputField>();
 	    consoleInput.enabled = false;
 	    rectTransform = find.GetComponent<RectTransform>();
 	    rectTransform.localScale = new Vector3(0,0,0);
+
         consoleInput.onEndEdit.AddListener(AnalyseCommand);
-	}
+        GameObject messageBox = GameObject.Find("MessageBox");
+	    messageBoxText = messageBox.GetComponent<Text>();
+	    messageBoxBorder = messageBox.transform.parent.gameObject;
+	    messageBoxBorder.SetActive(false);
+
+    }
 
     private void AnalyseCommand(string arg0)
     {
@@ -62,12 +73,14 @@ public class Console : MonoBehaviour
             DropSomething();
         }
         consoleInput.text = "";
+
         if (LaterHash.Equals(hash))
         {
-            consoleInput.text = "I will do it... later...somewhen...who knows...";
+            ShowMessage("I will do it... later...somewhen...who knows...", 5);
+
         }else if (NotAvailableHash.Equals(hash))
         {
-            consoleInput.text = "That is not available. maybe eppu can help.";
+            ShowMessage("That is not available. maybe eppu can help.", 5);
 
         }
         if(OpenHash.Equals(hash))
@@ -78,12 +91,49 @@ public class Console : MonoBehaviour
         {
             TeleportToBossRoom();
         }
+        consoleInput.enabled = false;
+        consoleVisible = false;
+        rectTransform.localScale = new Vector3(0, 0, 0);
     }
 
     private void TeleportToBossRoom()
     {
         GameObject.FindGameObjectWithTag("Player").GetComponent<NavMeshAgent>().Warp(GameObject.FindGameObjectWithTag("BossArea").transform.FindDeepChild("Entry 1").GetComponent<EntryPoint>().playerTeleportPoint.position);
         
+    }
+
+    private  string message;
+    private  float messageDuration;
+
+    private  List<MessageItem> messageQueue = new List<MessageItem>();
+
+    public static void ShowMessage(String message,float time=4)
+    {
+
+        if (instance.messageQueue.Count != 0)
+        {
+            instance.messageQueue.Add(new MessageItem() { duration = time, Message = message });
+            return;
+        }
+        instance.messageQueue.Add(new MessageItem() { duration = time, Message = message });
+
+
+        instance.StartCoroutine(instance.ShowMessage());
+    }
+
+    private IEnumerator ShowMessage()
+    {
+        while (instance.messageQueue.Count != 0) 
+        {
+            MessageItem first = instance.messageQueue[0];
+            instance.messageQueue.Remove(first);
+            messageBoxBorder.SetActive(true);
+            messageBoxText.text = first.Message;
+            yield return new WaitForSeconds(first.duration);
+            messageBoxBorder.SetActive(false);
+        }
+       
+
     }
 
     private void DropSomething()
@@ -242,5 +292,10 @@ public class Console : MonoBehaviour
         }
     }
 
+    private class MessageItem
+    {
+        public String Message { get; set; }
+        public float duration { get; set; }
+    }
 
 }

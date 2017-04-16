@@ -13,10 +13,13 @@ public class GameManager : MonoBehaviour
     public List<GameObject> weapons;
     public int progression = 0;
     public int levelsToBoss = 0;
+    public int DropLevel { get; set; }
 
-    
-	// Use this for initialization
-	void Start () {
+
+    // Use this for initialization
+	void Start ()
+	{
+	    DropLevel = 1;
         Object[] loadedweapons = Resources.LoadAll("/Assets/Weapons");
 	    
         foreach (Object weapon in loadedweapons)

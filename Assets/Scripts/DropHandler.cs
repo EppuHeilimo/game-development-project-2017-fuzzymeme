@@ -23,7 +23,6 @@ public class DropHandler : MonoBehaviour {
     public double DropChange = 0.7;
     public double MedicineChange = 0.3;
     private static bool prefabsImported = false;
-    private static List<InventoryItem> inventoryItems = new List<InventoryItem>();
     IZeroLifePointNotify zeroPointnotifier;
     private GameManager gameManager;
 
@@ -55,21 +54,10 @@ public class DropHandler : MonoBehaviour {
             var count = items.Count;
 
            int randomIndex = UnityEngine.Random.Range(0,count);
-           InventoryItem inventoryItem = inventoryItems[randomIndex];
+           InventoryItem inventoryItem = items[randomIndex];
 
            inventoryItem.Drop(transform);
-           //DropHelper.DropItem<Weapon>(transform, (weapon) => {
-
-           //     weapon.InventaryItemName = chosenDefinition.InventaryItemName;
-           //     weapon.Ammunition = chosenDefinition.Ammunition;
-           //     weapon.PickUpPrefab = chosenDefinition.PickUpPrefab;
-           //     weapon.ReloadTime = chosenDefinition.ReloadTime;
-           //     weapon.BulletPrefab = chosenDefinition.BulletPrefab;
-           //     weapon.holdingType = chosenDefinition.HoldingType;
-
-
-
-           // });
+        
        }
     }
 
@@ -120,7 +108,6 @@ public class DropHandler : MonoBehaviour {
             int numberInt = Int32.Parse(number);
 
             InventoryItem weapon = allWeapon.GetComponent<InventoryItem>();
-            inventoryItems.Add(weapon);
 
             if (name.Contains("Medicine"))
             {

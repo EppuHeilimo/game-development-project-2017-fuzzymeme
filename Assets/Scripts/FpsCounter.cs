@@ -7,7 +7,7 @@ public class FpsCounter : MonoBehaviour
     private Text fpsText;
     private float timer;
     private int count = 0;
-    private float deltaTime = 0f;
+    private float deltaTimeAvarage = 0f;
 	// Use this for initialization
 	void Start ()
 	{
@@ -17,10 +17,14 @@ public class FpsCounter : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-        deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
-
-
-	    fpsText.text = Mathf.FloorToInt(1f/deltaTime).ToString();
+        deltaTimeAvarage += (Time.deltaTime - deltaTimeAvarage) * 0.1f;
+	    timer += Time.deltaTime;
+	    if (timer > 1f)
+	    {
+	        timer = 0;
+            fpsText.text = Mathf.FloorToInt(1f / deltaTimeAvarage).ToString();
+        }
+	    
 
 
 

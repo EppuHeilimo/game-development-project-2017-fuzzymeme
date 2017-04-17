@@ -31,6 +31,7 @@ public class Console : MonoBehaviour
     private GameObject messageBoxBorder;
 
     private GameObject fpsCounter;
+    private bool fps = false;
 
     private Weapon stick;
     private Weapon godsFist;
@@ -100,7 +101,8 @@ public class Console : MonoBehaviour
         }
         if (FpsCounter.Equals(hash))
         {
-            fpsCounter.SetActive(true);
+            fps = !fps;
+            fpsCounter.SetActive(fps);
         }
         consoleInput.enabled = false;
         consoleVisible = false;

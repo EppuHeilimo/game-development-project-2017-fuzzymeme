@@ -18,9 +18,9 @@ public class GameManager : MonoBehaviour
     private bool lightColorChanging = false;
     private Light Sun;
     //where g and b colors will be at boss
-    private float targetSunColor = 128f;
+    private float targetSunColor = 0.4f;
     private float colorOffsetPerLevel;
-    private float lightChangeSpeed = 3f;
+    private float lightChangeSpeed = 0.2f;
 
 
     // Use this for initialization
@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
 
     public void Init()
     {
-        colorOffsetPerLevel = targetSunColor/levelsToBoss;
+        colorOffsetPerLevel = (1f - targetSunColor) / levelsToBoss;
     }
 	
 	// Update is called once per frame
@@ -49,9 +49,10 @@ public class GameManager : MonoBehaviour
 	        float off = Time.deltaTime*lightChangeSpeed;
             Color currColor = Sun.color;
 	        Sun.color = new Color(currColor.r, currColor.g - off, currColor.b - off);
-	        if (Sun.color.g <= colorOffsetPerLevel * progression)
+	        if (Sun.color.g <= 1f - colorOffsetPerLevel * progression)
 	        {
 	            lightColorChanging = false;
+                Debug.Log(currColor);
 	        }
 	    }	
 	}

@@ -2,8 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Assets.Script;
 using UnityEngine;
 using UnityEngine.AI;
+using Console = System.Console;
 using Random = UnityEngine.Random;
 
 public class Level : MonoBehaviour
@@ -17,6 +19,7 @@ public class Level : MonoBehaviour
     public bool rightway = false;
     GameManager gameManager;
     public bool initiated = false;
+    public EnemySpawner EnemySpawner;
 
     //public void Awake()
     //{
@@ -44,7 +47,9 @@ public class Level : MonoBehaviour
         }
         roomCount = Random.Range(2, entrypoints.Count + 1);
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-    }
+        if(!transform.CompareTag("BossArea"))
+            EnemySpawner = transform.FindDeepChild("EnemySpawnPoints").GetComponent<EnemySpawner>();
+	}
 
 	
 	// Update is called once per frame
@@ -53,8 +58,11 @@ public class Level : MonoBehaviour
 	    if (initiated && enemyCount <= 0 && !transform.root.CompareTag("BossArea"))
 	    {
 	        GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().OpenCurrentAreasEntries();
+	        global::Console.ShowMessage("Level Completed", 5);
+
 	    }
 	}
+
 
     //inits the room and returns the entrypoint used to enter the room (RECURSIVE)
     public EntryPoint init(List<GameObject> availableAreas, EntryPoint prevArea, bool deadend)

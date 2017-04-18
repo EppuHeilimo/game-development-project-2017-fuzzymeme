@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
@@ -13,7 +14,9 @@ public abstract class AI : MonoBehaviour
     protected Vector3 playerDirection;
     protected float playerDistance;
     protected NavMeshAgent agent;
-    protected float idleTime = 1.5f;
+    protected float idleTimeMax = 8.5f;
+    protected float idleTimeMin = 3f;
+    protected float idleTime = 2f;
     protected float shootdistance = 5f;
     protected bool obstructed = false;
     protected float obstructionHandlingTime = 1f;
@@ -23,7 +26,7 @@ public abstract class AI : MonoBehaviour
     protected Weapon weapon;
     protected bool moving;
     protected Transform ThisTransform;
-    protected AIState state;
+    public AIState state;
 
 
     public float RotationSpeed = 5.0f;
@@ -32,7 +35,7 @@ public abstract class AI : MonoBehaviour
     public float GiveupDistance = 10f;
     public float ReactionTime = 0.5f;
 
-    protected enum AIState
+    public enum AIState
     {
         Idle,
         Seek,
@@ -121,14 +124,39 @@ public abstract class AI : MonoBehaviour
         }
     }
 
-    protected Vector3 RndPointInArea(float walkradius, int areaindex)
+    protected Vector3 RndPointInArea(float walkradius, Vector3 position)
     {
-        Vector3 direction = Random.insideUnitSphere* walkradius;
-        direction += transform.position;
+        Vector3 temp;
+        Vector3 direction;
         NavMeshHit hit;
-        int areamask = 1 << areaindex; 
-        NavMesh.SamplePosition(direction, out hit, walkradius, areamask);
-        return hit.position;
+        temp = Random.insideUnitSphere * .5f * walkradius;
+        direction = temp + position;
+        direction.y = 0;
+        if(NavMesh.SamplePosition(direction, out hit, walkradius, NavMesh.AllAreas))
+            return hit.position;
+        else
+        {
+            return direction += temp * -2;
+        }
+
+    }
+
+    protected Vector3 RndPointInCircle(float walkradius, Vector3 center)
+    {
+        Vector3 temp;
+        Vector3 direction;
+        NavMeshHit hit;
+        temp = Random.insideUnitSphere * walkradius / 2;
+        direction = temp + center;
+        direction += temp * (walkradius / 3);
+        direction.y = 0;
+        if (NavMesh.SamplePosition(direction, out hit, walkradius, NavMesh.AllAreas))
+            return hit.position;
+        else
+        {
+            return center - (transform.rotation*new Vector3(walkradius, 0, walkradius));
+        }
+
     }
 
     protected void ObstructionCleared()

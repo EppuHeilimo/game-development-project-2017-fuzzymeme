@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Assets.Script;
 using Assets.Scripts;
 using UnityEngine;
 
@@ -25,20 +26,36 @@ public class CameraMovement : MonoBehaviour
     private float orthoSizeDefault;
     private int cameraMode = 0;
     private GameObject crosshair;
+    private float maxYDistance = 20f;
+    private float minYDistance = 5f;
+    private PlayerMovement player;
+    private GameObject apertureMask1;
+    private GameObject apertureMask2;
     // Use this for initialization
     void Start ()
 	{
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        player = playerTransform.GetComponent<PlayerMovement>();
         thirdPersonPosition = playerTransform.FindChild("ThirdPersonCameraPosition");
         LookPoint = playerTransform.FindChild("LookPoint");
         offset = playerTransform.position - thirdPersonPosition.position;
         LockedTo = playerTransform;
 	    transform.position = LockedTo.position;
-        minimap = GameObject.FindGameObjectWithTag("MinimapCamera").GetComponent<Minimap>();
+        
         orthoSizeDefault = Camera.main.orthographicSize;
         crosshair = GameObject.FindGameObjectWithTag("Crosshair");
         crosshair.SetActive(false);
-	}
+        apertureMask1 = playerTransform.FindDeepChild("ApertureMask").gameObject;
+        apertureMask2 = playerTransform.FindDeepChild("ApertureMask2").gameObject;
+        apertureMask2.SetActive(false);
+    }
+
+    public GameObject GetCrosshair()
+    {
+        if(crosshair == null)
+            crosshair = GameObject.FindGameObjectWithTag("Crosshair");
+        return crosshair;
+    }
 	
 	// Update is called once per frame
 	void LateUpdate ()
@@ -52,48 +69,62 @@ public class CameraMovement : MonoBehaviour
             else if(cameraMode == 1)
             {
                 transform.position = LockedTo.position;
-
                 float desiredAngle = playerTransform.transform.eulerAngles.y;
                 Quaternion rotation = Quaternion.Euler(0, desiredAngle, 0);
                 transform.position = playerTransform.transform.position - (rotation * offset);
-
-                transform.LookAt(playerTransform.transform.position + playerTransform.forward * 10);
-
+                transform.LookAt(playerTransform.transform.position + playerTransform.forward * player.GetLookYPoint());
             }
         } 
 	    else if (translating)
 	    {
-	        MoveTowardsTransform(translationSpeed*Time.deltaTime);
-	        if (Vector3.Distance(transform.position, LockedTo.position) < 0.3f)
+
+	        MoveTowardsTransform(translationSpeed * Time.deltaTime);
+	        if (cameraMode == 0)
 	        {
-	            translating = false;
-	        }
-	    }
+                if (Vector3.Distance(transform.position, LockedTo.position) < 0.3f)
+                {
+                    translating = false;
+                    player.locked = false;
+                }
+            }
+            else if (cameraMode == 1)
+            {
+                if (Vector3.Distance(transform.position, LockedTo.position) < 1f)
+                {
+                    translating = false;
+                    player.locked = false;
+                    playerTransform.LookAt(targetEntryPoint.transform);
+                    float desiredAngle = playerTransform.transform.eulerAngles.y;
+                    Quaternion rotation = Quaternion.Euler(0, desiredAngle, 0);
+                    transform.position = playerTransform.transform.position - (rotation * offset);
+                    transform.LookAt(playerTransform.transform.position);
+                }
+            }
+
+        }
 	    else if (playerTeleported)
 	    {
+	        player.locked = true;
 	        TeleportToTransform(targetEntryPoint.cameraTarget);
 	        translating = true;
 	        playerTeleported = false;
-            if (cameraMode == 0)
+	        if (cameraMode == 0)
+	        {
                 LockedTo = playerTransform;
+            }   
             else if (cameraMode == 1)
+            {
                 LockedTo = thirdPersonPosition;
-            minimap.SetArea(GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().GetCurrentArea().transform);
+
+            }
+                
+            GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().SetCurrentArea(targetEntryPoint.parentTerrain.GetComponent<Level>());
+            
         }
-        if(Input.GetKeyDown(KeyCode.P))
+        if(Console.GetKeyDown(KeyCode.P))
         {
             ToggleCameraMode();
         }
-	    if (Input.GetKeyDown(KeyCode.LeftAlt))
-	    {
-            if(Cursor.lockState == CursorLockMode.Locked)
-                Cursor.lockState = CursorLockMode.None;
-            if (Cursor.lockState == CursorLockMode.None)
-                Cursor.lockState = CursorLockMode.Locked;
-        }
-
-
-
     }
 
     private void ToggleCameraMode()
@@ -104,6 +135,8 @@ public class CameraMovement : MonoBehaviour
             cameraMode = 1;
             Cursor.lockState = CursorLockMode.Locked;
             crosshair.SetActive(true);
+            apertureMask2.SetActive(true);
+            apertureMask1.SetActive(false);
 
         }
         else if(cameraMode == 1)
@@ -111,6 +144,8 @@ public class CameraMovement : MonoBehaviour
             LockedTo = playerTransform;
             cameraMode = 0;
             crosshair.SetActive(false);
+            apertureMask2.SetActive(true);
+            apertureMask1.SetActive(false);
 
         }
         playerTransform.GetComponent<PlayerMovement>().CameraMode = cameraMode;
@@ -122,6 +157,16 @@ public class CameraMovement : MonoBehaviour
         targetEntryPoint = targetEntrypoint;
         translating = true;
         playerTeleported = true;
+
+        if (cameraMode == 1)
+        {
+            playerTransform.LookAt(t1);
+            float desiredAngle = playerTransform.transform.eulerAngles.y;
+            Quaternion rotation = Quaternion.Euler(0, desiredAngle, 0);
+            transform.position = playerTransform.transform.position - (rotation * offset);
+            transform.LookAt(playerTransform.transform.position);
+        }
+
     }
 
     void MoveTowardsTransform(float step)

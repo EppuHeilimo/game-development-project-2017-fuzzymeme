@@ -137,23 +137,25 @@ public class Console : MonoBehaviour
             return;
         }
         instance.messageQueue.Add(new MessageItem() { duration = time, Message = message });
-
-
         instance.StartCoroutine(instance.ShowMessage());
+
+
     }
 
     private IEnumerator ShowMessage()
     {
-        while (instance.messageQueue.Count != 0) 
-        {
+       
             MessageItem first = instance.messageQueue[0];
             instance.messageQueue.Remove(first);
             messageBoxBorder.SetActive(true);
             messageBoxText.text = first.Message;
             yield return new WaitForSeconds(first.duration);
             messageBoxBorder.SetActive(false);
+        if (instance.messageQueue.Count != 0)
+        {
+            instance.StartCoroutine(instance.ShowMessage());
         }
-       
+
 
     }
 

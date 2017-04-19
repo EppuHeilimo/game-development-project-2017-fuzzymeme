@@ -136,7 +136,7 @@ public class TextureToObjectsV2 : MonoBehaviour
             ColorObject colorsToObjectTree = new ColorObject(new RGBColor(0, 0, 0), treePrefab, trees.gameObject);
             colorsToObjectTree.RandomizeRotation = true;
             colorsToObjectTree.RandomizeScale = true;
-            colorsToObjectTree.RandomScaleRange = new Vector2(0.1f,0.25f);
+            colorsToObjectTree.RandomScaleRange = new Vector2(-0.31f,0.15f);
             ColorsToObjects.Add(colorsToObjectTree);
 
             ColorObject colorsToObject = new ColorObject(new RGBColor(255, 0, 0), enemySpawnPointPreFab, enemySpawnPoints.gameObject);

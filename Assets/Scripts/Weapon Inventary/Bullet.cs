@@ -33,6 +33,11 @@ namespace Assets.Scripts.Weapon_Inventary
 
         void Start()
         {
+            OnStart();
+        }
+
+        protected virtual void OnStart()
+        {
             lifeTime = Distance / Speed;
             gameObject.tag = "Bullet";
         }
@@ -44,7 +49,7 @@ namespace Assets.Scripts.Weapon_Inventary
 
         }
 
-        void Update()
+        void  Update()
         {
             
             Vector3 movement = Time.deltaTime * Speed * transform.forward;

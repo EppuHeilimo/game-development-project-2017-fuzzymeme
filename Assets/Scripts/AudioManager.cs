@@ -99,18 +99,14 @@ public class AudioManager : MonoBehaviour
     //for short sounds like effects
     public void PlaySound(AudioClip clip, Vector3 pos)
     {
-        
-        
-
         if (clip != null)
         {
-            Debug.Log(clip);
-            Debug.Log("sfx"+ sfxVolumePrecent);
-            Debug.Log("master" + masterVolumePrecent);
+           // Debug.Log(clip);
+          //  Debug.Log("sfx"+ sfxVolumePrecent);
+           // Debug.Log("master" + masterVolumePrecent);
 
             AudioSource.PlayClipAtPoint(clip, pos, sfxVolumePrecent * masterVolumePrecent);
         }
-
     }
 
     public void PlaySound(string soundName, Vector3 pos)
@@ -135,6 +131,8 @@ public class AudioManager : MonoBehaviour
             yield return null;
         }
     }
+
+
 
 }
 

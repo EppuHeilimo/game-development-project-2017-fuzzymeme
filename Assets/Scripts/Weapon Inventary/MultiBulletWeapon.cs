@@ -46,12 +46,19 @@ namespace Assets.Scripts.Weapon_Inventary
             bool evenNumber = Number%2 == 0;
             if (evenNumber)
             {
+                
                 startPosition = -((AngleBetweenBullets)*(Number/2.0f));
                 startPosition = startPosition - AngleBetweenBullets / 2;
 
             }
             else
             {
+                Debug.Log(InventaryItemName);
+                if (InventaryItemName == "Auto shotgun")
+                {
+                    AudioManager.instance.PlaySound("Shotgun", transform.position);
+                }
+
                 startPosition = -((AngleBetweenBullets) * (Number / 2.0f));
 
             }

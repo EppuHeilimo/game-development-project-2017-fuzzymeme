@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Shooting : MonoBehaviour {
+
    
 	void Start () {
         
@@ -12,7 +13,9 @@ public class Shooting : MonoBehaviour {
 	void Update () {
         if (Input.GetKey(KeyCode.Mouse0))
         {
-            GetComponent<Inventory>().Use();  
+            
+            GetComponent<Inventory>().Use();
+            
         }
     }
 }

@@ -1,0 +1,130 @@
+fileFormatVersion: 2
+guid: c0cf2c9ed50b6754fa5c76f761eb27ef
+timeCreated: 1492627718
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Armature
+    100002: ArmIK.L
+    100004: ArmIK.L_end
+    100006: ArmIK.R
+    100008: ArmIK.R_end
+    100010: Boss
+    100012: //RootNode
+    100014: Head
+    100016: Head_end
+    100018: Leg.L
+    100020: Leg.L_end
+    100022: Leg.R
+    100024: Leg.R_end
+    100026: LowerArm.L
+    100028: LowerArm.L_end
+    100030: LowerArm.R
+    100032: LowerArm.R_end
+    100034: LowerBody
+    100036: Neck
+    100038: UpperArm.L
+    100040: UpperArm.R
+    100042: UpperBody
+    400000: Armature
+    400002: ArmIK.L
+    400004: ArmIK.L_end
+    400006: ArmIK.R
+    400008: ArmIK.R_end
+    400010: Boss
+    400012: //RootNode
+    400014: Head
+    400016: Head_end
+    400018: Leg.L
+    400020: Leg.L_end
+    400022: Leg.R
+    400024: Leg.R_end
+    400026: LowerArm.L
+    400028: LowerArm.L_end
+    400030: LowerArm.R
+    400032: LowerArm.R_end
+    400034: LowerBody
+    400036: Neck
+    400038: UpperArm.L
+    400040: UpperArm.R
+    400042: UpperBody
+    4300000: Boss
+    7400000: Armature|CastHoldOneHanded
+    7400002: Armature|CastHoldTwoHanded
+    7400004: Armature|Die
+    7400006: Armature|IdleLowerBody
+    7400008: Armature|IdleUpperBody
+    7400010: Armature|RunBackward
+    7400012: Armature|RunForward
+    7400014: Armature|UpperBodyCastOneHand
+    9500000: //RootNode
+    13700000: Boss
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

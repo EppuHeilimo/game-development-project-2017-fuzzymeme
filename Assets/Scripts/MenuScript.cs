@@ -96,7 +96,7 @@ public class MenuScript : MonoBehaviour {
     
                 public void SetMasterVolume(float value)
                 {
-                Debug.Log("master " + value);
+                //Debug.Log("master " + value);
                 AudioManager.instance.SetVolume(value, AudioManager.AudioChannel.Master);
                 }
 

@@ -132,6 +132,42 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public static void PlayShootSound(string InventaryItemName, Transform _bulletSpawnPosition)
+    {
+        if (InventaryItemName == "Stick")
+        {
+            //Debug.Log("make stick sound");
+        }
+        else if (InventaryItemName == "Rifle")
+        {
+            AudioManager.instance.PlaySound("Rifle", _bulletSpawnPosition.transform.position);
+        }
+        else if (InventaryItemName == "Pistol")
+        {
+            AudioManager.instance.PlaySound("Pistol", _bulletSpawnPosition.transform.position);
+        }
+
+        else if (InventaryItemName == "Test")
+        {
+            AudioManager.instance.PlaySound("Rifle", _bulletSpawnPosition.transform.position);
+        }
+
+
+        else { }
+    }
+
+    public static void PlayMultiBulletSound(string InventaryItemName,Transform BulletSpawnPosition)
+    {
+        if (InventaryItemName == "Auto shotgun")
+        {
+            Debug.Log(InventaryItemName);
+            Debug.Log(BulletSpawnPosition);
+
+            AudioManager.instance.PlaySound("Shotgun", BulletSpawnPosition.position);
+        }
+    }
+
+
 
 
 }

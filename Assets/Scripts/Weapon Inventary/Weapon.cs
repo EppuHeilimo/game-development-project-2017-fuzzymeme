@@ -136,30 +136,7 @@ namespace Assets.Scripts.Weapon_Inventary
 
             Debug.Log(InventaryItemName);
 
-            
-            if (InventaryItemName == "Stick")
-            {
-                Debug.Log("make stick sound");
-            }
-            else if (InventaryItemName == "Rifle")
-            {
-                AudioManager.instance.PlaySound("Rifle", transform.position);
-            }
-            else if (InventaryItemName == "Pistol")
-            {
-                AudioManager.instance.PlaySound("Pistol", transform.position);
-            }
-
-            else if(InventaryItemName == "Test")
-            {
-                AudioManager.instance.PlaySound("Rifle", transform.position);
-            }
-            else { }
-
-           
-
-
-           
+            AudioManager.PlayShootSound(InventaryItemName, _bulletSpawnPosition);
 
             //var bullet = (GameObject)Instantiate(
             //BulletPrefab,

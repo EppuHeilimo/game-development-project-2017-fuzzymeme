@@ -54,11 +54,9 @@ namespace Assets.Scripts.Weapon_Inventary
             else
             {
                 Debug.Log(InventaryItemName);
-                if (InventaryItemName == "Auto shotgun")
-                {
-                    AudioManager.instance.PlaySound("Shotgun", transform.position);
-                }
 
+                AudioManager.PlayMultiBulletSound(InventaryItemName, BulletSpawnPosition);
+          
                 startPosition = -((AngleBetweenBullets) * (Number / 2.0f));
 
             }

@@ -21,6 +21,7 @@ public class PlayerAnimation : MonoBehaviour
     public float inputVertical = 0;
     public int quadrant;
     public WeaponType wepType;
+    private bool locked = false;
     
     // Use this for initialization
     void Start ()
@@ -31,32 +32,36 @@ public class PlayerAnimation : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-
-	    float angle = transform.localEulerAngles.y;
-        //looking up
-	    if (angle >= 315 || angle < 45)
+	    if (!locked)
 	    {
-            anim.SetFloat("Vertical", inputVertical);
-            anim.SetFloat("Horizontal", inputHorizontal);
+            float angle = transform.localEulerAngles.y;
+            //looking up
+            if (angle >= 315 || angle < 45)
+            {
+                anim.SetFloat("Vertical", inputVertical);
+                anim.SetFloat("Horizontal", inputHorizontal);
+            }
+            else if (angle >= 45 && angle < 135)
+            {
+                anim.SetFloat("Vertical", inputHorizontal);
+                anim.SetFloat("Horizontal", inputVertical);
+            }
+            else if (angle >= 135 && angle < 225)
+            {
+                anim.SetFloat("Vertical", -1 * inputVertical);
+                anim.SetFloat("Horizontal", -1 * inputHorizontal);
+            }
+            else if (angle >= 225 && angle < 315)
+            {
+                anim.SetFloat("Vertical", -1 * inputHorizontal);
+                anim.SetFloat("Horizontal", -1 * inputVertical);
+            }
         }
-        else if (angle >= 45 && angle < 135)
-        {
-            anim.SetFloat("Vertical", inputHorizontal);
-            anim.SetFloat("Horizontal", inputVertical);
-        }
-        else if (angle >= 135 && angle < 225)
-        {
-            anim.SetFloat("Vertical", -1 * inputVertical);
-            anim.SetFloat("Horizontal", -1 * inputHorizontal);
-        }
-        else if (angle >= 225 && angle < 315)
-        {
-            anim.SetFloat("Vertical", -1 * inputHorizontal);
-            anim.SetFloat("Horizontal", -1 * inputVertical);
-        }
+    }
 
-        
-
+    public void Die()
+    {
+        anim.SetBool("Dead", true);
     }
 
     public void AnimateSlash()

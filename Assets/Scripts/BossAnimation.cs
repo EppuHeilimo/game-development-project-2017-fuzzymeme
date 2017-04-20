@@ -27,6 +27,8 @@ public class BossAnimation : MonoBehaviour
 	void Start ()
 	{
 	    animator = GetComponent<Animator>();
+        ChangeUpperState(UBodyState);
+        ChangeLowerState(LBodyState);
 	}
 	
 

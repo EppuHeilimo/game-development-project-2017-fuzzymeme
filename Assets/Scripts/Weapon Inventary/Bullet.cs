@@ -80,7 +80,10 @@ namespace Assets.Scripts.Weapon_Inventary
                 {
                     //do nothing
                 }
-
+                else if (collision.CompareTag("Boss") && shooter.CompareTag("Boss"))
+                {
+                    //do nothing
+                }
                 else
                 {
                     Collision(collision);

@@ -28,10 +28,12 @@ public class BossAI : MonoBehaviour
         public float RotationSpeed;
         public float BulletSpeedModifier;
         public float SpeedModifier;
+        public float ReloadSpeed;
         public int BulletStormTurns;
         public float BulletStormRotationSpeed;
         public float BulletStormBulletAngle;
         public int BulletStormBulletCount;
+
         public List<ModeCombination> ModeCombinations;
     }
 
@@ -93,7 +95,7 @@ public class BossAI : MonoBehaviour
         weapon = GetComponent<Weapon>();
         weapon2 = GetComponent<MultiBulletWeapon>();
         player = GameObject.FindGameObjectWithTag("Player");
-        ChangeState(AttackMode.AimAndShoot, MovementState.Idle);
+        ChangeState(AttackMode.Idle, MovementState.Idle);
 	}
 	
 	// Update is called once per frame
@@ -163,7 +165,7 @@ public class BossAI : MonoBehaviour
                 Homing();
                 break;
             case AttackMode.Idle:
-                if (Vector3.Distance(transform.position, player.transform.position) < 15f)
+                if (Vector3.Distance(transform.position, player.transform.position) < 10f)
                 {
                     modeComplete = true;
                 }
@@ -277,6 +279,8 @@ public class BossAI : MonoBehaviour
         currentCombination = 0;
         ChangeState(Stages[stage].ModeCombinations[currentCombination].aState, Stages[stage].ModeCombinations[currentCombination].mState);
         agent.speed *= Stages[stage].SpeedModifier;
+        weapon.ReloadTime = Stages[stage].ReloadSpeed;
+        weapon2.ReloadTime = Stages[stage].ReloadSpeed;
     }
 
     public bool RotateTowards(Transform target, float speed)

@@ -21,7 +21,7 @@ public class BossArea : MonoBehaviour
 
     public void SpawnBoss()
     {
-        boss = Instantiate(BossPrefab, bossSpawnPoint.position, Quaternion.identity);
+        boss = Instantiate(BossPrefab, bossSpawnPoint.position, BossPrefab.transform.rotation);
         boss.GetComponent<BossAI>().CenterOfZone = bossSpawnPoint;
     }
 }

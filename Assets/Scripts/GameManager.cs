@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     private float colorOffsetPerLevel;
     private float lightChangeSpeed = 0.2f;
 
+    private GameObject gameWin;
+
 
     // Use this for initialization
     void Start ()
@@ -35,7 +37,9 @@ public class GameManager : MonoBehaviour
         }
 
         minimap = GameObject.FindGameObjectWithTag("MinimapCamera").GetComponent<Minimap>();
-    }
+        gameWin = GameObject.FindGameObjectWithTag("GameWinCanvas");
+        gameWin.SetActive(false);
+	}
 
     public void Init()
     {
@@ -132,6 +136,12 @@ public class GameManager : MonoBehaviour
                 t.ClosePath();
             }
         }
+    }
+
+    public void GameWin()
+    {
+        player.GetComponent<PlayerMovement>().locked = true;
+        gameWin.SetActive(true);
     }
 
 }

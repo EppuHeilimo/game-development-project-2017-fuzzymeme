@@ -85,6 +85,7 @@ public class BossAI : MonoBehaviour
     private GameObject player;
     private int currentCombination = 0;
     private int stageCombinationCount = 0;
+    private bool dead = false;
 
     // Use this for initialization
     void Start ()
@@ -101,49 +102,54 @@ public class BossAI : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-	    CheckStats();
-	    if (modeComplete)
-	    {
-	        currentCombination++;
-	        if (currentCombination >= stageCombinationCount)
-	            currentCombination = 0;
-            ChangeState(Stages[stage].ModeCombinations[currentCombination].aState, Stages[stage].ModeCombinations[currentCombination].mState);
-	        modeComplete = false;
-	    }
-	    switch (MMode)
-	    {
-	        case MovementState.FindMiddle:
-	            if (FindMiddle())
-	            {
-                    Attack();
-                }
-	            else
-	            {
+        if(!dead)
+            CheckStats();
+        if (!dead)
+        {
+            if (modeComplete)
+            {
+                currentCombination++;
+                if (currentCombination >= stageCombinationCount)
+                    currentCombination = 0;
+                ChangeState(Stages[stage].ModeCombinations[currentCombination].aState, Stages[stage].ModeCombinations[currentCombination].mState);
+                modeComplete = false;
+            }
+            switch (MMode)
+            {
+                case MovementState.FindMiddle:
+                    if (FindMiddle())
+                    {
+                        Attack();
+                    }
+                    else
+                    {
+                        if (modeChanged)
+                        {
+                            modeChanged = false;
+                            animation.ChangeLowerState(BossAnimation.LBodyAnimationState.RunForward);
+                        }
+                    }
+                    break;
+                case MovementState.Follow:
                     if (modeChanged)
                     {
                         modeChanged = false;
                         animation.ChangeLowerState(BossAnimation.LBodyAnimationState.RunForward);
                     }
-                }
-                break;
-            case MovementState.Follow:
-                if (modeChanged)
-                {
-                    modeChanged = false;
-                    animation.ChangeLowerState(BossAnimation.LBodyAnimationState.RunForward);
-                }
-                Attack();
-	            break;
-            case MovementState.Idle:
-	            if (modeChanged)
-	            {
-	                modeChanged = false;
-                    animation.ChangeUpperState(BossAnimation.UBodyAnimationState.Idle);
-                    animation.ChangeLowerState(BossAnimation.LBodyAnimationState.Idle);
-                }
-                Attack();
-	            break;
-	    }
+                    Attack();
+                    break;
+                case MovementState.Idle:
+                    if (modeChanged)
+                    {
+                        modeChanged = false;
+                        animation.ChangeUpperState(BossAnimation.UBodyAnimationState.Idle);
+                        animation.ChangeLowerState(BossAnimation.LBodyAnimationState.Idle);
+                    }
+                    Attack();
+                    break;
+            }
+        }
+
 	}
 
     void Attack()
@@ -264,6 +270,8 @@ public class BossAI : MonoBehaviour
             animation.Die();
             agent.Stop();
             agent.ResetPath();
+            dead = true;
+            GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().GameWin();
         }
         else if (stats.CurrentLifeEnergy < stats.LifeEnergy - stats.LifeEnergy / Stages.Count * (stage + 1))
         {

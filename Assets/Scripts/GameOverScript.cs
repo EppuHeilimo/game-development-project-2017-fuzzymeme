@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Assets.Scripts.Weapon_Inventary;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameOverScript : MonoBehaviour {
@@ -70,6 +71,6 @@ public class GameOverScript : MonoBehaviour {
     IEnumerator EndGame()
     {
         yield return new WaitForSeconds(ShowGameOverTime);
-        // todo switch to main menu;
+        SceneManager.LoadScene("MainMenuScene");
     }
 }

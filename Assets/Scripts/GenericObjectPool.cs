@@ -88,6 +88,7 @@ namespace Assets.Scripts
                 IPoolAble poolAble = sender as IPoolAble;
                 poolAble.Inactivated -= PoolAble_Inactivated;
                 MonoBehaviour behaviour = poolAble as MonoBehaviour;
+                pools[hashCode].PoolingObjects.Remove(poolAble);
                 Destroy(behaviour);
             }
         }

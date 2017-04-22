@@ -48,7 +48,7 @@ namespace Assets.Scripts.Weapon_Inventary
                 poolAble.Init(BulletPrefab.GetHashCode());
                 return poolAble;
                 
-            },10,50);
+            },20,100);
         }
 
         public void InitWeaponHolder()

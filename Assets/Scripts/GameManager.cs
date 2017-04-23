@@ -23,6 +23,9 @@ public class GameManager : MonoBehaviour
     private float lightChangeSpeed = 0.2f;
 
     private GameObject gameWin;
+    private bool gameWon = false;
+    private float timer = 0f;
+    private float time = 4f;
 
 
     // Use this for initialization
@@ -60,6 +63,20 @@ public class GameManager : MonoBehaviour
                 Debug.Log(currColor);
 	        }
 	    }	
+        if (gameWon)
+        {
+            if(timer <= time)
+                timer += Time.deltaTime;
+            if (timer > time)
+            {
+                player.GetComponent<PlayerMovement>().locked = true;
+                if (gameWin.GetComponent<CanvasGroup>().alpha < 1)
+                {
+                    gameWin.GetComponent<CanvasGroup>().alpha += Time.deltaTime;
+                    
+                }
+            }
+        }
 	}
 
     public void SetCurrentArea(Level area)
@@ -141,8 +158,10 @@ public class GameManager : MonoBehaviour
 
     public void GameWin()
     {
-        player.GetComponent<PlayerMovement>().locked = true;
+        
         gameWin.SetActive(true);
+        gameWin.GetComponent<CanvasGroup>().alpha = 0;
+        gameWon = true;
     }
 
 }

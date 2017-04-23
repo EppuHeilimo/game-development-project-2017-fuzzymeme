@@ -54,6 +54,7 @@ public class BossAI : MonoBehaviour
         Homing,
         AimAndShoot,
         BulletStorm,
+        DeathWave,
         Idle
     }
     public AttackMode AMode = AttackMode.AimAndShoot;
@@ -76,6 +77,7 @@ public class BossAI : MonoBehaviour
 
     /* BulletStorm */
     public float currRotation = 0f;
+    public float Speed = 10f;
     private float rotationTarget = 360f;   
     private int turn = -1;
 
@@ -138,6 +140,7 @@ public class BossAI : MonoBehaviour
                         modeChanged = false;
                         animation.ChangeLowerState(BossAnimation.LBodyAnimationState.RunForward);
                     }
+                    Follow();
                     Attack();
                     break;
                 case MovementState.Idle:
@@ -154,6 +157,13 @@ public class BossAI : MonoBehaviour
 
 	}
 
+    void Follow()
+    {
+        float step = Speed * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, step);
+       
+    }
+
     void Attack()
     {
         switch (AMode)
@@ -164,7 +174,7 @@ public class BossAI : MonoBehaviour
                 AimAndShoot();
                 break;
             case AttackMode.BulletStorm:
-                animation.ChangeUpperState(BossAnimation.UBodyAnimationState.TwoHanded);
+                animation.ChangeUpperState(BossAnimation.UBodyAnimationState.OneHanded);
                 BulletStorm(0);
                 break;
             case AttackMode.Homing:
@@ -178,6 +188,18 @@ public class BossAI : MonoBehaviour
                     ChangeState(Stages[stage].ModeCombinations[currentCombination].aState, Stages[stage].ModeCombinations[currentCombination].mState);
                 }
                 break;
+            case AttackMode.DeathWave:
+                animation.ChangeUpperState(BossAnimation.UBodyAnimationState.TwoHanded);
+                DeathWave();
+                break;
+        }
+    }
+
+    private void DeathWave()
+    {
+        if (RotateTowards(player.transform, Stages[stage].RotationSpeed))
+        {
+            weapon.Use();
         }
     }
 
@@ -218,6 +240,7 @@ public class BossAI : MonoBehaviour
         {
             if (modeBullet.mode == AMode)
             {
+                modeBullet.bullet.GetComponent<Bullet>().Speed *= Stages[stage].BulletSpeedModifier;
                 weapon.ChangeBullet(modeBullet.bullet); 
 
                 weapon2.AngleBetweenBullets = Stages[stage].BulletStormBulletAngle;
@@ -317,6 +340,7 @@ public class BossAI : MonoBehaviour
         stageCombinationCount = Stages[stage].ModeCombinations.Count;
         currentCombination = 0;
         agent.speed *= Stages[stage].SpeedModifier;
+        Speed *= Stages[stage].SpeedModifier;
         ChangeState(Stages[stage].ModeCombinations[currentCombination].aState, Stages[stage].ModeCombinations[currentCombination].mState);
 
     }

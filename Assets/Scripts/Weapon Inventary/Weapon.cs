@@ -75,11 +75,12 @@ namespace Assets.Scripts.Weapon_Inventary
             {
                 weaponHolder = findDeepChild.gameObject;
 
-                if (_bulletSpawnPosition == null)
-                {
-                    attackSpawnPosition = transform.FindDeepChild("AttackSpawnPoint");
-                    _bulletSpawnPosition = attackSpawnPosition;
-                }
+
+            }
+            if (_bulletSpawnPosition == null)
+            {
+                attackSpawnPosition = transform.FindDeepChild("AttackSpawnPoint");
+                _bulletSpawnPosition = attackSpawnPosition;
             }
         }
 
@@ -142,6 +143,8 @@ namespace Assets.Scripts.Weapon_Inventary
 
             Quaternion rotation = BulletSpawnPosition.root.rotation;
 
+
+
             IPoolAble poolAble = GenericObjectPool.Current.Get(BulletPrefab.GetHashCode());
 
             Bullet bullet1 = poolAble as Bullet;
@@ -149,6 +152,7 @@ namespace Assets.Scripts.Weapon_Inventary
 
             bulletGameObject.transform.parent = null;
             bulletGameObject.transform.position = BulletSpawnPosition.position;
+            bullet1.spawnPosition = BulletSpawnPosition.position;
             bulletGameObject.transform.rotation = rotation;
 
             Debug.Log(InventaryItemName);

@@ -237,7 +237,7 @@ public class BossAI : MonoBehaviour
         {
             transform.Rotate(Vector3.up, Time.deltaTime * Stages[stage].BulletStormRotationSpeed);
             turn++;
-            weapon2.Use();
+            weapon.Use();
             if (turn >= Stages[stage].BulletStormTurns)
             {
                 modeComplete = true;
@@ -257,7 +257,7 @@ public class BossAI : MonoBehaviour
     {
         if (RotateTowards(player.transform, Stages[stage].RotationSpeed))
         {
-            weapon2.Use();
+            weapon.Use();
         }
     }
 

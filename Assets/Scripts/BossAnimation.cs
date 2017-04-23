@@ -23,6 +23,7 @@ public class BossAnimation : MonoBehaviour
 
 
     private Animator animator;
+    private bool dead = false;
 	// Use this for initialization
 	void Start ()
 	{
@@ -34,12 +35,14 @@ public class BossAnimation : MonoBehaviour
 
     public void ChangeUpperState(UBodyAnimationState state)
     {
-        animator.SetInteger("UpperAnimationState", (int)state);
+        if(!dead)
+            animator.SetInteger("UpperAnimationState", (int)state);
     }
 
     public void ChangeLowerState(LBodyAnimationState state)
     {
-        animator.SetInteger("LowerAnimationState", (int)state);
+        if (!dead)
+            animator.SetInteger("LowerAnimationState", (int)state);
     }
 
     public void Die()

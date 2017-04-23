@@ -34,7 +34,8 @@ public class BossAI : MonoBehaviour
         public float BulletStormRotationSpeed;
         public float BulletStormBulletAngle;
         public int BulletStormBulletCount;
-
+        public float LaserRotationSpeed;
+        public float LaserEyeAngleAdjustSpeed;
         public List<ModeCombination> ModeCombinations;
     }
 
@@ -55,6 +56,7 @@ public class BossAI : MonoBehaviour
         AimAndShoot,
         BulletStorm,
         DeathWave,
+        LaserEyes,
         Idle
     }
     public AttackMode AMode = AttackMode.AimAndShoot;
@@ -70,14 +72,14 @@ public class BossAI : MonoBehaviour
     private int stage = 0;
 
     private bool lockedToMoving = false;
-
+    private bool lasersOn = false;
     /* Find middle */
     public Transform CenterOfZone;
    
 
     /* BulletStorm */
     public float currRotation = 0f;
-    public float Speed = 10f;
+    public float Speed = 3f;
     private float rotationTarget = 360f;   
     private int turn = -1;
 
@@ -90,6 +92,8 @@ public class BossAI : MonoBehaviour
     private int stageCombinationCount = 0;
     private bool dead = false;
 
+    private LaserEyes eyes;
+
     // Use this for initialization
     void Start ()
 	{
@@ -101,7 +105,8 @@ public class BossAI : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         ChangeState(AttackMode.Idle, MovementState.Idle);
         stageCombinationCount = Stages[0].ModeCombinations.Count;
-    }
+        eyes = transform.FindDeepChild("LaserEyes").GetComponent<LaserEyes>();
+	}
 	
 	// Update is called once per frame
 	void Update ()
@@ -175,7 +180,7 @@ public class BossAI : MonoBehaviour
                 break;
             case AttackMode.BulletStorm:
                 animation.ChangeUpperState(BossAnimation.UBodyAnimationState.OneHanded);
-                BulletStorm(0);
+                BulletStorm();
                 break;
             case AttackMode.Homing:
                 ModeTime();
@@ -192,6 +197,36 @@ public class BossAI : MonoBehaviour
                 animation.ChangeUpperState(BossAnimation.UBodyAnimationState.TwoHanded);
                 DeathWave();
                 break;
+            case AttackMode.LaserEyes:
+                animation.ChangeUpperState(BossAnimation.UBodyAnimationState.Idle);
+                Laser();
+                break;
+        }
+    }
+
+    private void Laser()
+    {
+        if (!lasersOn)
+        {
+            transform.GetComponentInChildren<LaserEyes>().OpenEyes();
+            lasersOn = false;
+            if (MMode == MovementState.Follow)
+            {
+                agent.updateRotation = false;
+            }
+        }
+        if (MMode == MovementState.FindMiddle)
+        {
+            Turn(Stages[stage].LaserRotationSpeed);
+            if (turn > 3)
+            {
+                transform.GetComponentInChildren<LaserEyes>().CloseEyes();
+                modeComplete = true;
+            }
+        }
+        else
+        {
+            ModeTime();
         }
     }
 
@@ -207,7 +242,11 @@ public class BossAI : MonoBehaviour
     {
         modeTimer += Time.deltaTime;
         if (modeTimer > modeTime)
+        {
             modeComplete = true;
+            modeTimer = 0f;
+        }
+            
     }
 
     bool FindMiddle()
@@ -228,13 +267,12 @@ public class BossAI : MonoBehaviour
 
     public void ChangeState(AttackMode aState, MovementState mState)
     {
+        eyes.speed = Stages[stage].LaserEyeAngleAdjustSpeed;
         modeChanged = true;
         AMode = aState;
         MMode = mState;
-        if (AMode == AttackMode.BulletStorm)
-        {
-            turn = -1;
-        }
+        turn = -1;
+        agent.updateRotation = true;
 
         foreach (ModeBullet modeBullet in ModeBullets)
         {
@@ -259,43 +297,30 @@ public class BossAI : MonoBehaviour
         }
     }
 
-    void BulletStorm(int mode)
+    void Turn(float rotationspeed)
     {
-        if (mode == 0)
+        float rotation = Time.deltaTime*rotationspeed; 
+        currRotation += rotation;
+        transform.Rotate(Vector3.up, rotation);
+        if (currRotation >= 360f)
         {
-            float rotation = Time.deltaTime * Stages[stage].BulletStormRotationSpeed;
-            currRotation += rotation;
-            transform.Rotate(Vector3.up, rotation);
-            
-            if (currRotation >= 360f)
-            {
-                turn++;
-                currRotation = 0f;
-            }
-            weapon.Use();
-
-            if (turn >= Stages[stage].BulletStormTurns)
-            {
-                modeComplete = true;
-            }
+            turn++;
+            currRotation = 0f;
         }
-        else if (mode == 1)
+    }
+
+    void BulletStorm()
+    {
+        if (MMode == MovementState.Follow)
         {
-            float rotation = Time.deltaTime * Stages[stage].BulletStormRotationSpeed;
-            currRotation += rotation;
-            transform.Rotate(Vector3.up, rotation);
-
-            if (currRotation >= 360f)
-            {
-                turn++;
-                currRotation = 0f;
-            }
-            weapon.Use();
-
-            if (turn >= Stages[stage].BulletStormTurns)
-            {
-                modeComplete = true;
-            }
+            agent.updateRotation = false;
+        }
+        Turn(Stages[stage].BulletStormRotationSpeed);
+        weapon.Use();
+            
+        if (turn >= Stages[stage].BulletStormTurns)
+        {
+            modeComplete = true;
         }
     }
 

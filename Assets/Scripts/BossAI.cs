@@ -36,6 +36,7 @@ public class BossAI : MonoBehaviour
         public int BulletStormBulletCount;
         public float LaserRotationSpeed;
         public float LaserEyeAngleAdjustSpeed;
+        public int Minions;
         public List<ModeCombination> ModeCombinations;
     }
 
@@ -57,6 +58,7 @@ public class BossAI : MonoBehaviour
         BulletStorm,
         DeathWave,
         LaserEyes,
+        SpawnMinions,
         Idle
     }
     public AttackMode AMode = AttackMode.AimAndShoot;
@@ -66,6 +68,7 @@ public class BossAI : MonoBehaviour
     private NavMeshAgent agent;
     private Weapon weapon;
     private MultiBulletWeapon weapon2;
+    
 
     private bool modeChanged = false;
     private bool modeComplete = false;
@@ -83,6 +86,9 @@ public class BossAI : MonoBehaviour
     private float rotationTarget = 360f;   
     private int turn = -1;
 
+    public MinionSpawn[] MinionSpawns;
+    public GameObject MinionPrefab;
+
     /* mode timer */
     public float modeTime = 10f;
     public float modeTimer = 0f;
@@ -91,6 +97,8 @@ public class BossAI : MonoBehaviour
     private int currentCombination = 0;
     private int stageCombinationCount = 0;
     private bool dead = false;
+    private float deathDestroyTimer = 0;
+    private float deathDestroyTime = 3f;
 
     private LaserEyes eyes;
 
@@ -106,11 +114,23 @@ public class BossAI : MonoBehaviour
         ChangeState(AttackMode.Idle, MovementState.Idle);
         stageCombinationCount = Stages[0].ModeCombinations.Count;
         eyes = transform.FindDeepChild("LaserEyes").GetComponent<LaserEyes>();
-	}
+
+        GameObject area = GameObject.FindGameObjectWithTag("BossArea");
+        GameObject[] MinionSpawnPoints = GameObject.FindGameObjectsWithTag("MinionSpawn");
+        MinionSpawns = new MinionSpawn[MinionSpawnPoints.Length];
+        int count = 0;
+        foreach (GameObject go in MinionSpawnPoints)
+        {
+            MinionSpawns[count] = go.GetComponent<MinionSpawn>();
+            count++;
+        }
+
+    }
 	
 	// Update is called once per frame
 	void Update ()
 	{
+
         if(!dead)
             CheckStats();
         if (!dead)
@@ -160,13 +180,24 @@ public class BossAI : MonoBehaviour
             }
         }
 
+	    if (dead && transform.root.CompareTag("Minion"))
+	    {
+	        deathDestroyTimer += Time.deltaTime;
+	        if (deathDestroyTimer > deathDestroyTime)
+	        {
+	            Destroy(gameObject);
+	        }
+	    }
+
 	}
 
     void Follow()
     {
-        float step = Speed * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, step);
-       
+        if (Vector3.Distance(player.transform.position, transform.position) > 5f)
+        {
+            float step = Speed * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, step);
+        }
     }
 
     void Attack()
@@ -201,7 +232,25 @@ public class BossAI : MonoBehaviour
                 animation.ChangeUpperState(BossAnimation.UBodyAnimationState.Idle);
                 Laser();
                 break;
+            case AttackMode.SpawnMinions:
+                SpawnMinions();
+                break;
         }
+    }
+
+    private void SpawnMinions()
+    {
+        int count = 0;
+        for (int i = 0; i < Stages[stage].Minions; i++)
+        {
+            MinionSpawns[i].Spawn(MinionPrefab);
+            count++;
+            if (count > MinionSpawns.Length)
+            {
+                break;
+            }
+        }
+        modeComplete = true;
     }
 
     private void Laser()
@@ -267,7 +316,8 @@ public class BossAI : MonoBehaviour
 
     public void ChangeState(AttackMode aState, MovementState mState)
     {
-        eyes.speed = Stages[stage].LaserEyeAngleAdjustSpeed;
+        if(aState == AttackMode.LaserEyes)
+            eyes.speed = Stages[stage].LaserEyeAngleAdjustSpeed;
         modeChanged = true;
         AMode = aState;
         MMode = mState;
@@ -350,11 +400,13 @@ public class BossAI : MonoBehaviour
             agent.Stop();
             agent.ResetPath();
             dead = true;
-            GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().GameWin();
+            if(transform.root.CompareTag("Boss"))
+                GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().GameWin();
         }
         else if (stats.CurrentLifeEnergy < stats.LifeEnergy - stats.LifeEnergy / Stages.Count * (stage + 1))
         {
-            NextStage();
+            if(transform.root.CompareTag("Boss"))
+                NextStage();
         }
     }
 

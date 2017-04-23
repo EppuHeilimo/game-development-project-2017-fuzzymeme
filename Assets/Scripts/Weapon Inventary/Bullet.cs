@@ -53,7 +53,16 @@ namespace Assets.Scripts.Weapon_Inventary
         {
             
             Vector3 movement = Time.deltaTime * Speed * transform.forward;
-            transform.position = transform.position + movement;
+
+            try
+            {
+                transform.position = transform.position + movement;
+            }
+            catch (Exception)
+            {
+                Debug.LogError("Shit");
+            }
+            
 
         }
 

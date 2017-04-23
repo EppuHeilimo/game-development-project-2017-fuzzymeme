@@ -20,6 +20,7 @@ public class BossAI : MonoBehaviour
     {
         public AttackMode mode;
         public GameObject bullet;
+        public float reloadSpeed;
     }
 
     [Serializable]
@@ -74,9 +75,9 @@ public class BossAI : MonoBehaviour
    
 
     /* BulletStorm */
-    private float currRotation = 0f;
+    public float currRotation = 0f;
     private float rotationTarget = 360f;   
-    private int turn = 0;
+    private int turn = -1;
 
     /* mode timer */
     public float modeTime = 10f;
@@ -97,7 +98,8 @@ public class BossAI : MonoBehaviour
         weapon2 = GetComponent<MultiBulletWeapon>();
         player = GameObject.FindGameObjectWithTag("Player");
         ChangeState(AttackMode.Idle, MovementState.Idle);
-	}
+        stageCombinationCount = Stages[0].ModeCombinations.Count;
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -163,7 +165,7 @@ public class BossAI : MonoBehaviour
                 break;
             case AttackMode.BulletStorm:
                 animation.ChangeUpperState(BossAnimation.UBodyAnimationState.TwoHanded);
-                BulletStorm(UnityEngine.Random.Range(0, 2));
+                BulletStorm(0);
                 break;
             case AttackMode.Homing:
                 ModeTime();
@@ -173,7 +175,7 @@ public class BossAI : MonoBehaviour
             case AttackMode.Idle:
                 if (Vector3.Distance(transform.position, player.transform.position) < 10f)
                 {
-                    modeComplete = true;
+                    ChangeState(Stages[stage].ModeCombinations[currentCombination].aState, Stages[stage].ModeCombinations[currentCombination].mState);
                 }
                 break;
         }
@@ -196,6 +198,7 @@ public class BossAI : MonoBehaviour
         else if (agent.pathStatus == NavMeshPathStatus.PathComplete || agent.remainingDistance < 1f)
         {
             lockedToMoving = false;
+            rotationTarget = transform.rotation.eulerAngles.y;
             return true;
         }
         return false;
@@ -206,17 +209,29 @@ public class BossAI : MonoBehaviour
         modeChanged = true;
         AMode = aState;
         MMode = mState;
+        if (AMode == AttackMode.BulletStorm)
+        {
+            turn = -1;
+        }
 
         foreach (ModeBullet modeBullet in ModeBullets)
         {
             if (modeBullet.mode == AMode)
             {
-                weapon.BulletPrefab = modeBullet.bullet;
-                weapon.BulletPrefab.GetComponent<Bullet>().Speed *= Stages[stage].BulletSpeedModifier;
-                weapon2.BulletPrefab = modeBullet.bullet;
-                weapon2.BulletPrefab.GetComponent<Bullet>().Speed *= Stages[stage].BulletSpeedModifier;
+                weapon.ChangeBullet(modeBullet.bullet); 
+
                 weapon2.AngleBetweenBullets = Stages[stage].BulletStormBulletAngle;
                 weapon2.Number = Stages[stage].BulletStormBulletCount;
+                if (Mathf.Approximately(modeBullet.reloadSpeed,-1))
+                {
+                    weapon.ReloadTime = Stages[stage].ReloadSpeed;
+                    weapon2.ReloadTime = Stages[stage].ReloadSpeed;
+                }
+                else
+                {
+                    weapon.ReloadTime = modeBullet.reloadSpeed;
+                    weapon2.ReloadTime = modeBullet.reloadSpeed;
+                }
             }
         }
     }
@@ -225,9 +240,17 @@ public class BossAI : MonoBehaviour
     {
         if (mode == 0)
         {
-            transform.Rotate(Vector3.up, Time.deltaTime * Stages[stage].BulletStormRotationSpeed);
-            turn++;
+            float rotation = Time.deltaTime * Stages[stage].BulletStormRotationSpeed;
+            currRotation += rotation;
+            transform.Rotate(Vector3.up, rotation);
+            
+            if (currRotation >= 360f)
+            {
+                turn++;
+                currRotation = 0f;
+            }
             weapon.Use();
+
             if (turn >= Stages[stage].BulletStormTurns)
             {
                 modeComplete = true;
@@ -235,9 +258,17 @@ public class BossAI : MonoBehaviour
         }
         else if (mode == 1)
         {
-            transform.Rotate(Vector3.up, Time.deltaTime * Stages[stage].BulletStormRotationSpeed);
-            turn++;
+            float rotation = Time.deltaTime * Stages[stage].BulletStormRotationSpeed;
+            currRotation += rotation;
+            transform.Rotate(Vector3.up, rotation);
+
+            if (currRotation >= 360f)
+            {
+                turn++;
+                currRotation = 0f;
+            }
             weapon.Use();
+
             if (turn >= Stages[stage].BulletStormTurns)
             {
                 modeComplete = true;
@@ -285,10 +316,9 @@ public class BossAI : MonoBehaviour
         stage++;
         stageCombinationCount = Stages[stage].ModeCombinations.Count;
         currentCombination = 0;
-        ChangeState(Stages[stage].ModeCombinations[currentCombination].aState, Stages[stage].ModeCombinations[currentCombination].mState);
         agent.speed *= Stages[stage].SpeedModifier;
-        weapon.ReloadTime = Stages[stage].ReloadSpeed;
-        weapon2.ReloadTime = Stages[stage].ReloadSpeed;
+        ChangeState(Stages[stage].ModeCombinations[currentCombination].aState, Stages[stage].ModeCombinations[currentCombination].mState);
+
     }
 
     public bool RotateTowards(Transform target, float speed)

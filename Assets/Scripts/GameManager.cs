@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
         minimap = GameObject.FindGameObjectWithTag("MinimapCamera").GetComponent<Minimap>();
         gameWin = GameObject.FindGameObjectWithTag("GameWinCanvas");
         gameWin.SetActive(false);
+        player = GameObject.FindGameObjectWithTag("Player");
 	}
 
     public void Init()

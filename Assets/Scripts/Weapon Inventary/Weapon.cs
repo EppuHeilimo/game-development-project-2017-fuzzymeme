@@ -51,6 +51,23 @@ namespace Assets.Scripts.Weapon_Inventary
             },20,100);
         }
 
+        public void ChangeBullet(GameObject newBullet)
+        {
+            BulletPrefab = newBullet;
+            GenericObjectPool genericObjectPool = GenericObjectPool.Current;
+            genericObjectPool.Init(BulletPrefab.GetHashCode(), behaviour =>
+            {
+
+                GameObject bullet = (GameObject)Instantiate(
+                BulletPrefab);
+
+                IPoolAble poolAble = bullet.GetComponent<IPoolAble>();
+                poolAble.Init(BulletPrefab.GetHashCode());
+                return poolAble;
+
+            }, 20, 100);
+        }
+
         public void InitWeaponHolder()
         {
             Transform findDeepChild = transform.FindDeepChild("WeaponHolder");

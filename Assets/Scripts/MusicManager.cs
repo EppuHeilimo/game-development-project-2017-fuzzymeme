@@ -14,13 +14,12 @@ public class MusicManager : MonoBehaviour
         AudioManager.instance.PlayMusic(menuTheme, 2);
 
     }
-    
-    void Update()
+
+    void Awake()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            
-            AudioManager.instance.PlayMusic(mainTheme, 3);
-        }
+        AudioManager.instance.PlayMusic(menuTheme, 2);
     }
+    
+    
+   
 }

@@ -38,6 +38,7 @@ public class MenuScript : MonoBehaviour {
 	public void Play()
     {
         SceneManager.LoadScene(1);
+        
     }
 
     public void Quit()
@@ -96,7 +97,7 @@ public class MenuScript : MonoBehaviour {
     
                 public void SetMasterVolume(float value)
                 {
-                //Debug.Log("master " + value);
+                
                 AudioManager.instance.SetVolume(value, AudioManager.AudioChannel.Master);
                 }
 

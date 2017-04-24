@@ -21,6 +21,9 @@ namespace Assets.Scripts.Weapon_Inventary
         public Vector3 spawnPosition;
 
 
+        private GameObject playerGameObject;
+
+
         public void SetActive()
         {
             IsInActive = false;
@@ -35,6 +38,7 @@ namespace Assets.Scripts.Weapon_Inventary
         void Start()
         {
             OnStart();
+            playerGameObject = GameObject.FindGameObjectWithTag("Player");
         }
 
         protected virtual void OnStart()
@@ -52,11 +56,17 @@ namespace Assets.Scripts.Weapon_Inventary
 
         void  Update()
         {
+            if (shooter == null)
+            {
+                return;              
+            }
+
+
             Vector3 direction = transform.forward;
             //boss shoots downwards towards the player.
             if (shooter.transform.CompareTag("Boss") && transform.position.y > 0.5f)
             {
-                Vector3 heading = GameObject.FindGameObjectWithTag("Player").transform.position + new Vector3(0, 1, 0) - spawnPosition;
+                Vector3 heading = playerGameObject.transform.position + new Vector3(0, 1, 0) - spawnPosition;
                              
                 direction.y = (heading / heading.magnitude).y;
             }

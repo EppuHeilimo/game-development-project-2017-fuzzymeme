@@ -14,7 +14,7 @@ public class Console : MonoBehaviour
 {
 
     const int NormalHash = -2016234814;
-    const int GodHash = 1175195924;
+    const int GodHash = 2071335238;
     const int DropSomethingHash = -262007715;
     const int HalfGodHash = -208539993;
     const int LaterHash = 2071488744;
@@ -22,6 +22,8 @@ public class Console : MonoBehaviour
     const int ShowMeTheBossHash = 649304737;
     const int OpenHash = -371437091;
     const int FpsCounter = 101609;
+
+    private GameManager gameManager;
 
 
     private static InputField consoleInput;
@@ -43,6 +45,7 @@ public class Console : MonoBehaviour
     private static Console instance = null;
 	void Start ()
 	{
+
 	    instance = this;
         GameObject find = GameObject.Find("ConsoleInput");
         consoleInput=find.GetComponent<InputField>();
@@ -119,8 +122,10 @@ public class Console : MonoBehaviour
     private void TeleportToBossRoom()
     {
         GameObject.FindGameObjectWithTag("Player").GetComponent<NavMeshAgent>().Warp(GameObject.FindGameObjectWithTag("BossArea").transform.FindDeepChild("Entry 1").GetComponent<EntryPoint>().playerTeleportPoint.position);
-        GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().SetCurrentArea(GameObject.FindGameObjectWithTag("BossArea").GetComponent<Level>());
-        
+        GameManager gameMananger = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        gameMananger.SetCurrentArea(GameObject.FindGameObjectWithTag("BossArea").GetComponent<Level>());
+        gameMananger.progression = gameMananger.levelsToBoss;
+        gameMananger.UpdateProgressionText();
     }
 
     private  string message;

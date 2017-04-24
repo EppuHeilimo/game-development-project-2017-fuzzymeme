@@ -132,6 +132,16 @@ public class GameManager : MonoBehaviour
                 lightColorChanging = true;
                 UpdateProgressionText();
 
+
+                if (progression == 2)
+                {
+                    DropLevel = 2;
+                }
+                if (progression == levelsToBoss - 1)
+                {
+                    DropLevel = 3;
+                }
+
             }
         }
         EntryPoint[] entries = currentArea.GetComponentsInChildren<EntryPoint>();

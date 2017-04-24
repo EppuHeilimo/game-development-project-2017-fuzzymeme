@@ -185,7 +185,17 @@ public class BossAI : MonoBehaviour
 	        deathDestroyTimer += Time.deltaTime;
 	        if (deathDestroyTimer > deathDestroyTime)
 	        {
-	            Destroy(gameObject);
+                Transform t = transform;
+                foreach (Transform tr in t)
+                {
+                    if (tr.tag == "BloodScript")
+                    {
+                        var bloodParticles = tr.GetComponent<ParticleSystem>();
+                        bloodParticles.transform.parent = null;
+
+                    }
+                }
+                Destroy(gameObject);
 	        }
 	    }
 

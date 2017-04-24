@@ -5,8 +5,11 @@ using UnityEngine;
 public class MinionSpawn : MonoBehaviour
 {
 
-    public GameObject MinionPrefab;
+    private GameObject MinionPrefab;
     private ParticleSystem particleSystem;
+    private float timer = 0f;
+    private float time = 2.5f;
+    private bool minionSpawning = false;
 
 	// Use this for initialization
 	void Start ()
@@ -17,13 +20,22 @@ public class MinionSpawn : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-		
+	    if (minionSpawning)
+	    {
+	        timer += Time.deltaTime;
+	        if (timer >= time)
+	        {
+                Instantiate(MinionPrefab, transform.position, Quaternion.Euler(0, 180, 0));
+	            minionSpawning = false;
+	        }
+	    }
 	}
 
     public void Spawn(GameObject prefab)
     {
-
-        Instantiate(prefab, transform.position, Quaternion.Euler(0, 180, 0));
+        timer = 0f;
+        minionSpawning = true;
+        MinionPrefab = prefab;
         particleSystem.Play();
     }
 }

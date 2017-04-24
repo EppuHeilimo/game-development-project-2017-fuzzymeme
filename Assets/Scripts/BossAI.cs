@@ -99,6 +99,9 @@ public class BossAI : MonoBehaviour
     private bool dead = false;
     private float deathDestroyTimer = 0;
     private float deathDestroyTime = 3f;
+    private float minionSpawnIdleTimer = 0f;
+    private float minionSpawnIdleTime = 5f;
+    private bool minionsSpawned = false;
 
     private LaserEyes eyes;
 
@@ -251,17 +254,31 @@ public class BossAI : MonoBehaviour
 
     private void SpawnMinions()
     {
-        int count = 0;
-        for (int i = 0; i < Stages[stage].Minions; i++)
+        if (!minionsSpawned)
         {
-            MinionSpawns[i].Spawn(MinionPrefab);
-            count++;
-            if (count > MinionSpawns.Length)
+            int count = 0;
+            for (int i = 0; i < Stages[stage].Minions; i++)
             {
-                break;
+                MinionSpawns[i].Spawn(MinionPrefab);
+                count++;
+                if (count > MinionSpawns.Length)
+                {
+                    break;
+                }
+            }
+            minionsSpawned = true;
+        }
+        else
+        {
+            minionSpawnIdleTimer += Time.deltaTime;
+            if (minionSpawnIdleTimer > minionSpawnIdleTime)
+            {
+                modeComplete = true;
+                minionSpawnIdleTimer = 0f;
+                minionsSpawned = false;
             }
         }
-        modeComplete = true;
+        
     }
 
     private void Laser()

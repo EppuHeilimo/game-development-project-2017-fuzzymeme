@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Assets.Scripts.Weapon_Inventary;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameOverScript : MonoBehaviour {
@@ -15,11 +16,12 @@ public class GameOverScript : MonoBehaviour {
     private Image image;
     public float FadingOutTime = 5;
     public float ShowGameOverTime = 3;
+    private GameObject player;
 
     // Use this for initialization
     void Start ()
 	{
-	    GameObject player = GameObject.Find("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
         stats = player.GetComponent<Stats>();
 
         gameoverBackground = GameObject.Find("GameOverBackground");
@@ -41,9 +43,11 @@ public class GameOverScript : MonoBehaviour {
 
             Transform textTransform = gameoverBackground.transform.Find("Text");
             textTransform.gameObject.SetActive(true);
+	        player.GetComponent<PlayerMovement>().locked = true;
+            player.GetComponent<PlayerMovement>().animation.Die();
 
 
-        }
+	    }
 	}
 
     void Update()
@@ -67,6 +71,6 @@ public class GameOverScript : MonoBehaviour {
     IEnumerator EndGame()
     {
         yield return new WaitForSeconds(ShowGameOverTime);
-        // todo switch to main menu;
+        SceneManager.LoadScene("MainMenuScene");
     }
 }

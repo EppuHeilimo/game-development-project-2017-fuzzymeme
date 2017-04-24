@@ -18,6 +18,7 @@ namespace Assets.Scripts.Weapon_Inventary
         private bool init = false;
         private float lifeTime;
         private int hashCode;
+        public Vector3 spawnPosition;
 
 
         public void SetActive()
@@ -51,10 +52,17 @@ namespace Assets.Scripts.Weapon_Inventary
 
         void  Update()
         {
-            
-            Vector3 movement = Time.deltaTime * Speed * transform.forward;
-            transform.position = transform.position + movement;
+            Vector3 direction = transform.forward;
+            //boss shoots downwards towards the player.
+            if (shooter.transform.CompareTag("Boss") && transform.position.y > 0.5f)
+            {
+                Vector3 heading = GameObject.FindGameObjectWithTag("Player").transform.position + new Vector3(0, 1, 0) - spawnPosition;
+                             
+                direction.y = (heading / heading.magnitude).y;
+            }
+            Vector3 movement = Time.deltaTime*Speed*direction;
 
+            transform.position = transform.position + movement;
         }
 
         void OnTriggerEnter(Collider collision)
@@ -80,7 +88,14 @@ namespace Assets.Scripts.Weapon_Inventary
                 {
                     //do nothing
                 }
+                else if (collision.CompareTag("Boss") && (shooter.CompareTag("Boss") || shooter.CompareTag("Minion")))
+                {
+                    //do nothing
+                }
+                else if (collision.CompareTag("Minion") && (shooter.CompareTag("Minion") || shooter.CompareTag("Boss")))
+                {
 
+                }
                 else
                 {
                     Collision(collision);

@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour {
     public Vector3 player;
     private Camera main_camera;
     public int speed = 5;
-    private PlayerAnimation animation;
+    public PlayerAnimation animation;
     private float xrotateSpeed = 30f;
     private float yrotateSpeed = 20f;
 
@@ -67,6 +67,10 @@ public class PlayerMovement : MonoBehaviour {
                 }
             }
             CharacterMovement();
+            if (Input.GetKey(KeyCode.Mouse0))
+            {
+                GetComponent<Inventory>().Use();
+            }
         }
     }
 

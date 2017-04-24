@@ -48,7 +48,24 @@ namespace Assets.Scripts.Weapon_Inventary
                 poolAble.Init(BulletPrefab.GetHashCode());
                 return poolAble;
                 
-            },10,50);
+            },20,100);
+        }
+
+        public void ChangeBullet(GameObject newBullet)
+        {
+            BulletPrefab = newBullet;
+            GenericObjectPool genericObjectPool = GenericObjectPool.Current;
+            genericObjectPool.Init(BulletPrefab.GetHashCode(), behaviour =>
+            {
+
+                GameObject bullet = (GameObject)Instantiate(
+                BulletPrefab);
+
+                IPoolAble poolAble = bullet.GetComponent<IPoolAble>();
+                poolAble.Init(BulletPrefab.GetHashCode());
+                return poolAble;
+
+            }, 20, 100);
         }
 
         public void InitWeaponHolder()
@@ -58,11 +75,12 @@ namespace Assets.Scripts.Weapon_Inventary
             {
                 weaponHolder = findDeepChild.gameObject;
 
-                if (_bulletSpawnPosition == null)
-                {
-                    attackSpawnPosition = transform.FindDeepChild("AttackSpawnPoint");
-                    _bulletSpawnPosition = attackSpawnPosition;
-                }
+
+            }
+            if (_bulletSpawnPosition == null)
+            {
+                attackSpawnPosition = transform.FindDeepChild("AttackSpawnPoint");
+                _bulletSpawnPosition = attackSpawnPosition;
             }
         }
 
@@ -125,6 +143,8 @@ namespace Assets.Scripts.Weapon_Inventary
 
             Quaternion rotation = BulletSpawnPosition.root.rotation;
 
+
+
             IPoolAble poolAble = GenericObjectPool.Current.Get(BulletPrefab.GetHashCode());
 
             Bullet bullet1 = poolAble as Bullet;
@@ -132,9 +152,9 @@ namespace Assets.Scripts.Weapon_Inventary
 
             bulletGameObject.transform.parent = null;
             bulletGameObject.transform.position = BulletSpawnPosition.position;
+            bullet1.spawnPosition = BulletSpawnPosition.position;
             bulletGameObject.transform.rotation = rotation;
 
-            Debug.Log(weaponHolder);
             AudioManager.PlayShootSound(InventaryItemName, _bulletSpawnPosition, transform.tag);
 
             //var bullet = (GameObject)Instantiate(

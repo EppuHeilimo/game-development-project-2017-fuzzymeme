@@ -22,6 +22,11 @@ public class GameManager : MonoBehaviour
     private float colorOffsetPerLevel;
     private float lightChangeSpeed = 0.2f;
 
+    private GameObject gameWin;
+    private bool gameWon = false;
+    private float timer = 0f;
+    private float time = 4f;
+
 
     // Use this for initialization
     void Start ()
@@ -35,7 +40,10 @@ public class GameManager : MonoBehaviour
         }
 
         minimap = GameObject.FindGameObjectWithTag("MinimapCamera").GetComponent<Minimap>();
-    }
+        gameWin = GameObject.FindGameObjectWithTag("GameWinCanvas");
+        gameWin.SetActive(false);
+        player = GameObject.FindGameObjectWithTag("Player");
+	}
 
     public void Init()
     {
@@ -55,6 +63,20 @@ public class GameManager : MonoBehaviour
                 Debug.Log(currColor);
 	        }
 	    }	
+        if (gameWon)
+        {
+            if(timer <= time)
+                timer += Time.deltaTime;
+            if (timer > time)
+            {
+                player.GetComponent<PlayerMovement>().locked = true;
+                if (gameWin.GetComponent<CanvasGroup>().alpha < 1)
+                {
+                    gameWin.GetComponent<CanvasGroup>().alpha += Time.deltaTime;
+                    
+                }
+            }
+        }
 	}
 
     public void SetCurrentArea(Level area)
@@ -132,6 +154,14 @@ public class GameManager : MonoBehaviour
                 t.ClosePath();
             }
         }
+    }
+
+    public void GameWin()
+    {
+        
+        gameWin.SetActive(true);
+        gameWin.GetComponent<CanvasGroup>().alpha = 0;
+        gameWon = true;
     }
 
 }

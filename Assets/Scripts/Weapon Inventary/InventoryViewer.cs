@@ -15,6 +15,11 @@ namespace Assets.Scripts.Weapon_Inventary
         private Boolean showsText = false;
 
 
+        private EqualChecker equalCheckeritem1 = new EqualChecker();
+        private EqualChecker equalCheckeritem2 = new EqualChecker();
+        private EqualChecker equalCheckeritem3 = new EqualChecker();
+        private EqualChecker equalCheckeritem4 = new EqualChecker();
+
 
         private Image item1Image;
         private Image item2Image;
@@ -91,7 +96,7 @@ namespace Assets.Scripts.Weapon_Inventary
         //}
 
 
-      
+
 
         private void LoadComponents()
         {
@@ -108,11 +113,11 @@ namespace Assets.Scripts.Weapon_Inventary
 
 
             item1Text = GameObject.Find("Inventory/LeftSide/Item1/Text").GetComponent<Text>();
-           
+
             item2Text = GameObject.Find("Inventory/LeftSide/Item2/Text").GetComponent<Text>();
-    
+
             item3Text = GameObject.Find("Inventory/LeftSide/Item3/Text").GetComponent<Text>();
-         
+
             item4Text = GameObject.Find("Inventory/LeftSide/Item4/Text").GetComponent<Text>();
 
             item1Text.text = "";
@@ -150,7 +155,8 @@ namespace Assets.Scripts.Weapon_Inventary
 
 
                     pickUpText.text = "[" + (inventory.SelectedPickUpArroundIndex + 1) + ":" +
-                                inventory.PickUpsAround.Count + "]  " + inventory.SelectedPickUpAround.InventaryItemName;
+                                      inventory.PickUpsAround.Count + "]  " +
+                                      inventory.SelectedPickUpAround.InventaryItemName;
 
 
 
@@ -170,12 +176,13 @@ namespace Assets.Scripts.Weapon_Inventary
 
 
         private bool is100 = false;
+
         private void UpdateReloadBar()
         {
-          
+
             InventoryItem inventoryItem = inventory.Items[inventory.Index];
-            double percentage = inventoryItem.ReloadPercentage ;
-            if (percentage == 1 )
+            double percentage = inventoryItem.ReloadPercentage;
+            if (percentage == 1)
             {
                 if (is100)
                 {
@@ -185,261 +192,322 @@ namespace Assets.Scripts.Weapon_Inventary
                 {
                     is100 = true;
                 }
-               
+
             }
             else
             {
                 is100 = false;
             }
-            float heightint =(float)( height* percentage);
+            float heightint = (float) (height*percentage);
             refillImage.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, heightint);
         }
 
-        private InventoryItem lastInventoryItem0 = null;
-        private InventoryItem lastInventoryItem1 = null;
-        private InventoryItem lastInventoryItem2 = null;
+        private int lastInventoryItem0Id = -1;
+        private int lastInventoryItem1Id = -1;
+        //private InventoryItem lastInventoryItem2 = null;
+        private int lastInventoryItem2Id = -1;
         private InventoryItem lastInventoryItem3 = null;
 
 
         private void UpdateInventoryIcon()
         {
             InventoryItem item = inventory.Items[0];
-            if (lastInventoryItem0 != item)
+            var isEqual = equalCheckeritem1.IsEqual(item  );
+            if (!isEqual)
             {
-                lastInventoryItem0 = item;
+                equalCheckeritem1.Current = item;
                 ChangeIcon(item, Icon1);
             }
 
-
              item = inventory.Items[1];
-            if (lastInventoryItem1 != item)
+            isEqual = equalCheckeritem2.IsEqual(item);
+            if (!isEqual)
             {
-                lastInventoryItem1 = item;
+                equalCheckeritem2.Current = item;
                 ChangeIcon(item, Icon2);
-
-             
-
             }
+
+
             item = inventory.Items[2];
-            if (lastInventoryItem2 != item)
+            isEqual = equalCheckeritem3.IsEqual(item);
+            if (!isEqual)
             {
+                equalCheckeritem3.Current = item;
                 ChangeIcon(item, Icon3);
-                lastInventoryItem2 = item;
-
             }
+
             item = inventory.Items[3];
-            if (lastInventoryItem3 != item)
+            isEqual = equalCheckeritem4.IsEqual(item);
+            if (!isEqual)
             {
-                lastInventoryItem3 = item;
+                equalCheckeritem4.Current = item;
                 ChangeIcon(item, Icon4);
-
             }
-
-
+           
         }
 
-        private void ChangeIcon(InventoryItem item,Image icon)
-        {
-            if (item == null)
+        void ChangeIcon 
+            (InventoryItem item, Image icon)
             {
-                icon.sprite = null;
-            }
-            else
-            {
-                icon.sprite = item.InventarSprite;
-                icon.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 46.4f);
-                icon.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 61.4f);
-            }
-            
-        }
-
-        private void UpdateUseAmount()
-        {
-
-
-            InventoryItem item = inventory.Items[0];
-            int lastTemp = last1Amount;
-            UpdateUseAmount(item, ref lastTemp);
-            if (lastTemp != last1Amount)
-            {
-                last1Amount = lastTemp;
-
-                ChangeText(item1Text, lastTemp);
-            }
-
-          
-
-            item = inventory.Items[1];
-            lastTemp = last2Amount;
-            UpdateUseAmount(item, ref lastTemp);
-            if (lastTemp != last2Amount)
-            {
-                last2Amount = lastTemp;
-                ChangeText(item2Text, lastTemp);
-
-
-            }
-
-             item = inventory.Items[2];
-             lastTemp = last3Amount;
-            UpdateUseAmount(item, ref lastTemp);
-            if (lastTemp != last3Amount)
-            {
-                last3Amount = lastTemp;
-                ChangeText(item3Text, lastTemp);
-
-            }
-
-            item = inventory.Items[3];
-            lastTemp = last4Amount;
-            UpdateUseAmount(item, ref lastTemp);
-            if (lastTemp != last4Amount)
-            {
-                last4Amount = lastTemp;
-                ChangeText(item4Text, lastTemp);
-
-            }
-
-        }
-
-        private void ChangeText(Text textComponent, int i)
-        {
-
-            String text;
-            if (i == -2)
-            {
-                text = "";
-            }
-            else if (i == -1)
-            {
-                text = "∞";
-                textComponent.fontSize = 30;
-            }
-            else
-            {
-                text = i + "";
-                textComponent.fontSize = 15;
-
-            }
-            textComponent.text = text;
-        }
-
-       
-
-        private void UpdateUseAmount(InventoryItem item, ref int lastAmount)
-        {
-            if (item == null)
-            {
-                if (lastAmount != -2)
+                if (item == null)
                 {
-
-                    lastAmount = -2;
-                }
-               
-            }else if (item.UseAbleAmount != lastAmount)
-            {
-
-                lastAmount = item.UseAbleAmount;
-            }
-        }
-    
-
-        private void UpdateSelectedItem()
-        {
-            InventoryItem item = inventory.Items[inventory.Index];
-            if (item != lastInventoryItem)
-            {
-                item1Image.sprite = notSelectedSprite;
-                item2Image.sprite = notSelectedSprite;
-                item3Image.sprite = notSelectedSprite;
-                item4Image.sprite = notSelectedSprite;
-                int index = inventory.Index;
-                if (index == 0)
-                {
-                    item1Image.sprite = SelectedSprite;
-
-                }
-                else if (index == 1)
-                {
-                    item2Image.sprite = SelectedSprite;
-
-                }
-                else if (index == 2)
-                {
-                    item3Image.sprite = SelectedSprite;
-
-                }
-                else if (index == 3)
-                {
-                    item4Image.sprite = SelectedSprite;
-
+                    icon.sprite = null;
                 }
                 else
                 {
-                    throw new RuntimeException("Unsupported index");
+                    icon.sprite = item.InventarSprite;
+                    icon.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 46.4f);
+                    icon.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 61.4f);
                 }
 
-                selectedWeaponText.text = item.ItemDescription;
-
-                lastInventoryItem = item;
             }
-        }
+
+        private
+            void UpdateUseAmount 
+            ()
+            {
 
 
-        protected String getItem(int index)
+                InventoryItem item = inventory.Items[0];
+                int lastTemp = last1Amount;
+                UpdateUseAmount(item, ref lastTemp);
+                if (lastTemp != last1Amount)
+                {
+                    last1Amount = lastTemp;
+
+                    ChangeText(item1Text, lastTemp);
+                }
+
+
+
+                item = inventory.Items[1];
+                lastTemp = last2Amount;
+                UpdateUseAmount(item, ref lastTemp);
+                if (lastTemp != last2Amount)
+                {
+                    last2Amount = lastTemp;
+                    ChangeText(item2Text, lastTemp);
+
+
+                }
+
+                item = inventory.Items[2];
+                lastTemp = last3Amount;
+                UpdateUseAmount(item, ref lastTemp);
+                if (lastTemp != last3Amount)
+                {
+                    last3Amount = lastTemp;
+                    ChangeText(item3Text, lastTemp);
+
+                }
+
+                item = inventory.Items[3];
+                lastTemp = last4Amount;
+                UpdateUseAmount(item, ref lastTemp);
+                if (lastTemp != last4Amount)
+                {
+                    last4Amount = lastTemp;
+                    ChangeText(item4Text, lastTemp);
+
+                }
+
+            }
+
+        private
+            void ChangeText 
+            (Text textComponent, int i)
+            {
+
+                String text;
+                if (i == -2)
+                {
+                    text = "";
+                }
+                else if (i == -1)
+                {
+                    text = "∞";
+                    textComponent.fontSize = 30;
+                }
+                else
+                {
+                    text = i + "";
+                    textComponent.fontSize = 15;
+
+                }
+                textComponent.text = text;
+            }
+
+
+
+        private
+            void UpdateUseAmount 
+            (InventoryItem item, ref int lastAmount)
+            {
+                if (item == null)
+                {
+                    if (lastAmount != -2)
+                    {
+
+                        lastAmount = -2;
+                    }
+
+                }
+                else if (item.UseAbleAmount != lastAmount)
+                {
+
+                    lastAmount = item.UseAbleAmount;
+                }
+            }
+
+
+        private
+            void UpdateSelectedItem 
+            ()
+            {
+                InventoryItem item = inventory.Items[inventory.Index];
+                if (item != lastInventoryItem)
+                {
+                    item1Image.sprite = notSelectedSprite;
+                    item2Image.sprite = notSelectedSprite;
+                    item3Image.sprite = notSelectedSprite;
+                    item4Image.sprite = notSelectedSprite;
+                    int index = inventory.Index;
+                    if (index == 0)
+                    {
+                        item1Image.sprite = SelectedSprite;
+
+                    }
+                    else if (index == 1)
+                    {
+                        item2Image.sprite = SelectedSprite;
+
+                    }
+                    else if (index == 2)
+                    {
+                        item3Image.sprite = SelectedSprite;
+
+                    }
+                    else if (index == 3)
+                    {
+                        item4Image.sprite = SelectedSprite;
+
+                    }
+                    else
+                    {
+                        throw new RuntimeException("Unsupported index");
+                    }
+
+                    selectedWeaponText.text = item.ItemDescription;
+
+                    lastInventoryItem = item;
+                }
+            }
+
+
+        protected
+            String getItem 
+            (int
+            index)
+            {
+                String text = " [";
+                if (index == inventory.Index)
+                {
+                    text += "->";
+                }
+                else
+                {
+                    text += "  ";
+
+                }
+                InventoryItem inventaryItem = inventory.Items[index];
+                if (inventaryItem == null)
+                {
+                    text += "      ";
+                }
+                else
+                {
+                    text += inventaryItem.InventaryItemName;
+                    text += "(" + inventaryItem.UseAbleAmount + ")";
+                }
+
+
+                if (index == inventory.Index)
+                {
+                    text += "<-";
+                }
+                else
+                {
+                    text += "  ";
+
+                }
+                text += "] ";
+                return text;
+            }
+
+        protected void UpdateSelectableItems ()
+            {
+                List<GameObject> pickUpsAround = inventory.PickUpsAround;
+                if (pickUpsAround.Count == 0)
+                {
+                    DropItemsText.text = "";
+                }
+                else
+                {
+                    int indexer = inventory.SelectedPickUpArroundIndex + 1;
+                    string name = inventory.SelectedPickUpAround.InventaryItemName;
+                    String str = name + "  [" + indexer + "|" + pickUpsAround.Count + "]";
+                    DropItemsText.text = str;
+
+                }
+
+
+            }
+
+        class EqualChecker
         {
-            String text = " [";
-            if (index == inventory.Index)
-            {
-                text += "->";
-            }
-            else
-            {
-                text += "  ";
 
-            }
-            InventoryItem inventaryItem = inventory.Items[index];
-            if (inventaryItem == null)
+
+            private InventoryItem _current;
+            private bool isSetToNotNull = false;
+
+            public InventoryItem Current
             {
-                text += "      ";
-            }
-            else
-            {
-                text += inventaryItem.InventaryItemName;
-                text += "(" + inventaryItem.UseAbleAmount + ")";
+                get { return _current; }
+                set
+                {
+                    isSetToNotNull = value != null;
+                    _current = value;
+                }
             }
 
 
-            if (index == inventory.Index)
+            public bool IsEqual(InventoryItem item)
             {
-                text += "<-";
-            }
-            else
-            {
-                text += "  ";
+
+                int itemId = -1;
+                if (item != null)
+                {
+                    itemId = item.GetInstanceID();
+                }
+
+                if (isSetToNotNull)
+                {
+                    int currentId = Current.GetInstanceID();
+
+
+                    return currentId == itemId;
+                }
+                else
+                {
+                    return itemId == -1;
+                }
 
             }
-            text += "] ";
-            return text;
         }
 
-        protected void UpdateSelectableItems()
-        {
-            List<GameObject> pickUpsAround = inventory.PickUpsAround;
-            if (pickUpsAround.Count == 0)
-            {
-                DropItemsText.text = "";
-            }
-            else
-            {
-                int indexer = inventory.SelectedPickUpArroundIndex+1;
-                string name = inventory.SelectedPickUpAround.InventaryItemName;
-                String str = name + "  [" + indexer + "|" + pickUpsAround.Count + "]";
-                DropItemsText.text = str;
 
-            }
-
-
-        }
     }
+
+
+
 }

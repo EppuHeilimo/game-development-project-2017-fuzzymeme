@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-
-
     public Transform playerTransform;
     public Transform thirdPersonPosition;
     public Transform LookPoint;

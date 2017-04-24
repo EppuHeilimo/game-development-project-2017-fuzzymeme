@@ -139,9 +139,10 @@ public class AudioManager : MonoBehaviour
         // Debug.Log(Shooter);
         if (Shooter == "Boss" || Shooter == "Minion")
         {
-            if (InventaryItemName == "Rifle")
+            AudioManager.instance.PlaySound("Boss", _bulletSpawnPosition.transform.position);
+            if (InventaryItemName == "")
             {
-                Debug.Log("Boss is shooting");
+                
                 //AudioManager.instance.PlaySound("BossRifle", _bulletSpawnPosition.transform.position);
             }
 
@@ -153,14 +154,16 @@ public class AudioManager : MonoBehaviour
                     {
                         //Debug.Log("make stick sound");
                     }
-                    else if (InventaryItemName == "Rifle")
+                    else if (InventaryItemName == "Rifle" || InventaryItemName == "Rusty Rifle")
                     {
                         AudioManager.instance.PlaySound("Rifle", _bulletSpawnPosition.transform.position);
                     }
-                    else if (InventaryItemName == "Pistol")
+                    else if (InventaryItemName == "Pistol" || InventaryItemName == "Rusty Pistol")
                     {
                         AudioManager.instance.PlaySound("Pistol", _bulletSpawnPosition.transform.position);
                     }
+
+                    
 
                     else if (InventaryItemName == "Test")
                     {
@@ -174,12 +177,13 @@ public class AudioManager : MonoBehaviour
 
     public static void PlayMultiBulletSound(string InventaryItemName,Transform BulletSpawnPosition)
     {
-        if (InventaryItemName == "Auto shotgun")
+        Debug.Log(InventaryItemName);
+        if (InventaryItemName == "Auto shotgun" || InventaryItemName == "Shotgun" || InventaryItemName == "Rusty Shotgun")
         {
-           
-
             AudioManager.instance.PlaySound("Shotgun", BulletSpawnPosition.position);
         }
+
+        
     }
 
 

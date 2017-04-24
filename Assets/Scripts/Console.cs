@@ -166,6 +166,7 @@ public class Console : MonoBehaviour
         gameMananger.SetCurrentArea(GameObject.FindGameObjectWithTag("BossArea").GetComponent<Level>());
         gameMananger.progression = gameMananger.levelsToBoss;
         gameMananger.UpdateProgressionText();
+        gameMananger.UpdateDropLevel();
     }
 
     private  string message;

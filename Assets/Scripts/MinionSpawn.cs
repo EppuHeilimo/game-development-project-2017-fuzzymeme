@@ -22,6 +22,7 @@ public class MinionSpawn : MonoBehaviour
 
     public void Spawn(GameObject prefab)
     {
+
         Instantiate(prefab, transform.position, Quaternion.Euler(0, 180, 0));
         particleSystem.Play();
     }

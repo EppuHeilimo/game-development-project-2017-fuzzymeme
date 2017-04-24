@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -58,6 +59,7 @@ public class MenuScript : MonoBehaviour {
     public IEnumerator StartGame()
     {
        yield return  new WaitForSecondsRealtime(1.5f);
+       GenericObjectPool.Current.Clear();
         SceneManager.LoadScene(1);
     }
 

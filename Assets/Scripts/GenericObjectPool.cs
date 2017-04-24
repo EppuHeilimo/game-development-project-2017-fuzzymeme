@@ -19,6 +19,10 @@ namespace Assets.Scripts
 
         public delegate IPoolAble InstantiationMethod(MonoBehaviour behaviour);
 
+        public void Clear()
+        {
+            pools.Clear();
+        }
 
         public void Init(int hashCode, InstantiationMethod instantiationMethod,int min  = 10,int max = 20)
         {

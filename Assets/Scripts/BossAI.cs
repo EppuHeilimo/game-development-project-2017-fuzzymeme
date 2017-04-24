@@ -410,6 +410,10 @@ public class BossAI : MonoBehaviour
             animation.Die();
             agent.Stop();
             agent.ResetPath();
+            if(AMode == AttackMode.LaserEyes)
+            {
+                eyes.CloseEyes();
+            }
             dead = true;
             if(transform.root.CompareTag("Boss"))
                 GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().GameWin();

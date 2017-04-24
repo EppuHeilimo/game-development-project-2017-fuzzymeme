@@ -60,7 +60,6 @@ public class GameManager : MonoBehaviour
 	        if (Sun.color.g <= 1f - colorOffsetPerLevel * progression)
 	        {
 	            lightColorChanging = false;
-                Debug.Log(currColor);
 	        }
 	    }	
         if (gameWon)

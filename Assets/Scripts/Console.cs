@@ -162,6 +162,7 @@ public class Console : MonoBehaviour
     {
         GameObject.FindGameObjectWithTag("Player").GetComponent<NavMeshAgent>().Warp(GameObject.FindGameObjectWithTag("BossArea").transform.FindDeepChild("Entry 1").GetComponent<EntryPoint>().playerTeleportPoint.position);
         GameManager gameMananger = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        GameObject.FindGameObjectWithTag("Sun").GetComponent<Light>().color = new Color(1f, 0.4f, 0.4f);
         gameMananger.SetCurrentArea(GameObject.FindGameObjectWithTag("BossArea").GetComponent<Level>());
         gameMananger.progression = gameMananger.levelsToBoss;
         gameMananger.UpdateProgressionText();

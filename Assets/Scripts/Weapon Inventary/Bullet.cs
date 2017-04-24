@@ -92,6 +92,10 @@ namespace Assets.Scripts.Weapon_Inventary
                 {
                     //do nothing
                 }
+                else if (collision.CompareTag("Minion") && shooter.CompareTag("Minion"))
+                {
+
+                }
                 else
                 {
                     Collision(collision);

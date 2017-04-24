@@ -152,7 +152,7 @@ public class GameManager : MonoBehaviour
         {
             DropLevel = 2;
         }
-        if (progression == levelsToBoss - 1)
+        if (progression >= levelsToBoss - 1)
         {
             DropLevel = 3;
         }

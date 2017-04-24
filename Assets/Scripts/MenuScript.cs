@@ -85,6 +85,7 @@ public class MenuScript : MonoBehaviour {
     public void OptionsMenu()
     {
         mainMenuHolder.SetActive(false);
+
         optionsMenuHolder.SetActive(true);
     }
 

@@ -112,7 +112,6 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySound(string soundName, Vector3 pos)
     {
-        Debug.Log(soundName);
         PlaySound(library.GetClipFromName(soundName), pos);
     }
 

@@ -36,7 +36,6 @@ public class MusicManager : MonoBehaviour
         }
         else if (sceneName == "MainScene")
         {
-            Debug.Log("game music clip");
             clipToPlay = mainTheme;
         }
 

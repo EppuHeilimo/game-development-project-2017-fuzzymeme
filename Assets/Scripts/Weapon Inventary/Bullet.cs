@@ -88,11 +88,11 @@ namespace Assets.Scripts.Weapon_Inventary
                 {
                     //do nothing
                 }
-                else if (collision.CompareTag("Boss") && shooter.CompareTag("Boss"))
+                else if (collision.CompareTag("Boss") && (shooter.CompareTag("Boss") || shooter.CompareTag("Minion")))
                 {
                     //do nothing
                 }
-                else if (collision.CompareTag("Minion") && shooter.CompareTag("Minion"))
+                else if (collision.CompareTag("Minion") && (shooter.CompareTag("Minion") || shooter.CompareTag("Boss")))
                 {
 
                 }

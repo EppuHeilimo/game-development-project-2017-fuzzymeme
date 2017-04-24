@@ -237,6 +237,7 @@ public class BossAI : MonoBehaviour
             case AttackMode.DeathWave:
                 animation.ChangeUpperState(BossAnimation.UBodyAnimationState.TwoHanded);
                 DeathWave();
+                ModeTime();
                 break;
             case AttackMode.LaserEyes:
                 animation.ChangeUpperState(BossAnimation.UBodyAnimationState.Idle);

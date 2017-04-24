@@ -27,11 +27,11 @@ public class EnemySpawner : MonoBehaviour
 
     public void KillAllEnemies()
     {
-        for (int i = enemies.Count; i < 0; i--)
+        foreach (var enemy in enemies)
         {
-            enemies[i].GetComponent<Stats>().CurrentLifeEnergy = -1;
-            enemies.RemoveAt(i);
+            enemy.GetComponent<Stats>().Damage(10000);
         }
+        enemies.Clear();
     }
 
     void Init()

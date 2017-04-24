@@ -22,6 +22,9 @@ public class Console : MonoBehaviour
     const int ShowMeTheBossHash = 649304737;
     const int OpenHash = -371437091;
     const int FpsCounter = 101609;
+    const int FreeBeer = -489312271;
+    const int FreeBeerForAYear = -86716964;
+    const int NoFreeBeer = 1230423493;
 
     private GameManager gameManager;
 
@@ -65,22 +68,34 @@ public class Console : MonoBehaviour
 
     private void AnalyseCommand(string arg0)
     {
+        arg0 = arg0.ToLower();
         int hash = arg0.GetHashCode();
         
 
         if (GodHash.Equals(hash))
         {
             StartGodMode(true);
-        }else if (NormalHash.Equals(hash))
+            ShowMessage("It´s EPPU time");
+
+        }
+        else if (NormalHash.Equals(hash))
         {
             StartGodMode(false);
-        }else if (HalfGodHash.Equals(hash))
+            ShowMessage("We are proud, that you dont use cheat power anymore!");
+
+        }
+        else if (HalfGodHash.Equals(hash))
         {
             StartGodMode(false);
             StartHalfGodMode();
-        }else if (DropSomethingHash.Equals(hash))
+            ShowMessage("Joeli....."+Environment.NewLine+"halfgod, pro designer and true inventor of the m building party");
+
+        }
+        else if (DropSomethingHash.Equals(hash))
         {
             DropSomething();
+            ShowMessage("Something dropped :D");
+
         }
         consoleInput.text = "";
 
@@ -92,8 +107,26 @@ public class Console : MonoBehaviour
         {
             ShowMessage("That is not available. maybe eppu can help.", 5);
 
+        }else if (FreeBeer.Equals(hash))
+        {
+            SetPlayerSpeed(17);
+            ShowMessage("Hurry Up - There is free beer ! :D");
+
         }
-        if(OpenHash.Equals(hash))
+        else if (FreeBeerForAYear.Equals(hash))
+        {
+            SetPlayerSpeed(30);
+            ShowMessage("I will be as fast as I can");
+
+        }
+        else if (NoFreeBeer.Equals(hash))
+        {
+            SetPlayerSpeed(8);
+            ShowMessage("There is no reason to hurry then");
+
+
+        }
+        if (OpenHash.Equals(hash))
         {
             CompleteLevel();
             
@@ -110,6 +143,12 @@ public class Console : MonoBehaviour
         consoleInput.enabled = false;
         consoleVisible = false;
         rectTransform.localScale = new Vector3(0, 0, 0);
+    }
+
+    private void SetPlayerSpeed(int speed)
+    {
+        PlayerMovement playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+        playerMovement.speed = speed;
     }
 
     private void CompleteLevel()
@@ -284,6 +323,10 @@ public class Console : MonoBehaviour
 
     public static bool GetKeyDown(KeyCode keyCode)
     {
+        if (consoleInput == null)
+        {
+            return Input.GetKeyDown(keyCode);
+        }
         if (consoleInput.isFocused)
         {
             return false;

@@ -18,7 +18,7 @@ public class EntryPoint : MonoBehaviour
     public EntryPoint otherSidePoint;
     private GameObject player;
     private bool locked = false;
-    private GameObject blockingÓbject;
+    private GameObject blockingObject;
     private NavMeshObstacle obstacle;
 
     private VinesAnimation vineAnim;
@@ -37,7 +37,7 @@ public class EntryPoint : MonoBehaviour
 		player = GameObject.FindGameObjectWithTag("Player");
 	    cameraTarget = transform.FindChild("CameraTarget");
 	    mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-        blockingÓbject = transform.FindChild("Tree").gameObject;
+        blockingObject = transform.FindChild("Tree").gameObject;
         vine = transform.FindChild("Vines").gameObject;
         vineAnim = vine.GetComponent<VinesAnimation>();
         playerTeleportPoint = transform.FindChild("PlayerTeleportPoint");
@@ -103,7 +103,7 @@ public class EntryPoint : MonoBehaviour
 
     public void Init(bool isEntry)
     {
-        blockingÓbject.SetActive(!isEntry);
+        blockingObject.SetActive(!isEntry);
         vine.SetActive(isEntry);
     }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,6 +13,11 @@ public class MenuScript : MonoBehaviour {
     public Slider[] volumeSliders;
     public Toggle[] resolutionToggles;
     public Toggle fullscreenToggle;
+    private bool startPlaying = false;
+
+    private Image image;
+    private GameObject gameoverBackground;
+
 
     public int[] screenWiths;
 
@@ -19,6 +25,12 @@ public class MenuScript : MonoBehaviour {
 
     void Start()
     {
+
+        gameoverBackground = GameObject.Find("LoadingScreen");
+        image = gameoverBackground.GetComponent<Image>();
+
+        gameoverBackground.SetActive(false);
+
         activeScreenResIndex = PlayerPrefs.GetInt("screen res index");
         bool isFullscreen = (PlayerPrefs.GetInt("fullscreen") == 1) ? true : false;
 
@@ -36,9 +48,33 @@ public class MenuScript : MonoBehaviour {
     
 
 	public void Play()
-    {
-        SceneManager.LoadScene(1);
+	{
+        gameoverBackground.SetActive(true);
+        startPlaying = true;
+	    StartCoroutine(StartGame());
         
+    }
+
+    public IEnumerator StartGame()
+    {
+       yield return  new WaitForSecondsRealtime(1.5f);
+        SceneManager.LoadScene(1);
+    }
+
+    private Boolean isBlack = false;
+    public void Update()
+    {
+        if (startPlaying && !isBlack)
+        {
+            float alphaIncrement = Time.deltaTime * 1 / 1.5f;
+            alphaIncrement = image.color.a + alphaIncrement;
+            if (alphaIncrement > 1)
+            {
+                alphaIncrement = 1;
+                isBlack = true;
+            }
+            image.color = new Color(0, 0, 0, alphaIncrement);
+        }
     }
 
     public void Quit()

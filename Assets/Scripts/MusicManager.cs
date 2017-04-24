@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MusicManager : MonoBehaviour
 {
@@ -8,18 +9,45 @@ public class MusicManager : MonoBehaviour
     public AudioClip mainTheme;
     public AudioClip menuTheme;
 
+    string sceneName;
     void Start()
     {
-        
-        AudioManager.instance.PlayMusic(menuTheme, 2);
-
+        OnLevelWasLoaded(0);
     }
 
-    void Awake()
+
+    void OnLevelWasLoaded(int sceneIndex)
     {
-        AudioManager.instance.PlayMusic(menuTheme, 2);
+        string newSceneName = SceneManager.GetActiveScene().name;
+        if (newSceneName != sceneName)
+        {
+            sceneName = newSceneName;
+            Invoke("PlayMusic", .2f);
+        }
     }
-    
-    
-   
+
+    void PlayMusic()
+    {
+        AudioClip clipToPlay = null;
+
+        if (sceneName == "MainMenuScene")
+        {
+            clipToPlay = menuTheme;
+        }
+        else if (sceneName == "MainScene")
+        {
+            Debug.Log("game music clip");
+            clipToPlay = mainTheme;
+        }
+
+        if (clipToPlay != null)
+        {
+            AudioManager.instance.PlayMusic(clipToPlay, 2);
+            Invoke("PlayMusic", clipToPlay.length);
+        }
+
+    }
+
+
+
 }

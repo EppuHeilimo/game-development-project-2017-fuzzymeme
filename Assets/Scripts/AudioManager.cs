@@ -136,9 +136,10 @@ public class AudioManager : MonoBehaviour
     public static void PlayShootSound(string InventaryItemName, Transform _bulletSpawnPosition, string Shooter)
     {
         // Boss Minion
+        // Debug.Log(Shooter);
         if (Shooter == "Boss" || Shooter == "Minion")
         {
-            if (InventaryItemName== "Rifle")
+            if (InventaryItemName == "Rifle")
             {
                 Debug.Log("Boss is shooting");
                 //AudioManager.instance.PlaySound("BossRifle", _bulletSpawnPosition.transform.position);

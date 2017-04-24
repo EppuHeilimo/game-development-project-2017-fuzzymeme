@@ -23,16 +23,17 @@ public class AudioManager : MonoBehaviour
 
     void Awake()
     {
+
+       
         if (instance != null)
         {
+        
             Debug.Log("destroy obj");
             Destroy(gameObject);
         }
 
         else
         {
-
-
 
             instance = this;
             library = GetComponent<SoundLibrary>();
@@ -132,36 +133,49 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public static void PlayShootSound(string InventaryItemName, Transform _bulletSpawnPosition)
+    public static void PlayShootSound(string InventaryItemName, Transform _bulletSpawnPosition, string Shooter)
     {
-        if (InventaryItemName == "Stick")
+        // Boss Minion
+        if (Shooter == "Boss" || Shooter == "Minion")
         {
-            //Debug.Log("make stick sound");
-        }
-        else if (InventaryItemName == "Rifle")
-        {
-            AudioManager.instance.PlaySound("Rifle", _bulletSpawnPosition.transform.position);
-        }
-        else if (InventaryItemName == "Pistol")
-        {
-            AudioManager.instance.PlaySound("Pistol", _bulletSpawnPosition.transform.position);
-        }
+            if (InventaryItemName== "Rifle")
+            {
+                Debug.Log("Boss is shooting");
+                //AudioManager.instance.PlaySound("BossRifle", _bulletSpawnPosition.transform.position);
+            }
 
-        else if (InventaryItemName == "Test")
-        {
-            AudioManager.instance.PlaySound("Rifle", _bulletSpawnPosition.transform.position);
         }
+        //normal sounds
+        else
+        {
+                    if (InventaryItemName == "Stick")
+                    {
+                        //Debug.Log("make stick sound");
+                    }
+                    else if (InventaryItemName == "Rifle")
+                    {
+                        AudioManager.instance.PlaySound("Rifle", _bulletSpawnPosition.transform.position);
+                    }
+                    else if (InventaryItemName == "Pistol")
+                    {
+                        AudioManager.instance.PlaySound("Pistol", _bulletSpawnPosition.transform.position);
+                    }
 
+                    else if (InventaryItemName == "Test")
+                    {
+                        AudioManager.instance.PlaySound("Rifle", _bulletSpawnPosition.transform.position);
+                    }
 
-        else { }
+            }
+
     }
+    
 
     public static void PlayMultiBulletSound(string InventaryItemName,Transform BulletSpawnPosition)
     {
         if (InventaryItemName == "Auto shotgun")
         {
-            Debug.Log(InventaryItemName);
-            Debug.Log(BulletSpawnPosition);
+           
 
             AudioManager.instance.PlaySound("Shotgun", BulletSpawnPosition.position);
         }

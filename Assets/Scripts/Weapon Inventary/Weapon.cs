@@ -155,8 +155,7 @@ namespace Assets.Scripts.Weapon_Inventary
             bullet1.spawnPosition = BulletSpawnPosition.position;
             bulletGameObject.transform.rotation = rotation;
 
-
-            AudioManager.PlayShootSound(InventaryItemName, _bulletSpawnPosition);
+            AudioManager.PlayShootSound(InventaryItemName, _bulletSpawnPosition, transform.tag);
 
             //var bullet = (GameObject)Instantiate(
             //BulletPrefab,

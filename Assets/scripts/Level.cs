@@ -21,6 +21,8 @@ public class Level : MonoBehaviour
     public bool initiated = false;
     public EnemySpawner EnemySpawner;
 
+    private bool openedEntries = false;
+
     //public void Awake()
     //{
     //    bool compareTo = CompareTag("Area");
@@ -55,10 +57,12 @@ public class Level : MonoBehaviour
 	// Update is called once per frame
 	void Update () {
 
-	    if (initiated && enemyCount <= 0 && !transform.root.CompareTag("BossArea"))
+	    if (initiated && enemyCount <= 0 && !transform.root.CompareTag("BossArea") && !openedEntries)
 	    {
 	        GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().OpenCurrentAreasEntries();
 	        global::Console.ShowMessage("Level Completed", 5);
+	        openedEntries = true;
+
 
 	    }
 	}

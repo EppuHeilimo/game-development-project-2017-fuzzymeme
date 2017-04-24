@@ -131,33 +131,15 @@ public class Console : MonoBehaviour
     public static void ShowMessage(String message,float time=4)
     {
 
-        if (instance.messageQueue.Count != 0)
-        {
-            instance.messageQueue.Add(new MessageItem() { duration = time, Message = message });
-            return;
-        }
-        instance.messageQueue.Add(new MessageItem() { duration = time, Message = message });
-        instance.StartCoroutine(instance.ShowMessage());
+       instance.messageQueue.Add(new MessageItem() {duration = time,Message = message});
 
 
     }
 
-    private IEnumerator ShowMessage()
-    {
-       
-            MessageItem first = instance.messageQueue[0];
-            instance.messageQueue.Remove(first);
-            messageBoxBorder.SetActive(true);
-            messageBoxText.text = first.Message;
-            yield return new WaitForSeconds(first.duration);
-            messageBoxBorder.SetActive(false);
-        if (instance.messageQueue.Count != 0)
-        {
-            instance.StartCoroutine(instance.ShowMessage());
-        }
 
+    
 
-    }
+  
 
     private void DropSomething()
     {
@@ -264,7 +246,36 @@ public class Console : MonoBehaviour
 	        lastPressedButtonTime = Time.time;
 
 	    }
+
+
+
+        if (messageItem != null)
+        {
+
+            if (Time.time > messageEndTime)
+            {
+                messageItem = null;
+
+                messageBoxBorder.SetActive(false);
+                messageBoxText.text = "";
+
+            }
+        }
+        else
+        {
+            if (messageQueue.Count != 0)
+            {
+                messageItem = messageQueue[0];
+                messageQueue.Remove(messageItem);
+                messageEndTime = Time.time+messageItem.duration;
+                messageBoxBorder.SetActive(true);
+                messageBoxText.text = messageItem.Message;
+            }
+        }
 	}
+
+    private float messageEndTime;
+    private MessageItem messageItem;
 
     public static bool GetKeyDown(KeyCode keyCode)
     {

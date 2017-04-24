@@ -302,8 +302,9 @@ public class BossAI : MonoBehaviour
                 modeComplete = true;
             }
         }
-        else
+        else if (MMode == MovementState.Follow)
         {
+            RotateTowards(player.transform, Stages[stage].RotationSpeed);
             ModeTime();
         }
     }

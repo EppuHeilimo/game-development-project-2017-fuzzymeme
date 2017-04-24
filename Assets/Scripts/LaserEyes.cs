@@ -6,7 +6,7 @@ public class LaserEyes : MonoBehaviour
     public GameObject Eye1;
     public GameObject Eye2;
     private Transform player;
-    public float speed = 100f;
+    public float speed = 5f;
 
     // Use this for initialization
     void Start () {
@@ -22,13 +22,6 @@ public class LaserEyes : MonoBehaviour
 	    transform.localRotation = Quaternion.Slerp(transform.rotation, targetRotation, speed*Time.deltaTime);
         //keep only x rotation, everything else is coming from parent object
         transform.localRotation = Quaternion.Euler(transform.rotation.eulerAngles.x, 0, 0);
-
-
-
-	    /*
-	    transform.LookAt(player);
-        
-        */
 	}
 
     public void OpenEyes()

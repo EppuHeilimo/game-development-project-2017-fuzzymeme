@@ -210,6 +210,7 @@ public class BossAI : MonoBehaviour
         {
             float step = Speed * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, player.transform.position, step);
+
         }
     }
 
